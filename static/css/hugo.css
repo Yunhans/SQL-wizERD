@@ -1,5 +1,47 @@
-#post:hover {
-    box-shadow: 10px 10px rgb(0, 0, 0, 0.5);
-    transform: translate(-5px, -5px);
-    cursor: pointer;
-  }
+body {
+  height: 100%;
+  min-height: -webkit-fill-available;
+  /* overflow-y: hidden; */
+} 
+
+aside {
+  height: -webkit-fill-available;
+  /* max-height: 100vh; */
+  overflow-x: auto;
+  overflow-y: hidden;
+  position: fixed;
+}
+
+header{
+  height: 70px;
+}
+
+#whiteboard-border {
+  height: calc(100vh - 70px);
+  width: calc(100vw - 4.5rem);
+  margin-left: 4.5rem;
+  margin-top: auto;
+  overflow: auto;
+}
+
+#whiteboard{
+  height: 2000px;
+  width: 2000px;
+  /* background-color: coral; */
+}
+
+#mydiv {
+  position: absolute;
+  z-index: 9;
+  background-color: #f1f1f1;
+  border: 1px solid #d3d3d3;
+  text-align: center;
+}
+
+#mydivheader {
+  padding: 10px;
+  cursor: move;
+  z-index: 10;
+  background-color: #2196F3;
+  color: #fff;
+}

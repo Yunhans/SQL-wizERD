@@ -10,8 +10,8 @@ app.mount("/static", StaticFiles(directory="static"))
 templates = Jinja2Templates(directory="templates")
 
 @app.get("/", response_class=HTMLResponse)
-async def read_test(request: Request):
-    return templates.TemplateResponse("test.html", {"request": request})
+async def read_main(request: Request):
+    return templates.TemplateResponse("main.html", {"request": request})
 
 @app.get("/items/{id}", response_class=HTMLResponse)
 async def read_item(request: Request, id: str):

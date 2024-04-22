@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>main</title>
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/icons/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="/static/css/hugo.css" rel="stylesheet">
+    <script src="/static/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+
+    <header>
+        <div class="container-fluid bg-body-tertiary">
+            <div class="d-flex flex-wrap align-items-center justify-content-between py-3 border-bottom">
+                <div>
+                    <a class="navbar-brand" href="#">
+                        <i class="bi bi-database" style="font-size: 1.5rem;"></i>
+                        UR sql helper
+                    </a>
+                </div>
+        
+                <div>
+                    <a>file name</a>
+                </div>
+        
+                <div class="dropdown text-end">
+                    <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-person-circle" style="font-size: 1.5rem;"></i>
+                    </a>
+                    <ul class="dropdown-menu text-small">
+                        <li><a class="dropdown-item" href="#">New project...</a></li>
+                        <li><a class="dropdown-item" href="#">Settings</a></li>
+                        <li><a class="dropdown-item" href="#">Profile</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Sign out</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <aside class="d-flex flex-nowrap">
+        <div class="d-flex flex-column flex-shrink-0 bg-body-tertiary" style="width: 4.5rem;">
+            <!-- <a href="/" class="d-block p-3 link-body-emphasis text-decoration-none" title="Icon-only" data-bs-toggle="tooltip" data-bs-placement="right">
+                <i class="bi bi-database" style="font-size: 2rem;"></i>
+                <span class="visually-hidden">Icon-only</span>
+            </a> -->
+            <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
+                <li class="nav-item">
+                    <a href="#" class="nav-link active py-3 border-bottom rounded-0" aria-current="page" title="Files" data-bs-toggle="tooltip" data-bs-placement="right">
+                        <i class="bi bi-folder" style="font-size: 1.5rem;"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link py-3 border-bottom rounded-0" title="Chat" data-bs-toggle="tooltip" data-bs-placement="right">
+                        <i class="bi bi-chat-left-dots" style="font-size: 1.5rem;"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link py-3 border-bottom rounded-0" title="Script" data-bs-toggle="tooltip" data-bs-placement="right">
+                        <i class="bi bi-code-slash" style="font-size: 1.5rem;"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link py-3 border-bottom rounded-0" title="Hint" data-bs-toggle="tooltip" data-bs-placement="right">
+                        <i class="bi bi-info-circle" style="font-size: 1.5rem;"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </aside>
+
+    <main>
+        <div id="whiteboard-border">
+            <!-- Draggable DIV -->
+            <div id="whiteboard">
+                <div id="mydiv">
+                    <!-- Include a header DIV with the same name as the draggable DIV, followed by "header" -->
+                    <div id="mydivheader">Table name here</div>
+                    <p>attr1</p>
+                    <p>attr2</p>
+                    <p>attr3</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Make the DIV element draggable:
+        dragElement(document.getElementById("mydiv"));
+
+        function dragElement(elmnt) {
+            var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+            if (document.getElementById(elmnt.id + "header")) {
+                // if present, the header is where you move the DIV from:
+                document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+            } else {
+                // otherwise, move the DIV from anywhere inside the DIV:
+                elmnt.onmousedown = dragMouseDown;
+            }
+
+            function dragMouseDown(e) {
+                e = e || window.event;
+                e.preventDefault();
+                // get the mouse cursor position at startup:
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                document.onmouseup = closeDragElement;
+                // call a function whenever the cursor moves:
+                document.onmousemove = elementDrag;
+            }
+
+            function elementDrag(e) {
+                e = e || window.event;
+                e.preventDefault();
+                // calculate the new cursor position:
+                pos1 = pos3 - e.clientX;
+                pos2 = pos4 - e.clientY;
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                // set the element's new position:
+                elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+                elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+            }
+
+            function closeDragElement() {
+                // stop moving when mouse button is released:
+                document.onmouseup = null;
+                document.onmousemove = null;
+            }
+        }
+    </script>
+</body>
+</html>
