@@ -5,29 +5,33 @@ body {
 } 
 
 aside {
-  height: -webkit-fill-available;
+  height: calc(100vh - 65px);
+  /* min-height: -webkit-fill-available; */
   /* max-height: 100vh; */
   overflow-x: auto;
   overflow-y: hidden;
   position: fixed;
+  z-index: 1;
 }
 
 header{
-  height: 70px;
+  height: 65px;
 }
 
 #whiteboard-border {
-  height: calc(100vh - 70px);
-  width: calc(100vw - 4.5rem);
-  margin-left: 4.5rem;
+  height: calc(100vh - 65px);
+  max-width: calc(100vw - 3.5rem);
+  margin-left: 3.5rem;
   margin-top: auto;
   overflow: auto;
+  border: 2px solid black;
 }
 
 #whiteboard{
   height: 2000px;
   width: 2000px;
   /* background-color: coral; */
+  z-index: 0;
 }
 
 #mydiv {
@@ -44,4 +48,10 @@ header{
   z-index: 10;
   background-color: #2196F3;
   color: #fff;
+}
+
+#offcanvasScrolling_chat {
+  margin-left: 3.5rem;
+  margin-top: 65px;
+  z-index: 0;
 }

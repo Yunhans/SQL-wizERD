@@ -16,13 +16,12 @@
             <div class="d-flex flex-wrap align-items-center justify-content-between py-3 border-bottom">
                 <div>
                     <a class="navbar-brand" href="#">
-                        <i class="bi bi-database" style="font-size: 1.5rem;"></i>
-                        UR sql helper
+                        <i class="bi bi-database" style="font-size: 1.5rem;"> UR sql helper</i>
                     </a>
                 </div>
         
                 <div>
-                    <a>file name</a>
+                    <span class="navbar-text">file name</span>
                 </div>
         
                 <div class="dropdown text-end">
@@ -42,7 +41,7 @@
     </header>
     
     <aside class="d-flex flex-nowrap">
-        <div class="d-flex flex-column flex-shrink-0 bg-body-tertiary" style="width: 4.5rem;">
+        <div class="d-flex flex-column flex-shrink-0 bg-body-tertiary" style="width: 3.5rem;">
             <!-- <a href="/" class="d-block p-3 link-body-emphasis text-decoration-none" title="Icon-only" data-bs-toggle="tooltip" data-bs-placement="right">
                 <i class="bi bi-database" style="font-size: 2rem;"></i>
                 <span class="visually-hidden">Icon-only</span>
@@ -54,25 +53,26 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="nav-link py-3 border-bottom rounded-0" title="Chat" data-bs-toggle="tooltip" data-bs-placement="right">
+                    <a href="#" class="nav-link py-3 border-bottom rounded-0 btn" title="Chat" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling_chat" aria-controls="offcanvasScrolling_chat">
                         <i class="bi bi-chat-left-dots" style="font-size: 1.5rem;"></i>
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="nav-link py-3 border-bottom rounded-0" title="Script" data-bs-toggle="tooltip" data-bs-placement="right">
+                    <a href="#" class="nav-link py-3 border-bottom rounded-0" title="Script">
                         <i class="bi bi-code-slash" style="font-size: 1.5rem;"></i>
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="nav-link py-3 border-bottom rounded-0" title="Hint" data-bs-toggle="tooltip" data-bs-placement="right">
+                    <a href="#" class="nav-link py-3 border-bottom rounded-0" title="Hint">
                         <i class="bi bi-info-circle" style="font-size: 1.5rem;"></i>
                     </a>
                 </li>
             </ul>
         </div>
+
     </aside>
 
-    <main>
+    <main class="d-flex flex-nowrap">
         <div id="whiteboard-border">
             <!-- Draggable DIV -->
             <div id="whiteboard">
@@ -83,6 +83,17 @@
                     <p>attr2</p>
                     <p>attr3</p>
                 </div>
+            </div>
+        </div>
+
+        <!-- offcanvas 1 -->
+        <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" id="offcanvasScrolling_chat" aria-labelledby="offcanvasScrollingLabel_chat">
+            <div class="offcanvas-header">
+              <h5 class="offcanvas-title" id="offcanvasScrollingLabel_chat">Offcanvas with body scrolling</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+              <p>Try scrolling the rest of the page to see this option in action.</p>
             </div>
         </div>
     </main>
