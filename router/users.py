@@ -4,6 +4,9 @@ from starlette.responses import RedirectResponse
 from starlette.middleware.sessions import SessionMiddleware
 from authlib.integrations.starlette_client import OAuth, OAuthError
 from fastapi.templating import Jinja2Templates
+import os
+from dotenv import load_dotenv
+from config import GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET
 
 router = APIRouter(
     prefix="/google",
@@ -18,9 +21,7 @@ def add_middleware(app):
 templates = Jinja2Templates(directory="templates")
 
 # 脩的憑證
-GOOGLE_CLIENT_ID = 
-GOOGLE_CLIENT_SECRET = 
-GOOGLE_REDIRECT_URI = 
+GOOGLE_REDIRECT_URI = "http://127.0.0.1:8000/auth"
 
 
 oauth = OAuth()
@@ -30,7 +31,7 @@ oauth.register(
     client_id=GOOGLE_CLIENT_ID,
     client_secret=GOOGLE_CLIENT_SECRET,
     redirect_uri=GOOGLE_REDIRECT_URI,
-    client_kwargs={"scope": "openid profile email"},
+    client_kwargs={"scope": "email openid profile"},
 )
 
 @router.get("/")
@@ -41,11 +42,11 @@ def index(request: Request):
 
     return templates.TemplateResponse(
         name="[to be chosen].html",
-        context={"request": request}
+        context={"request": request, "user": user}
     )
 
 
-# login
+# login (after chick signin with google button) 
 @router.get("/login")
 async def login(request: Request):
     url = request.url_for('auth')
