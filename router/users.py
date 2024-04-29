@@ -19,7 +19,7 @@ def add_middleware(app):
 templates = Jinja2Templates(directory="templates")
 
 # 脩的憑證
-GOOGLE_REDIRECT_URI = "http://127.0.0.1:8000/auth"
+GOOGLE_REDIRECT_URI = "http://127.0.0.1:8000/google/auth"
 
 
 oauth = OAuth()
@@ -28,18 +28,19 @@ oauth.register(
     sever_metadata_url="https://accounts.google.com/.well-known/openid-configuration",
     client_id=GOOGLE_CLIENT_ID,
     client_secret=GOOGLE_CLIENT_SECRET,
-    redirect_uri=GOOGLE_REDIRECT_URI,
-    client_kwargs={"scope": "email openid profile"},
+    client_kwargs={"scope": "email openid profile",
+                   'redirect_uri': GOOGLE_REDIRECT_URI
+    }
 )
 
 @router.get("/")
 def index(request: Request):
     user = request.session.get('user')
     if user:
-        return RedirectResponse('[to be chosen]')
+        return RedirectResponse('welcome')
 
     return templates.TemplateResponse(
-        name="[to be chosen].html",
+        name="home.html",
         context={"request": request}
     )
 
@@ -67,13 +68,13 @@ async def auth_google(request: Request):
         token = await oauth.google.authorize_access_token(request)
     except OAuthError as e:
         return templates.TemplateResponse(
-            name='[to be chosen].html',
+            name='welcome.html',
             context={'request': request, 'error': e.error}
         )
     user = token.get('userinfo')
     if user:
         request.session['user'] = dict(user)
-    return RedirectResponse('[to be chosen]')
+    return RedirectResponse('welcome')
 
 # logout
 @router.get('/logout')
