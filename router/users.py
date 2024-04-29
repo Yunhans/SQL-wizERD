@@ -4,6 +4,7 @@ from starlette.responses import RedirectResponse
 from starlette.middleware.sessions import SessionMiddleware
 from authlib.integrations.starlette_client import OAuth, OAuthError
 from fastapi.templating import Jinja2Templates
+
 from myconfig import get_client_id, get_client_secret
 #from myconfig import GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET
 
