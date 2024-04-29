@@ -7,29 +7,30 @@ from fastapi.templating import Jinja2Templates
 from config import GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET
 
 router = APIRouter(
-    prefix="/google",
+    #prefix="/google",
     tags=["google"],
     )
 
 # cuz middleware add to APIRrouter instance "won't" have effect
 # so we need to add it to FastAPI instance(app)
 def add_middleware(app):
-    app.add_middleware(SessionMiddleware, secret_key="add string(any)")
+    app.add_middleware(SessionMiddleware, secret_key="xxx")
 
 templates = Jinja2Templates(directory="templates")
 
 # 脩的憑證
-GOOGLE_REDIRECT_URI = "http://127.0.0.1:8000/google/auth"
+#GOOGLE_REDIRECT_URI = "http://127.0.0.1:8000/auth"
 
 
 oauth = OAuth()
 oauth.register(
     name="google",
     sever_metadata_url="https://accounts.google.com/.well-known/openid-configuration",
+    authorize_url="https://accounts.google.com/o/oauth2/auth",
     client_id=GOOGLE_CLIENT_ID,
     client_secret=GOOGLE_CLIENT_SECRET,
     client_kwargs={"scope": "email openid profile",
-                   'redirect_uri': GOOGLE_REDIRECT_URI
+                   'redirect_uri': "http://127.0.0.1:8000/auth"#GOOGLE_REDIRECT_URI
     }
 )
 
@@ -62,7 +63,7 @@ async def login(request: Request):
     return await oauth.google.authorize_redirect(request, url)
     
     
-@router.get("/auth")
+@router.get("/auth", name="auth")
 async def auth_google(request: Request):
     try:
         token = await oauth.google.authorize_access_token(request)
