@@ -4,8 +4,6 @@ from starlette.responses import RedirectResponse
 from starlette.middleware.sessions import SessionMiddleware
 from authlib.integrations.starlette_client import OAuth, OAuthError
 from fastapi.templating import Jinja2Templates
-import os
-from dotenv import load_dotenv
 from config import GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET
 
 router = APIRouter(
@@ -42,9 +40,19 @@ def index(request: Request):
 
     return templates.TemplateResponse(
         name="[to be chosen].html",
-        context={"request": request, "user": user}
+        context={"request": request}
     )
 
+
+@router.get('/welcome')
+def welcome(request: Request):
+    user = request.session.get('user')
+    if not user:
+        return RedirectResponse('/')
+    return templates.TemplateResponse(
+        name='welcome.html',
+        context={'request': request, 'user': user}
+    )
 
 # login (after chick signin with google button) 
 @router.get("/login")
