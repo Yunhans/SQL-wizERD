@@ -1,4 +1,5 @@
 .DS_Store
 __pycache__/
 router/__pycache__/
-credential.env
+.env
+myconfig.py

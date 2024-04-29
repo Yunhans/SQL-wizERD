@@ -4,7 +4,9 @@ from starlette.responses import RedirectResponse
 from starlette.middleware.sessions import SessionMiddleware
 from authlib.integrations.starlette_client import OAuth, OAuthError
 from fastapi.templating import Jinja2Templates
-from config import GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET
+from myconfig import get_client_id, get_client_secret
+#from myconfig import GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET
+
 
 router = APIRouter(
     #prefix="/google",
@@ -18,19 +20,17 @@ def add_middleware(app):
 
 templates = Jinja2Templates(directory="templates")
 
-# 脩的憑證
-#GOOGLE_REDIRECT_URI = "http://127.0.0.1:8000/auth"
-
 
 oauth = OAuth()
 oauth.register(
     name="google",
-    sever_metadata_url="https://accounts.google.com/.well-known/openid-configuration",
-    authorize_url="https://accounts.google.com/o/oauth2/auth",
-    client_id=GOOGLE_CLIENT_ID,
-    client_secret=GOOGLE_CLIENT_SECRET,
-    client_kwargs={"scope": "email openid profile",
-                   'redirect_uri': "http://127.0.0.1:8000/auth"#GOOGLE_REDIRECT_URI
+    server_metadata_url="https://accounts.google.com/.well-known/openid-configuration",
+    #authorize_url="https://accounts.google.com/o/oauth2/auth",
+    client_id= get_client_id(),
+    client_secret=get_client_secret(),
+    client_kwargs={
+        "scope": "email openid profile",
+        'redirect_url': 'http://127.0.0.1:8000/auth'
     }
 )
 
@@ -63,7 +63,7 @@ async def login(request: Request):
     return await oauth.google.authorize_redirect(request, url)
     
     
-@router.get("/auth", name="auth")
+@router.get("/auth", name='auth')
 async def auth_google(request: Request):
     try:
         token = await oauth.google.authorize_access_token(request)
