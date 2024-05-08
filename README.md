@@ -13,6 +13,10 @@ cd graduate_project
 
 2. 下載 pip 套件
 ```bash
+pip install fastapi
+
+pip install "uvicorn[standard]"
+
 pip install -r requirements.txt
 ```
 
