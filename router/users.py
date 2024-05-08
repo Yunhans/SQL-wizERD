@@ -53,7 +53,7 @@ def welcome(request: Request):
     if not user:
         return RedirectResponse('/')
     return templates.TemplateResponse(
-        name='welcome.html',
+        name='main.html',
         context={'request': request, 'user': user}
     )
 
@@ -70,7 +70,7 @@ async def auth_google(request: Request):
         token = await oauth.google.authorize_access_token(request)
     except OAuthError as e:
         return templates.TemplateResponse(
-            name='welcome.html',
+            name='main.html',
             context={'request': request, 'error': e.error}
         )
     user = token.get('userinfo')

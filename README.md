@@ -4,7 +4,7 @@
 
 # 使用說明
 
-> 需要 python3.8 或以上版本
+> 需要 python3.10 或以上版本
 
 1. 將 cmd 或 terminal 路徑 cd 至本資料夾
 ```bash
