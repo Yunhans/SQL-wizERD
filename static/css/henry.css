@@ -1,0 +1,37 @@
+body {
+    font-family: 'Times New Roman', serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+}
+body:lang(zh) {
+    font-family: 'Microsoft JhengHei', sans-serif;
+}
+
+span:lang(en) {
+    font-family: 'Times New Roman', serif;
+}
+
+span:lang(zh) {
+    font-family: 'Microsoft JhengHei', sans-serif;
+}
+
+section {
+    margin: 15px;
+}
+
+h2 {
+    color: #333;
+}
+
+p {
+    line-height: 1.6;
+}
+
+ul, ol {
+    padding-left: 20px;
+}
+
+ul li {
+    margin-bottom: 10px;
+}
