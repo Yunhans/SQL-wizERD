@@ -8,7 +8,7 @@
 | 石昀翰 | @Yunhans | 前端 |
 | 管奕凱 | @CalvinKuan1007 | AI |
 | 林均翰 | @HenryLin1412 | 後端 |
-| 朱伯脩 | @shioudidi | 後端 |
+| 朱博脩 | @shioudidi | 後端 |
 | 黃柏翰 | @hbh10601 | AI |
 
 # 使用說明
