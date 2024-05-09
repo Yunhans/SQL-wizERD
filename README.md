@@ -39,7 +39,7 @@ uvicorn main:app --reload
 # 預計製作功能
 
 - [x] fastapi 主頁架設
-- [x] 登入系統(google 帳號)
+- [x] 登入系統(google 帳號) (朱)
 - [ ] 白板功能 (朱)
 - [ ] 語法偵錯 (朱)
 - [ ] chatbot
