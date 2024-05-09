@@ -3,12 +3,43 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>home</title>
+        <title>小教程視窗</title>
         <link href="/static/css/bootstrap.min.css" rel="stylesheet">
         <link href="/static/icons/font/bootstrap-icons.min.css" rel="stylesheet">
         <link href="/static/css/henry.css" rel="stylesheet">
         <script src="/static/js/bootstrap.bundle.min.js"></script>
     </head>
+
+    <header>
+        <div class="container-fluid bg-body-tertiary">
+            <div class="d-flex flex-wrap align-items-center justify-content-between py-3 border-bottom">
+                <div>
+                    <a class="navbar-brand" href="#">
+                        <i class="bi bi-database" style="font-size: 1.5rem;"> UR sql helper</i>
+                    </a>
+                </div>
+        
+                <div>
+                    <span class="navbar-text">簡單的介紹</span>
+                </div>
+        
+                <div class="dropdown text-end">
+                    <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img class="img rounded-circle" src="{{user['picture']}}" style="width: 2rem;">
+                    </a>
+                    <ul class="dropdown-menu text-small">
+                        <li><a class="dropdown-item" href="#">New project...</a></li>
+                        <li><a class="dropdown-item" href="#">Settings</a></li>
+                        <li><a class="dropdown-item" href="#">Profile</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="/logout">Sign out</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
 
     <section>
         <h2 lang="en">ER Diagram</h2>
@@ -30,4 +61,5 @@
             <li>優化設計：</li>
         </ol>
     </section>
+
 </html>
