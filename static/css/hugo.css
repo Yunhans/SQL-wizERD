@@ -50,7 +50,13 @@ header{
   color: #fff;
 }
 
-#offcanvasScrolling_chat {
+#offcanvasScrolling_chat{
+  margin-left: 3.5rem;
+  margin-top: 65px;
+  z-index: 0;
+}
+
+#offcanvasScrolling_script{
   margin-left: 3.5rem;
   margin-top: 65px;
   z-index: 0;

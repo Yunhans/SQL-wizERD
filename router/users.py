@@ -39,7 +39,7 @@ oauth.register(
 def index(request: Request):
     user = request.session.get('user')
     if user:
-        return RedirectResponse('welcome')
+        return RedirectResponse('whiteboard')
 
     return templates.TemplateResponse(
         name="home.html",
@@ -47,13 +47,13 @@ def index(request: Request):
     )
 
 
-@router.get('/welcome')
-def welcome(request: Request):
+@router.get('/whiteboard')
+def whiteboard(request: Request):
     user = request.session.get('user')
     if not user:
         return RedirectResponse('/')
     return templates.TemplateResponse(
-        name='main.html',
+        name='whiteboard.html',
         context={'request': request, 'user': user}
     )
 
@@ -70,13 +70,13 @@ async def auth_google(request: Request):
         token = await oauth.google.authorize_access_token(request)
     except OAuthError as e:
         return templates.TemplateResponse(
-            name='main.html',
+            name='whiteboard.html',
             context={'request': request, 'error': e.error}
         )
     user = token.get('userinfo')
     if user:
         request.session['user'] = dict(user)
-    return RedirectResponse('welcome')
+    return RedirectResponse('whiteboard')
 
 # logout
 @router.get('/logout')

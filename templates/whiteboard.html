@@ -48,22 +48,22 @@
             </a> -->
             <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
                 <li class="nav-item">
-                    <a href="#" class="nav-link active py-3 border-bottom rounded-0" aria-current="page" title="Files" data-bs-toggle="tooltip" data-bs-placement="right">
+                    <a id="files_btn" href="#" class="nav-link py-3 border-bottom rounded-0" aria-current="page" title="Files" data-bs-toggle="tooltip" data-bs-placement="right">
                         <i class="bi bi-folder" style="font-size: 1.5rem;"></i>
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="nav-link py-3 border-bottom rounded-0 btn" title="Chat" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling_chat" aria-controls="offcanvasScrolling_chat">
+                    <a id="chat_btn" href="#" class="nav-link py-3 border-bottom rounded-0 btn" title="Chat" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling_chat" aria-controls="offcanvasScrolling_chat">
                         <i class="bi bi-chat-left-dots" style="font-size: 1.5rem;"></i>
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="nav-link py-3 border-bottom rounded-0" title="Script">
+                    <a id="script_btn" href="#" class="nav-link py-3 border-bottom rounded-0" title="Script" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling_script" aria-controls="offcanvasScrolling_script">
                         <i class="bi bi-code-slash" style="font-size: 1.5rem;"></i>
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="nav-link py-3 border-bottom rounded-0" title="Hint">
+                    <a id="info_btn" href="/tutorial" target="_blank" class="nav-link py-3 border-bottom rounded-0" title="Hint">
                         <i class="bi bi-info-circle" style="font-size: 1.5rem;"></i>
                     </a>
                 </li>
@@ -86,14 +86,36 @@
             </div>
         </div>
 
-        <!-- offcanvas 1 -->
-        <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" id="offcanvasScrolling_chat" aria-labelledby="offcanvasScrollingLabel_chat">
+        <!-- offcanvas files -->
+        <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" id="offcanvasScrolling_file" aria-labelledby="offcanvasScrollingLabel_file">
             <div class="offcanvas-header">
-              <h5 class="offcanvas-title" id="offcanvasScrollingLabel_chat">Offcanvas with body scrolling</h5>
+              <h5 class="offcanvas-title" id="offcanvasScrollingLabel_script">Script</h5>
               <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
-              <p>Try scrolling the rest of the page to see this option in action.</p>
+              <p>This is the place users type sql scripts</p>
+            </div>
+        </div>
+
+        <!-- offcanvas chat -->
+        <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" id="offcanvasScrolling_chat" aria-labelledby="offcanvasScrollingLabel_chat">
+            <div class="offcanvas-header">
+              <h5 class="offcanvas-title" id="offcanvasScrollingLabel_chat">Chatbot</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+              <p>This is the place users chat with chatbot.</p>
+            </div>
+        </div>
+
+        <!-- offcanvas script -->
+        <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" id="offcanvasScrolling_script" aria-labelledby="offcanvasScrollingLabel_script">
+            <div class="offcanvas-header">
+              <h5 class="offcanvas-title" id="offcanvasScrollingLabel_script">Script</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+              <p>This is the place users type sql scripts</p>
             </div>
         </div>
     </main>

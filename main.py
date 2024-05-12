@@ -5,12 +5,12 @@ from fastapi.templating import Jinja2Templates
 
 from router.users import add_middleware
 
-from router import items, whiteboard, users
+from router import items, users, tutorial
 
 app = FastAPI()
 app.include_router(items.router)
-app.include_router(whiteboard.router)
 app.include_router(users.router)
+app.include_router(tutorial.router)
 
 # add middleware
 add_middleware(app)
@@ -19,6 +19,6 @@ app.mount("/static", StaticFiles(directory="static"))
 
 templates = Jinja2Templates(directory="templates")
 
-@app.get("/white", response_class=HTMLResponse)
-async def read_main(request: Request):
-    return templates.TemplateResponse("main.html", {"request": request})
+# @app.get("/white", response_class=HTMLResponse)
+# async def read_main(request: Request):
+#     return templates.TemplateResponse("main.html", {"request": request})
