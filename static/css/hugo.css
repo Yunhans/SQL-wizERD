@@ -61,3 +61,8 @@ header{
   margin-top: 65px;
   z-index: 0;
 }
+
+#script_editor{
+  height: 100%;
+  width: 100%;
+}

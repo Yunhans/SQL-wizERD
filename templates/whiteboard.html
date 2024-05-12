@@ -103,7 +103,7 @@
               <h5 class="offcanvas-title" id="offcanvasScrollingLabel_chat">Chatbot</h5>
               <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
-            <div class="offcanvas-body">
+            <div class="offcanvas-body"> 
               <p>This is the place users chat with chatbot.</p>
             </div>
         </div>
@@ -114,12 +114,16 @@
               <h5 class="offcanvas-title" id="offcanvasScrollingLabel_script">Script</h5>
               <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
-            <div class="offcanvas-body">
-              <p>This is the place users type sql scripts</p>
+            <div class="offcanvas-body" id="script_editor"><!-- add ace editor-->
+                <div >
+                    <!-- 左側程式碼編輯區域 -->
+                </div>
             </div>
         </div>
     </main>
-
+    <!-- ace editor -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.9.5/ace.js"></script>
+    <script src="/static/js/script-editor.js"></script>
     <script>
         // Make the DIV element draggable:
         dragElement(document.getElementById("mydiv"));
