@@ -14,7 +14,7 @@ class Item(BaseModel):
     text: str
     
 @router.post("/")
-async def get_item(request: Request, item: Item):
+async def get_item(item: Item):
     text = item.text
     #print(text)
     structed_table = extract_multiple_table_info(text)
