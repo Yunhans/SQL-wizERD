@@ -8,6 +8,11 @@
     <link href="/static/icons/font/bootstrap-icons.min.css" rel="stylesheet">
     <link href="/static/css/hugo.css" rel="stylesheet">
     <script src="/static/js/bootstrap.bundle.min.js"></script>
+    <style>
+        .no-caret::after {
+            display: none !important;
+        }
+    </style>
 </head>
 <body>
 
@@ -76,13 +81,68 @@
         <div id="whiteboard-border">
             <!-- Draggable DIV -->
             <div id="whiteboard">
-                <div id="mydiv">
-                    <!-- Include a header DIV with the same name as the draggable DIV, followed by "header" -->
-                    <div id="mydivheader">Table name here</div>
-                    <p>attr1</p>
-                    <p>attr2</p>
-                    <p>attr3</p>
+
+                <!-- table -->
+                <div class="card" style="width: 400px;">
+                    <div class="card-header text-center">
+                        Table name    
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item px-1">
+                            <div class="row g-1">
+                                <div class="col-6">
+                                    <input type="text" class="form-control" placeholder="attr" required>
+                                </div>
+                                <div class="col-3">
+                                    <select class="form-select">
+                                        <option selected>int</option>
+                                        <option>bigint</option>
+                                        <option>decimal(8,2)</option>
+                                        <option>float(8,2)</option>
+                                        <option>varchar(255)</option>
+                                        <option>char(255)</option>
+                                        <option>binery</option>
+                                        <option>text</option>
+                                        <option>boolean</option>
+                                        <option>date</option>
+                                        <option>datetime</option>
+                                        <option>time</option>
+                                    </select>
+                                </div>
+                                <div class="col-1" style="margin-right: 15px;">
+                                    <button type="button" class="btn btn-outline-warning">
+                                        <i class="bi bi-key"></i>
+                                    </button>
+                                </div>
+                                <div class="col-1">
+                                    <div class="btn-group dropend">
+                                        <button type="button" class="btn btn-secondary dropdown-toggle no-caret" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="bi bi-three-dots-vertical"></i>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-lg g-1 px-2" style="min-width:200px">
+                                            <li>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="">
+                                                    <label class="form-check-label">Not Null</label>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="">
+                                                    <label class="form-check-label">Auto Increament</label>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">next row</li>
+                        <li class="list-group-item">next row</li>
+                    </ul>
                 </div>
+                <!-- end table -->
+
             </div>
         </div>
 
