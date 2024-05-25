@@ -22,8 +22,8 @@ aceEditor.getSession().on('change', function() {
   }
   timeout = setTimeout(function() {
     let text = aceEditor.getValue();
-    console.log(text);
-    fetch('http://127.0.0.1:8000/editor/', {
+    // console.log(text);
+    fetch('http://127.0.0.1:8000/editor/api/table_transform', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

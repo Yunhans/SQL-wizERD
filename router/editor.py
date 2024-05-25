@@ -13,7 +13,7 @@ router = APIRouter(
 class Item(BaseModel):
     text: str
     
-@router.post("/")
+@router.post("/api/table_transform")
 async def get_item(item: Item):
     text = item.text
     #print(text)
