@@ -81,6 +81,16 @@
         <div id="whiteboard-border">
             <!-- Draggable DIV -->
             <div id="whiteboard">
+                <!-- buttons -->
+                <div class="d-flex justify-content-evenly position-fixed bottom-0 my-4 w-100 px-3">
+                    <div>
+                        <button type="button" class="btn btn-outline-success me-2 px-3" style="height: 3rem;">Add table</button>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-primary me-2" style="height: 3rem; width: 3rem;"><i class="bi bi-plus-lg" style="font-size: 1.5rem;"></i></button>
+                        <button type="button" class="btn btn-primary" style="height: 3rem; width: 3rem;"><i class="bi bi-dash-lg" style="font-size: 1.5rem;"></i></button>
+                    </div>
+                </div>
 
                 <!-- table -->
                 <div class="card" style="width: 400px;">
@@ -137,8 +147,11 @@
                                 </div>
                             </div>
                         </li>
-                        <li class="list-group-item">next row</li>
-                        <li class="list-group-item">next row</li>
+                        <li class="list-group-item">
+                            <div class="">
+                                <button class="btn btn-sm btn-outline-primary w-100">add row</button>
+                            </div>
+                        </li>
                     </ul>
                 </div>
                 <!-- end table -->
@@ -149,30 +162,30 @@
         <!-- offcanvas files -->
         <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" id="offcanvasScrolling_file" aria-labelledby="offcanvasScrollingLabel_file">
             <div class="offcanvas-header">
-              <h5 class="offcanvas-title" id="offcanvasScrollingLabel_script">Script</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <h5 class="offcanvas-title" id="offcanvasScrollingLabel_script">Script</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
-              <p>This is the place users type sql scripts</p>
+                <p>This is the place users type sql scripts</p>
             </div>
         </div>
 
         <!-- offcanvas chat -->
         <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" id="offcanvasScrolling_chat" aria-labelledby="offcanvasScrollingLabel_chat">
             <div class="offcanvas-header">
-              <h5 class="offcanvas-title" id="offcanvasScrollingLabel_chat">Chatbot</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <h5 class="offcanvas-title" id="offcanvasScrollingLabel_chat">Chatbot</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body"> 
-              <p>This is the place users chat with chatbot.</p>
+                <p>This is the place users chat with chatbot.</p>
             </div>
         </div>
 
         <!-- offcanvas script -->
         <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" id="offcanvasScrolling_script" aria-labelledby="offcanvasScrollingLabel_script">
             <div class="offcanvas-header">
-              <h5 class="offcanvas-title" id="offcanvasScrollingLabel_script">Script</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <h5 class="offcanvas-title" id="offcanvasScrollingLabel_script">Script</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body" id="script_editor"><!-- add ace editor-->
                 <div >
