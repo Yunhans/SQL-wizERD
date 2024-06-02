@@ -78,9 +78,9 @@
             <!-- Draggable DIV -->
             <div id="whiteboard">
                 <!-- buttons -->
-                <div class="d-flex justify-content-evenly position-fixed bottom-0 my-4 w-100 px-3">
+                <div class="z-3 d-flex justify-content-evenly position-fixed bottom-0 my-4 w-100 px-3">
                     <div>
-                        <button type="button" class="btn btn-outline-success me-2 px-3">Add table</button>
+                        <button type="button" class="btn btn-success me-2 px-3">Add table</button>
                     </div>
                     <div>
                         <button type="button" class="btn btn-primary me-2"><i class="bi bi-plus-lg"></i></button>
@@ -89,7 +89,7 @@
                 </div>
 
                 <!-- table -->
-                <div class="card" draggable="true" id="draggableCard" style="width: 400px; left: 300px; top: 400px">
+                <div class="card z-0" draggable="true" id="draggableCard" style="width: 400px; left: 0px; top:0px">
                     <div class="card-header text-center" draggable="true" id="draggableHeader">
                         Table name    
                     </div>
@@ -195,51 +195,5 @@
     <script src="/static/js/script-editor.js"></script>
     <!--dragging-->
     <script src="/static/js/dragging.js"></script>
-
-    <!-- <script>
-        // Make the DIV element draggable:
-        dragElement(document.getElementById("mydiv"));
-
-        function dragElement(elmnt) {
-            var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-            if (document.getElementById(elmnt.id + "header")) {
-                // if present, the header is where you move the DIV from:
-                document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
-            } else {
-                // otherwise, move the DIV from anywhere inside the DIV:
-                elmnt.onmousedown = dragMouseDown;
-            }
-
-            function dragMouseDown(e) {
-                e = e || window.event;
-                e.preventDefault();
-                // get the mouse cursor position at startup:
-                pos3 = e.clientX;
-                pos4 = e.clientY;
-                document.onmouseup = closeDragElement;
-                // call a function whenever the cursor moves:
-                document.onmousemove = elementDrag;
-            }
-
-            function elementDrag(e) {
-                e = e || window.event;
-                e.preventDefault();
-                // calculate the new cursor position:
-                pos1 = pos3 - e.clientX;
-                pos2 = pos4 - e.clientY;
-                pos3 = e.clientX;
-                pos4 = e.clientY;
-                // set the element's new position:
-                elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-                elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-            }
-
-            function closeDragElement() {
-                // stop moving when mouse button is released:
-                document.onmouseup = null;
-                document.onmousemove = null;
-            }
-        }
-    </script> -->
 </body>
 </html>
