@@ -1,5 +1,6 @@
 let editor = document.querySelector('#script_editor');
 
+
 let aceEditor = ace.edit(editor, {
   theme: 'ace/theme/ambiance',
   mode: 'ace/mode/sql',
@@ -22,17 +23,19 @@ aceEditor.getSession().on('change', function() {
   }
   timeout = setTimeout(function() {
     let text = aceEditor.getValue();
+
+
     // console.log(text);
-    fetch('http://127.0.0.1:8000/editor/api/table_transform', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ text: text })
-    })
-    .then(response => response.json())
-    .then(data => console.log(data))
-    .catch(error => console.error('Error:', error));
-  }
-  , 1000);
+      fetch('http://127.0.0.1:8000/editor/api/table_transform', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ text: text })
+      })
+      .then(response => response.json())
+      .then(data => console.log(data))
+      .catch(error => console.error('Error:', error));
+    
+  }, 1000);
 });
