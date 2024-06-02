@@ -93,8 +93,8 @@
                 </div>
 
                 <!-- table -->
-                <div class="card" style="width: 400px;">
-                    <div class="card-header text-center">
+                <div class="card" draggable="true" id="draggableCard" style="width: 400px;">
+                    <div class="card-header text-center" draggable="true" id="draggableHeader">
                         Table name    
                     </div>
                     <ul class="list-group list-group-flush">
@@ -197,7 +197,10 @@
     <!-- ace editor -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.9.5/ace.js"></script>
     <script src="/static/js/script-editor.js"></script>
-    <script>
+    <!--dragging-->
+    <script src="/static/js/dragging.js"></script>
+
+    <!-- <script>
         // Make the DIV element draggable:
         dragElement(document.getElementById("mydiv"));
 
@@ -241,6 +244,6 @@
                 document.onmousemove = null;
             }
         }
-    </script>
+    </script> -->
 </body>
 </html>
