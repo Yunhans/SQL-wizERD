@@ -25,18 +25,18 @@ whiteboard.addEventListener('mousemove', (event) => {
         const borderRect = whiteboardBorder.getBoundingClientRect();
         const cardRect = card.getBoundingClientRect();
 
-        // Check if the new position is within the bounds of the whiteboard-border
-        if (newLeft < borderRect.left) {
-            newLeft = borderRect.left;
-        } else if (newLeft + cardRect.width > borderRect.right) {
-            newLeft = borderRect.right - cardRect.width;
-        }
+        // // Check if the new position is within the bounds of the whiteboard-border
+        // if (newLeft < borderRect.left) {
+        //     newLeft = borderRect.left;
+        // } else if (newLeft + cardRect.width > borderRect.right) {
+        //     newLeft = borderRect.right - cardRect.width;
+        // }
 
-        if (newTop < borderRect.top) {
-            newTop = borderRect.top;
-        } else if (newTop + cardRect.height > borderRect.bottom) {
-            newTop = borderRect.bottom - cardRect.height;
-        }
+        // if (newTop < borderRect.top) {
+        //     newTop = borderRect.top;
+        // } else if (newTop + cardRect.height > borderRect.bottom) {
+        //     newTop = borderRect.bottom - cardRect.height;
+        // }
         
         // Set the new position of the card
         // const draggableElement = card;
@@ -50,34 +50,4 @@ document.addEventListener('mouseup', (event) => {
     isDragging = false;
 });
 
-// cardHeader.addEventListener('dragstart', (event) => {
-//     isDragging = true;
-//     dragOffset.x = event.clientX - event.target.getBoundingClientRect().left;
-//     dragOffset.y = event.clientY - event.target.getBoundingClientRect().top;
-//     event.dataTransfer.setData('text/plain', card.id);
-    
-// });
 
-// whiteboard.addEventListener('dragover', (event) => {
-//     event.preventDefault();
-//     // const draggableElement = document.getElementById(id);
-//     draggableElement.style.left = event.clientX - dragOffset.x + 'px';
-//     draggableElement.style.top = event.clientY - dragOffset.y + 'px';
-// });
-
-// whiteboard.addEventListener('drop', (event) => {
-//     event.preventDefault();
-    
-//     const id = event.dataTransfer.getData('text');
-//     const draggableElement = document.getElementById(id);
-//     draggableElement.style.position = 'absolute';
-//     if (isDragging) {
-//         draggableElement.style.left = event.clientX - dragOffset.x + 'px';
-//         draggableElement.style.top = event.clientY - dragOffset.y + 'px';
-//     } else {
-//         // position the element at a specific coordinate when it's not being dragged
-//         draggableElement.style.left = '100px'; // replace with your specific coordinate
-//         draggableElement.style.top = '100px'; // replace with your specific coordinate
-//     }
-//     isDragging = false;
-// });
