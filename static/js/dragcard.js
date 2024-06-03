@@ -1,10 +1,12 @@
 function makeTableDraggable() {
     cards = document.getElementsByClassName('mytable');
+    cardHeaders = document.getElementsByClassName('myheader');
     
     for (let i = 0; i < cards.length; i++) {
         let card = cards[i];
+        let cardHeader = cardHeaders[i];
     
-        card.addEventListener('mousedown', function(event) {
+        cardHeader.addEventListener('mousedown', function(event) {
             card.dataset.initialX = event.clientX;
             card.dataset.initialY = event.clientY;
             card.dataset.isDragging = true;
