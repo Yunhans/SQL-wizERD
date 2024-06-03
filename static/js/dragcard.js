@@ -10,7 +10,9 @@ function makeTableDraggable() {
             card.dataset.initialX = event.clientX;
             card.dataset.initialY = event.clientY;
             card.dataset.isDragging = true;
+            cardHeader.style.cursor = 'grabbing';
             event.preventDefault();
+
     
             function mouseMoveHandler(event) {
                 if (card.dataset.isDragging === 'true') {
@@ -25,12 +27,16 @@ function makeTableDraggable() {
     
             function mouseUpHandler(event) {
                 card.dataset.isDragging = false;
+                cardHeader.style.cursor = 'grab';
                 document.removeEventListener('mousemove', mouseMoveHandler);
                 document.removeEventListener('mouseup', mouseUpHandler);
             }
     
             document.addEventListener('mousemove', mouseMoveHandler);
             document.addEventListener('mouseup', mouseUpHandler);
+        });
+        cardHeader.addEventListener('mouseover', function(event) {
+            cardHeader.style.cursor = 'grab';
         });
     }
 }
