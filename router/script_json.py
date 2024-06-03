@@ -1,32 +1,51 @@
 import re
 
-def extract_multiple_table_info(sql_script):
+def transform_sql_to_dict(sql_script):
+  """
+  Extracts table information from a SQL script with improved FOREIGN KEY handling.
+
+  Args:
+    sql_script: The SQL script containing CREATE TABLE statements.
+
+  Returns:
+    A dictionary representing the structure of extracted tables. 
+  """
 
   table_structure = {}
   tables = sql_script.split(";")
 
   for table in tables:
+    # remove leading & trailing whitespaces
     table = table.strip()
+    
+    # table empty --> skip
     if not table:
       continue
 
-    match = re.match(r"CREATE TABLE\s+(\w+)\s*\((.*)\)", table, re.DOTALL| re.IGNORECASE)
+    # match create table --> group table name and columns
+    match = re.match(r"CREATE TABLE\s+(\w+)\s*\((.*)\)", table, re.DOTALL | re.IGNORECASE)# re.DOTALL --> . matches any character (including newline)
+    # not match --> warning
     if not match:
       print(f"Warning: Could not parse table definition: {table}")
       continue
 
-    table_name = match.group(1)
-    columns_str = match.group(2)
+    table_name = match.group(1) # (\w+)
+    columns_str = match.group(2) # (.*)
     columns = {}
 
-    for column_str in columns_str.split(","):
+    # Splitting column definitions, handling FOREIGN KEY separately:
+    column_defs = re.split(r',\s*(?![^()]*\))', columns_str) # [^()]* --> not match paratheses
+
+    for column_str in column_defs:
       column_str = column_str.strip()
       if not column_str:
         continue
-      parts = re.split(r"\s+", column_str)
+      
+      # Split into max 3 parts: name, data type, constraints
+      parts = re.split(r"\s+", column_str, 2)  
       col_name = parts[0]
       col_data_type = parts[1]
-      col_constraints = ' '.join(parts[2:])  
+      col_constraints = parts[2] if len(parts) > 2 else ''
 
       constraints = {}
       if 'PRIMARY KEY' in col_constraints:
@@ -41,7 +60,7 @@ def extract_multiple_table_info(sql_script):
 
       columns[col_name] = {
           'data_type': col_data_type,
-          **constraints  
+          **constraints 
       }
 
     table_structure[table_name] = columns
@@ -64,7 +83,7 @@ CREATE TABLE Orders (
     OrderID INT PRIMARY KEY,
     CustomerID INT,
     OrderDate DATE NOT NULL,
-    TotalAmount DECIMAL (10, 2) NOT NULL,
+    TotalAmount DECIMAL(10, 2) NOT NULL,
     FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
 );
 
