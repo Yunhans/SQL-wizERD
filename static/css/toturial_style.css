@@ -1,0 +1,19 @@
+.image-text {
+    position: absolute;
+    top: 10px; /* 調整文字的垂直位置 */
+    left: 10px; /* 調整文字的水平位置 */
+    font-size: 16px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 5px;
+}
+.image-container {
+    position: relative;
+    display: inline-block;
+}
+.centered-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* 可视区域的100%，使卡片在垂直方向上居中 */
+}
