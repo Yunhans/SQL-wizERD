@@ -40,7 +40,10 @@ uvicorn main:app --reload
 
 - [x] fastapi 主頁架設
 - [x] 登入系統(google 帳號) (朱)
-- [ ] 白板功能 (朱)
+- [ ]白板功能 (石)
+    - [x] 資料表拖拉
+    - [ ] 關聯線條呈現
+    - [ ] json 資料 API 串接
 - [ ] 語法偵錯 (朱)
 - [ ] chatbot
 - [ ] 小教程 (林)
