@@ -1,7 +1,34 @@
 import mysql.connector
 
 
+
 '''
+更新script
+def update_script(name, mail):
+    connection = connect_to_database()
+    if connection.is_connected():
+        cursor = connection.cursor()
+        sql_insert_query = """ INSERT INTO `user` (`Name`, `Mail`) VALUES (%s, %s) """
+        cursor.execute(sql_insert_query, (name, mail))
+        connection.commit()
+        print("資料已成功插入")
+'''
+
+'''
+建立新script
+def new_script(name, mail):
+    connection = connect_to_database()
+    if connection.is_connected():
+        cursor = connection.cursor()
+        sql_insert_query = 
+        cursor.execute(sql_insert_query, (name, mail))
+        connection.commit()
+        print("資料已成功插入")
+'''
+
+
+'''
+建立新使用者
 def new_user(name, mail):
     connection = connect_to_database()
     if connection.is_connected():
