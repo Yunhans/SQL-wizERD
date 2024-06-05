@@ -2,13 +2,13 @@ let editor = document.querySelector('#script_editor');
 
 
 let aceEditor = ace.edit(editor, {
-  theme: 'ace/theme/ambiance',
+  theme: 'ace/theme/tomorrow_night',
   mode: 'ace/mode/sql',
 });
 
 // change font size of ace editor 
 aceEditor.setOptions({
-    fontSize: "16px"
+    fontSize: "14px"
 });
 
 //
