@@ -1,29 +1,55 @@
 import mysql.connector
+from starlette.requests import Request
 
 
 
 '''
-更新script
-def update_script(name, mail):
+更新table
+def update_script(x, y, t_id):
     connection = connect_to_database()
     if connection.is_connected():
         cursor = connection.cursor()
-        sql_insert_query = """ INSERT INTO `user` (`Name`, `Mail`) VALUES (%s, %s) """
-        cursor.execute(sql_insert_query, (name, mail))
+        sql_insert_query = """ UPDATE `Table` SET `x` = %s, `y` = %s WHERE `t_id` = %s"""
+        cursor.execute(sql_update_query, (x, y, t_id))
         connection.commit()
-        print("資料已成功插入")
+        print("successfully updated table!")
 '''
 
 '''
-建立新script
-def new_script(name, mail):
+建立新table
+def new_script(x, y, u_id):
     connection = connect_to_database()
     if connection.is_connected():
         cursor = connection.cursor()
         sql_insert_query = 
-        cursor.execute(sql_insert_query, (name, mail))
+        cursor.execute(sql_insert_query, (x, y, u_id))
         connection.commit()
-        print("資料已成功插入")
+        print("successfully added new table!")
+'''
+
+
+'''
+更新script
+def update_script(script, s_id):
+    connection = connect_to_database()
+    if connection.is_connected():
+        cursor = connection.cursor()
+        sql_insert_query = """ UPDATE `Script` SET `script` = %s WHERE `s_id` = %s"""
+        cursor.execute(sql_update_query, (script, s_id))
+        connection.commit()
+        print("Successfully updated script!")
+'''
+
+'''
+建立新script
+def new_script(script):
+    connection = connect_to_database()
+    if connection.is_connected():
+        cursor = connection.cursor()
+        sql_insert_query = 
+        cursor.execute(sql_insert_query, (script))
+        connection.commit()
+        print("Successfully added new script!")
 '''
 
 
@@ -36,18 +62,9 @@ def new_user(name, mail):
         sql_insert_query = """ INSERT INTO `user` (`Name`, `Mail`) VALUES (%s, %s) """
         cursor.execute(sql_insert_query, (name, mail))
         connection.commit()
-        print("資料已成功插入")
+        print("Successfully added new user!")
 '''
 
-#新增使用者
-def new_user():
-    connection = connect_to_database()
-    if connection.is_connected():
-        cursor = connection.cursor()
-        sql_insert_query = """ INSERT INTO `user` (`Name`, `Mail`) VALUES ('John', 'john@example.com') """
-        cursor.execute(sql_insert_query)
-        connection.commit()
-        print("Successfully inserted")
 
 
 
