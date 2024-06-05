@@ -33,7 +33,7 @@ header{
 	background-repeat: repeat;
 	background-size: 500px 500px;
 	background-image: url('/static/img/grid.jpg');
-	overflow: scroll;
+	overflow: auto;
 	z-index: 0;
 }
 

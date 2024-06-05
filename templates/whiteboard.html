@@ -8,6 +8,7 @@
     <link href="/static/icons/font/bootstrap-icons.min.css" rel="stylesheet">
     <link href="/static/css/hugo.css" rel="stylesheet">
     <script src="/static/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/js/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
     <style>
         .no-caret::after {
             display: none !important;
@@ -24,11 +25,11 @@
                         <i class="bi bi-database" style="font-size: 1.5rem;"> UR sql helper</i>
                     </a>
                 </div>
-        
+
                 <div>
                     <span class="navbar-text">file name</span>
                 </div>
-        
+
                 <div class="dropdown text-end">
                     <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                         <img class="img rounded-circle" src="{{user['picture']}}" style="width: 2rem;">
@@ -44,7 +45,7 @@
             </div>
         </div>
     </header>
-    
+
     <aside class="d-flex flex-nowrap">
         <div class="d-flex flex-column flex-shrink-0 bg-body-tertiary" style="width: 3.5rem;">
             <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
@@ -74,51 +75,51 @@
     </aside>
 
     <main class="d-flex flex-nowrap">
+        <!-- buttons -->
+        <div class="z-3 d-flex justify-content-evenly position-fixed bottom-0 my-4 w-100 px-3">
+            <div>
+                <button type="button" class="btn btn-success me-2 px-3" onclick="addNewTable()">Add table</button>
+            </div>
+            <div>
+                <button type="button" class="btn btn-primary me-2"><i class="bi bi-crosshair"></i></button>
+                <button type="button" class="btn btn-primary me-2"><i class="bi bi-plus-lg"></i></button>
+                <button type="button" class="btn btn-primary"><i class="bi bi-dash-lg"></i></button>
+            </div>
+        </div>
+        <!-- whiteboard -->
         <div id="whiteboard-border" class="position-relative">
-            <!-- Draggable DIV -->
             <div id="whiteboard" draggable="true">
-                <!-- buttons -->
-                <div class="z-3 d-flex justify-content-evenly position-fixed bottom-0 my-4 w-100 px-3">
-                    <div>
-                        <button type="button" class="btn btn-success me-2 px-3" onclick="addTable()">Add table</button>
-                    </div>
-                    <div>
-                        <button type="button" class="btn btn-primary me-2"><i class="bi bi-crosshair"></i></button>
-                        <button type="button" class="btn btn-primary me-2"><i class="bi bi-plus-lg"></i></button>
-                        <button type="button" class="btn btn-primary"><i class="bi bi-dash-lg"></i></button>
-                    </div>
-                </div>
 
                 <!-- <div id="middle" class="position-absolute translate-middle" style="background-color: red;height: 10px; width: 10px; left: 1000px;top:1000px"></div> -->
 
                 <!-- table 1 -->
-                <div class="mytable card position-absolute" draggable="true" id="table_product" style="width: 300px; left: 0px; top: 0px;">
-                    <div class="myheader card-header text-center" draggable="true" id="table_product_header">
-                        product
+                <div class="mytable card position-absolute" draggable="true" id="table_product" style="width: 300px; left: 200px; top: 200px;">
+                    <div class="myheader card-header d-flex px-2" draggable="true" id="table_product_header">
+                        <span class="flex-grow-1 text-center">product</span>
+                        <button type="button" class="btn btn-sm border-0 p-0" onclick="alert('edit table test');"><i class="bi bi-three-dots-vertical"></i></button>
                     </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
+                    <ul class="list-group list-group-flush my-1" id="table_product_data">
+                        <li class="list-group-item border-0 py-1">
                             <div class="my-0 w-100 d-flex justify-content-between">
                                 <span class="text-secondary">product_id <i class="bi bi-key-fill text-warning"></i></span>
-                                <span class="text-secondary">int</span>
+                                <span class="text-body-tertiary">int</span>
                             </div>
                         </li>
-                        <li class="list-group-item">
+                        <li class="list-group-item border-0 py-1">
                             <div class="my-0 w-100 d-flex justify-content-between">
                                 <span class="text-secondary">quantity</span>
-                                <span class="text-secondary">int</span>
+                                <span class="text-body-tertiary">int</span>
                             </div>
                         </li>
-                        <li class="list-group-item">
+                        <li class="list-group-item border-0 py-1">
                             <div class="my-0 w-100 d-flex justify-content-between">
                                 <span class="text-secondary">product_type</span>
-                                <span class="text-secondary">char</span>
+                                <span class="text-body-tertiary">char</span>
                             </div>
                         </li>
                     </ul>
                 </div>
                 <!-- end table 1 -->
-
             </div>
         </div>
 
@@ -139,7 +140,7 @@
                 <h5 class="offcanvas-title" id="offcanvasScrollingLabel_chat">Chatbot</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
-            <div class="offcanvas-body"> 
+            <div class="offcanvas-body">
                 <p>This is the place users chat with chatbot.</p>
             </div>
         </div>
@@ -164,12 +165,76 @@
     <script src="/static/js/dragcard.js"></script>
     <script>
         makeTableDraggable();
+        getTableData();
 
-        function addTable(){
-            var table_html = '<div class="mytable card position-absolute" draggable="true" style="width: 400px; left: 0px; top:0px;"><div class="myheader card-header text-center" draggable="true" id="table_header_1">Table</div><ul class="list-group list-group-flush"><li class="list-group-item px-1"><div class="row g-1"><div class="col-6"><input type="text" class="form-control" placeholder="attr" required></div><div class="col-3"><select class="form-select"><option selected>int</option><option>bigint</option><option>decimal(8,2)</option><option>float(8,2)</option><option>varchar(255)</option><option>char(255)</option><option>binery</option><option>text</option><option>boolean</option><option>date</option><option>datetime</option><option>time</option></select></div><div class="col-1" style="margin-right: 15px;"><button type="button" class="btn btn-outline-warning"><i class="bi bi-key"></i></button></div><div class="col-1"><div class="btn-group dropend"><button type="button" class="btn btn-secondary dropdown-toggle no-caret" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots-vertical"></i></button><ul class="dropdown-menu dropdown-menu-lg g-1 px-2" style="min-width:200px"><li><div class="form-check"><input class="form-check-input" type="checkbox" value=""><label class="form-check-label">Not Null</label></div></li><li><div class="form-check"><input class="form-check-input" type="checkbox" value=""><label class="form-check-label">Auto Increament</label></div></li></ul></div></div></div></li><li class="list-group-item"><div class=""><button class="btn btn-sm btn-outline-primary w-100">add row</button></div></li></ul></div>';
+        function addNewTable(){
+            var table_html = '\
+                    <div class="mytable card position-absolute" draggable="true" id="table_product" style="width: 300px; left: 0px; top: 0px;">\
+                        <div class="myheader card-header d-flex px-2" draggable="true" id="table_product_header">\
+                            <span class="flex-grow-1 text-center">Table</span>\
+                            <button type="button" class="btn btn-sm border-0 p-0" onclick="alert();"><i class="bi bi-three-dots-vertical"></i></button>\
+                        </div>\
+                        <ul class="list-group list-group-flush my-1">\
+                            <li class="list-group-item border-0 py-1">\
+                                <div class="my-0 w-100 d-flex justify-content-between">\
+                                    <span class="text-secondary">id <i class="bi bi-key-fill text-warning"></i></span>\
+                                    <span class="text-body-tertiary">int</span>\
+                                </div>\
+                            </li>\
+                        </ul>\
+                    </div>';
             document.getElementById("whiteboard").innerHTML += table_html;
             makeTableDraggable();
         }
+
+        function getTableData(){
+            $.ajax({
+                url: '/editor/api/get_transformed_sql',
+                type: 'GET',
+                crossDomain: true,
+                cache: false,
+                dataType: 'json',
+                timeout: 5000,
+                success: function(data){
+                    loadTableData(data);
+                    // console.log(data);
+                },
+                error: function () {
+                  alert("無法連線到伺服器！");
+                }
+            });
+        }
+
+        function loadTableData(data) {
+            // console.log(data["table"].keys(JSON[0]));
+            var table_html = '';
+            for (var table_name in data["table"]) {
+                console.log(table_name);
+                console.log(data["table"][table_name]);
+                table_html += '\
+                    <div class="mytable card position-absolute" draggable="true" id="table_'+ table_name +'" style="width: 300px; left: 0px; top: 0px;">\
+                        <div class="myheader card-header d-flex px-2" draggable="true" id="table_'+ table_name +'_header">\
+                            <span class="flex-grow-1 text-center">'+ table_name +'</span>\
+                            <button type="button" class="btn btn-sm border-0 p-0" onclick="alert();"><i class="bi bi-three-dots-vertical"></i></button>\
+                        </div>\
+                        <ul class="list-group list-group-flush my-1" id="table_'+ table_name +'_data">';
+                for(var table_data in data["table"][table_name]){
+                    // console.log(table_data);
+                    table_html += '\
+                        <li class="list-group-item border-0 py-1">\
+                            <div class="my-0 w-100 d-flex justify-content-between">\
+                                <span class="text-secondary">'+ table_data + (data["table"][table_name][table_data]["constraint"].includes('PRIMARY KEY') ? ' <i class="bi bi-key-fill text-warning"></i>' : '') +'</span>\
+                                <span class="text-body-tertiary">'+ data["table"][table_name][table_data]["data_type"] +'</span>\
+                            </div>\
+                        </li>';
+                }
+                table_html +='</ul>\
+                </div>';
+            }
+            document.getElementById("whiteboard").innerHTML += table_html;
+            makeTableDraggable();
+        }
+
     </script>
     <!-- <script src="/static/js/whiteboard.js"></script> -->
 </body>

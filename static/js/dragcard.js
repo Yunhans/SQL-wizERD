@@ -1,16 +1,16 @@
 function makeTableDraggable() {
     cards = document.getElementsByClassName('mytable');
-    cardHeaders = document.getElementsByClassName('myheader');
+    // cardHeaders = document.getElementsByClassName('myheader');
     
     for (let i = 0; i < cards.length; i++) {
         let card = cards[i];
-        let cardHeader = cardHeaders[i];
+        // let cardHeader = cardHeaders[i];
     
-        cardHeader.addEventListener('mousedown', function(event) {
+        card.addEventListener('mousedown', function(event) {
+            card.style.cursor = 'grabbing';
             card.dataset.initialX = event.clientX;
             card.dataset.initialY = event.clientY;
             card.dataset.isDragging = true;
-            cardHeader.style.cursor = 'grabbing';
             event.preventDefault();
 
     
@@ -27,7 +27,7 @@ function makeTableDraggable() {
     
             function mouseUpHandler(event) {
                 card.dataset.isDragging = false;
-                cardHeader.style.cursor = 'grab';
+                card.style.cursor = 'grab';
                 document.removeEventListener('mousemove', mouseMoveHandler);
                 document.removeEventListener('mouseup', mouseUpHandler);
             }
@@ -35,8 +35,8 @@ function makeTableDraggable() {
             document.addEventListener('mousemove', mouseMoveHandler);
             document.addEventListener('mouseup', mouseUpHandler);
         });
-        cardHeader.addEventListener('mouseover', function(event) {
-            cardHeader.style.cursor = 'grab';
+        card.addEventListener('mouseover', function(event) {
+            card.style.cursor = 'grab';
         });
     }
 }

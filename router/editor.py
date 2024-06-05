@@ -26,6 +26,7 @@ async def get_item(item: Item):
     structed_table = transform_sql_to_dict(text)
     table_data = structed_table  # Update the global variable
     return {"table": structed_table}
+    
 
     
 
