@@ -6,7 +6,7 @@ def transform_sql_to_dict(sql_script):
 
   Args:
     sql_script: The SQL script containing CREATE TABLE statements.
-
+  測試用
   Returns:
     A dictionary representing the structure of extracted tables. 
   """
