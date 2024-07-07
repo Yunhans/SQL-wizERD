@@ -21,16 +21,16 @@ USE `grduated_project`;
 -- Table structure for table `file`
 --
 
-DROP TABLE IF EXISTS `file`;
+DROP TABLE IF EXISTS `files`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `file` (
+CREATE TABLE `files` (
   `File_id` int NOT NULL AUTO_INCREMENT,
   `File_name` varchar(60) DEFAULT NULL,
   `User_id` int DEFAULT NULL,
   PRIMARY KEY (`File_id`),
   KEY `User_id_idx` (`User_id`),
-  CONSTRAINT `User_id` FOREIGN KEY (`User_id`) REFERENCES `user` (`User_id`)
+  CONSTRAINT `User_id` FOREIGN KEY (`User_id`) REFERENCES `users` (`User_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -38,20 +38,20 @@ CREATE TABLE `file` (
 -- Dumping data for table `file`
 --
 
-LOCK TABLES `file` WRITE;
-/*!40000 ALTER TABLE `file` DISABLE KEYS */;
-INSERT INTO `file` VALUES (1,'test_file',1);
-/*!40000 ALTER TABLE `file` ENABLE KEYS */;
+LOCK TABLES `files` WRITE;
+/*!40000 ALTER TABLE `files` DISABLE KEYS */;
+INSERT INTO `files` VALUES (1,'test_file',1);
+/*!40000 ALTER TABLE `files` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
 -- Table structure for table `foeign_key`
 --
 
-DROP TABLE IF EXISTS `foeign_key`;
+DROP TABLE IF EXISTS `foreign_key`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `foeign_key` (
+CREATE TABLE `foreign_key` (
   `FK_id` int NOT NULL AUTO_INCREMENT,
   `From_tbl` int NOT NULL,
   `Ref_tbl` int NOT NULL,
@@ -60,7 +60,7 @@ CREATE TABLE `foeign_key` (
   `File` int DEFAULT NULL,
   PRIMARY KEY (`FK_id`),
   KEY `File_id_idx1` (`File`),
-  CONSTRAINT `File_id` FOREIGN KEY (`File`) REFERENCES `file` (`File_id`)
+  CONSTRAINT `File_id` FOREIGN KEY (`File`) REFERENCES `files` (`File_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -68,28 +68,28 @@ CREATE TABLE `foeign_key` (
 -- Dumping data for table `foeign_key`
 --
 
-LOCK TABLES `foeign_key` WRITE;
-/*!40000 ALTER TABLE `foeign_key` DISABLE KEYS */;
-/*!40000 ALTER TABLE `foeign_key` ENABLE KEYS */;
+LOCK TABLES `foreign_key` WRITE;
+/*!40000 ALTER TABLE `foreign_key` DISABLE KEYS */;
+/*!40000 ALTER TABLE `foreign_key` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
 -- Table structure for table `table`
 --
 
-DROP TABLE IF EXISTS `table`;
+DROP TABLE IF EXISTS `table_list`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `table` (
+CREATE TABLE `table_list` (
   `Table_id` int NOT NULL AUTO_INCREMENT,
   `Table_name` varchar(60) DEFAULT NULL,
-  `Script` json DEFAULT NULL,
+  `Script` text DEFAULT NULL,
   `x` varchar(20) DEFAULT NULL,
   `y` varchar(20) DEFAULT NULL,
   `File` int DEFAULT NULL,
   PRIMARY KEY (`Table_id`),
   KEY `File_id_idx2` (`File`),
-  CONSTRAINT `File_id2` FOREIGN KEY (`File`) REFERENCES `file` (`File_id`)
+  CONSTRAINT `File_id2` FOREIGN KEY (`File`) REFERENCES `files` (`File_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -97,20 +97,20 @@ CREATE TABLE `table` (
 -- Dumping data for table `table`
 --
 
-LOCK TABLES `table` WRITE;
-/*!40000 ALTER TABLE `table` DISABLE KEYS */;
-INSERT INTO `table` VALUES (1,'test_1','\"\"','100','100',1);
-/*!40000 ALTER TABLE `table` ENABLE KEYS */;
+LOCK TABLES `table_list` WRITE;
+/*!40000 ALTER TABLE `table_list` DISABLE KEYS */;
+INSERT INTO `table_list` VALUES (1,'test_1','\"\"','100','100',1);
+/*!40000 ALTER TABLE `table_list` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
 -- Table structure for table `user`
 --
 
-DROP TABLE IF EXISTS `user`;
+DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `user` (
+CREATE TABLE `users` (
   `User_id` int NOT NULL AUTO_INCREMENT,
   `Mail` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`User_id`)
@@ -121,10 +121,10 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-LOCK TABLES `user` WRITE;
-/*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'abc@gmail.com');
-/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (1,'abc@gmail.com');
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
