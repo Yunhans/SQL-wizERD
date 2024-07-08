@@ -22,12 +22,12 @@ def new_table (x, y, script,file_id):
     connection = connect_to_database()
     if connection.is_connected():
         cursor = connection.cursor()
-        sql_insert_query = """ INSERT INTO `table` (`x`, `y`,`script`) VALUES (%s, %s, %s) """
-        cursor.execute(sql_insert_query, (0,0,script, file_id))
+        sql_insert_query = """ INSERT INTO `table_list` (`x`, `y`,`script`,`File`) VALUES (%s, %s, %s,%s)"""
+        cursor.execute(sql_insert_query, (0,0,1, 1))
         connection.commit()
         print("successfully added new table!")
 
-
+new_table(0,0,1,1)
 
 '''
 更新script
