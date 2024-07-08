@@ -1,74 +1,126 @@
 import re
 
-def transform_sql_to_dict(sql_script):
-  """
-  Extracts table information from a SQL script with improved FOREIGN KEY handling.
 
-  Args:
-    sql_script: The SQL script containing CREATE TABLE statements.
-  測試用
-  Returns:
-    A dictionary representing the structure of extracted tables. 
-  """
+# The extracted information
+# extracted_info = [
+#     '[product|<product_id> INT PRIMARY KEY UNIQUE|<quantity> INT NOT NULL|<product_type> CHAR ( 10 )|<description> TEXT];',
+#     '[orders|<order_id> INT PRIMARY KEY|<product_id> INT|<order_date> DATE|<FOREIGN> KEY ( product_id ) REFERENCES product ( product_id )];'
+# ]
 
-  table_structure = {}
-  tables = sql_script.split(";")
+# extracted_info2 = [
+#     '[product|<product_id> INT PRIMARY KEY UNIQUE NOT NULL|<quantity> INT NOT NULL|<product_type> CHAR ( 10 ) NOT NULL|<description> TEXT];', 
+#     '[orders|<order_id> INT PRIMARY KEY|<product_id> INT|<order_date> DATE|<FOREIGN> KEY ( product_id ) REFERENCES product ( product_id )];'
+# ]
 
-  for table in tables:
-    # remove leading & trailing whitespaces
-    table = table.strip()
+KEY_WORDS = ["PRIMARY KEY", "UNIQUE", "NOT NULL", "AUTO_INCREMENT"]
+
+
+def middle_parse_json(info):
+    tables = []
     
-    # table empty --> skip
-    if not table:
-      continue
+    
+    
+    
+    for table in info:
+        table_dict = {"name": "", "attributes": [], "foreign_keys": []}
+        # aplit table definition into parts
+        parts = table.strip("[];").split("|")
+        # table name
+        table_dict["name"] = parts[0]
+        
+        for part in parts[1:]:
+            print("part", part)
+            details = re.search(r"<(.+?)>\s*(\w+)\s*(.*)", part)
+            print("--details", details.groups())
+            # foreign key
+            if details.group(1) == "FOREIGN":
+                
+                fk_details = re.search(r"\((.+?)\) REFERENCES (.+?) \((.+?)\)", details.group(3))
+                if fk_details:
+                    local_field, referenced_table, referenced_field = fk_details.groups()
+                    fk_dict = {
+                        "from": f"{table_dict['name']}.{local_field}",
+                        "references": f"{referenced_table}.{referenced_field}"
+                    }
+                    table_dict["foreign_keys"].append(fk_dict)
+            
+            # attribute    
+            else:
+                attr_dict = {
+                    "name": None,
+                    "type": None,
+                    "primary_key": False,
+                    "not_null": False,
+                    "unique": False,
+                    "auto_increment": False,
+                    "default": None
+                }
+                
+                # extract attribute details
+                attr_details = re.search(r"<(.+?)>\s*(\w+)\s*(.*)", part)
+                if attr_details:
+                    attr_name, attr_type, constraints = attr_details.groups()
+                    attr_dict["name"] = attr_name
+                    attr_dict["type"] = attr_type
+                    
+                    # check for constraints
+                    if "PRIMARY KEY" in constraints:
+                        attr_dict["primary_key"] = True
+                        constraints = constraints.replace("PRIMARY KEY", "")
+                        #attr_dict["not_null"] = True  # Primary key implies not null
+                    if "UNIQUE" in constraints:
+                        attr_dict["unique"] = True
+                        constraints = constraints.replace("UNIQUE", "")
+                    if "NOT NULL" in constraints:
+                        attr_dict["not_null"] = True
+                        constraints = constraints.replace("NOT NULL", "")
+                    if "AUTO_INCREMENT" in constraints:
+                        attr_dict["auto_increment"] = True
+                        constraints = constraints.replace("AUTO_INCREMENT", "")
+                    if "DEFAULT" in constraints:
+                    # Updated regex to handle words or quoted strings
+                        default_value = re.search(r"DEFAULT\s*(\'.+?\'|\".+?\"|\w+)", constraints)
+                        if default_value:
+                            # Extract the matched default value
+                            attr_dict["default"] = default_value.group(1)
+                            # Remove the matched default value expression from the constraints string
+                            constraints = constraints.replace(default_value.group(0), "")
+                    
+                    # remove all space and add the remaining constraints behind the attribute type
+                    attr_dict["type"] += constraints.replace(" ", "") 
+                    
+                    table_dict["attributes"].append(attr_dict)
+                
+        tables.append(table_dict)
+    print("--table--\n",tables)
+    return {tables}
 
-    # match create table --> group table name and columns
-    match = re.match(r"CREATE TABLE\s+(\w+)\s*\((.*)\)", table, re.DOTALL | re.IGNORECASE)# re.DOTALL --> . matches any character (including newline)
-    # not match --> warning
-    if not match:
-      print(f"Warning: Could not parse table definition: {table}")
-      continue
-
-    table_name = match.group(1) # (\w+)
-    columns_str = match.group(2) # (.*)
-    columns = {}
-
-    # Splitting column definitions, handling FOREIGN KEY separately:
-    column_defs = re.split(r',\s*(?![^()]*\))', columns_str) # [^()]* --> not match paratheses
-
-    for column_str in column_defs:
-      column_str = column_str.strip()
-      if not column_str:
-        continue
-      
-      # Split into max 3 parts: name, data type, constraints
-      parts = re.split(r"\s+", column_str, 2)  
-      col_name = parts[0]
-      col_data_type = parts[1]
-      col_constraints = parts[2] if len(parts) > 2 else ''
-
-      constraints = {}
-      if 'PRIMARY KEY' in col_constraints:
-        constraints['constraint'] = 'PRIMARY KEY'
-      elif 'FOREIGN KEY' in col_constraints:
-        constraints['constraint'] = 'FOREIGN KEY'
-        match = re.search(r'REFERENCES\s+(\w+)\((\w+)\)', col_constraints)
-        if match:
-          constraints['references'] = f"{match.group(1)}({match.group(2)})" 
-      else:
-        constraints['constraint'] = col_constraints.strip() 
-
-      columns[col_name] = {
-          'data_type': col_data_type,
-          **constraints 
-      }
-
-    table_structure[table_name] = columns
-
-  return table_structure
+# Parsing the extracted information
+# parsed_tables = parse_info(extracted_info2)
 
 
-# test
+
+
+
+
+
+
+
+
+
+# s = "( 10 ) NOT NULL PRIMARY KEY UNIQUE"
+# keyword = ["PRIMARY KEY", "UNIQUE", "NOT NULL"]
+
+# for k in keyword:
+#     s = s.replace(k, "")
+    
+
+# print(s.replace(" ", ""))
+
+
+
+
+# test1
 '''
 
 CREATE TABLE Customers (
@@ -87,4 +139,62 @@ CREATE TABLE Orders (
     FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
 );
 
+'''
+
+# test2
+'''
+CREATE TABLE Customers (
+    CustomerID INT PRIMARY KEY,
+    FirstName VARCHAR(255) NOT NULL UNIQUE,
+    LastName VARCHAR(255) NOT NULL,
+    Email VARCHAR(255) UNIQUE,
+    PhoneNumber VARCHAR(20)
+);
+
+CREATE TABLE Orders (
+    OrderID INT PRIMARY KEY,
+    CustomerID INT,
+    OrderDate DATE NOT NULL,
+    TotalAmount DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+
+CREATE TABLE Products (
+    ProductID INT PRIMARY KEY,
+    ProductName VARCHAR(255) NOT NULL,
+    Description TEXT,
+    Price DECIMAL (10, 2) NOT NULL,
+    Category VARCHAR(255)
+);
+
+CREATE TABLE OrderItems (
+    OrderItemID INT PRIMARY KEY,
+    OrderID INT,
+    ProductID INT,
+    Quantity INT NOT NULL,
+    UnitPrice DECIMAL (10, 2) NOT NULL,
+    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+
+CREATE TABLE Categories (
+    CategoryID INT PRIMARY KEY,
+    CategoryName VARCHAR(255) NOT NULL UNIQUE,
+    Description TEXT
+);
+
+CREATE TABLE Shippers (
+    ShipperID INT PRIMARY KEY,
+    ShipperName VARCHAR(255) NOT NULL UNIQUE,
+    Phone VARCHAR(20)
+);
+
+CREATE TABLE Payments (
+    PaymentID INT PRIMARY KEY,
+    OrderID INT,
+    PaymentDate DATE NOT NULL,
+    Amount DECIMAL (10, 2) NOT NULL,
+    PaymentMethod VARCHAR(50) NOT NULL,
+    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID)
+);
 '''

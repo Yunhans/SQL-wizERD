@@ -1,5 +1,6 @@
 import mysql.connector
-from starlette.requests import Request
+
+from connect_db import connect_to_database, close_connection
 
 
 
@@ -68,26 +69,7 @@ def new_user(name, mail):
 
 
 
-# connect to database
-def connect_to_database():
-    connection = mysql.connector.connect(
-        host="localhost",
-        user="boshiou",
-        password="920108200387",
-        database="graduated_project"
-    )
 
-    if connection.is_connected():
-        print("Successfully connected")
-    else:
-        print("Failed")
-    return connection
-
-
-# close connection
-def close_connection(connection):
-    connection.close()
-    print("Connection closed")
 
 
 
