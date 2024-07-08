@@ -68,13 +68,13 @@ def new_user(name, mail):
 
 
 
-#連接到資料庫
+# connect to database
 def connect_to_database():
     connection = mysql.connector.connect(
-        host="localhost",  # 通常為localhost
-        user="admin",  # 輸入您的phpMyAdmin的使用者名稱
-        password="123",  # 輸入您的phpMyAdmin的密碼
-        database="graduate_project"  # 輸入您想要連接的資料庫名稱
+        host="localhost",
+        user="boshiou",
+        password="920108200387",
+        database="graduated_project"
     )
 
     if connection.is_connected():
@@ -82,6 +82,16 @@ def connect_to_database():
     else:
         print("Failed")
     return connection
+
+
+# close connection
+def close_connection(connection):
+    connection.close()
+    print("Connection closed")
+
+
+
+
 
 
 
