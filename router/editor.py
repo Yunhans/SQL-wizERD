@@ -14,15 +14,17 @@ router = APIRouter(
 
 ## api -------------------------------------------------
 class Item(BaseModel):
+    file_id: str
     text: str
     
 @router.post("/api/table_transform")
 async def sql_parse_json(item: Item):
-    
+    print(item.file_id)
+    file_id = item.file_id
     raw_sql = item.text
-    # print(raw_sql)
+    #print(raw_sql)
     middle_format = sql_parse_middle(raw_sql)
-    table_data = middle_parse_json(middle_format)
+    table_data = middle_parse_json(file_id, middle_format)
 
     return table_data
     

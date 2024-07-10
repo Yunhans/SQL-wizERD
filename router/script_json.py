@@ -1,6 +1,10 @@
 import re
 
 
+from .CRUD import search_specific_table
+from .structed_object import table_list, foreign_key
+
+
 # The extracted information
 # extracted_info = [
 #     '[product|<product_id> INT PRIMARY KEY UNIQUE|<quantity> INT NOT NULL|<product_type> CHAR ( 10 )|<description> TEXT];',
@@ -15,11 +19,9 @@ import re
 KEY_WORDS = ["PRIMARY KEY", "UNIQUE", "NOT NULL", "AUTO_INCREMENT"]
 
 
-def middle_parse_json(info):
+def middle_parse_json(file_id, info):
     tables = []
-    
-    
-    
+    file_id = file_id
     
     for table in info:
         table_dict = {"name": "", "attributes": [], "foreign_keys": []}
@@ -29,9 +31,9 @@ def middle_parse_json(info):
         table_dict["name"] = parts[0]
         
         for part in parts[1:]:
-            print("part", part)
+            
             details = re.search(r"<(.+?)>\s*(\w+)\s*(.*)", part)
-            print("--details", details.groups())
+            
             # foreign key
             if details.group(1) == "FOREIGN":
                 
@@ -90,10 +92,35 @@ def middle_parse_json(info):
                     attr_dict["type"] += constraints.replace(" ", "") 
                     
                     table_dict["attributes"].append(attr_dict)
-                
+        
+        # add table to db      
+        _Table_name = table_dict["name"]
+        _Script = str(table_dict)
+        table_list(_Table_name, _Script, 0, 0, file_id)
+        
+        # search specific table and return id
+        table_id = search_specific_table(_Table_name)
+        table_id = table_id[0]
+        # add foreign key to db
+        foreign_keys = table_dict.get("foreign_keys", [])
+        print("--test foreign", foreign_keys)
+
+        # if nothing in foreign key
+        if foreign_keys:
+            
+            for fk in table_dict["foreign_keys"]:
+                _From_tbl = fk["from"].split(".")[0]
+                _Ref_tbl = fk["references"].split(".")[0]
+                _From_col = fk["from"].split(".")[1]
+                _To_col = fk["references"].split(".")[1]
+
+                foreign_key(_From_tbl, _Ref_tbl, _From_col, _To_col, file_id, table_id)
+        else:  
+            print("No foreign key in this table")
+        
         tables.append(table_dict)
     print("--table--\n",tables)
-    return {tables}
+    return tables
 
 # Parsing the extracted information
 # parsed_tables = parse_info(extracted_info2)

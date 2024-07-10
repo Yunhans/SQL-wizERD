@@ -5,6 +5,7 @@ from starlette.middleware.sessions import SessionMiddleware
 from authlib.integrations.starlette_client import OAuth, OAuthError
 from fastapi.templating import Jinja2Templates
 
+from .CRUD import search_user, new_user, new_file, search_file
 from myconfig import get_client_id, get_client_secret
 #from myconfig import GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET
 
@@ -50,11 +51,13 @@ def index(request: Request):
 @router.get('/whiteboard')
 def whiteboard(request: Request):
     user = request.session.get('user')
+    user_id = request.session.get('user_id')
+    user_file = request.session.get('user_file')
     if not user:
         return RedirectResponse('/')
     return templates.TemplateResponse(
         name='whiteboard.html',
-        context={'request': request, 'user': user}
+        context={'request': request, 'user': user, 'user_id': user_id, 'user_file': user_file}
     )
 
 # login (after chick signin with google button) 
@@ -73,10 +76,41 @@ async def auth_google(request: Request):
             name='whiteboard.html',
             context={'request': request, 'error': e.error}
         )
-    user = token.get('userinfo')
-    if user:
-        request.session['user'] = dict(user)
+    user_info = token.get('userinfo')
+    
+    # check if user exist in database
+    if user_info:
+        request.session['user'] = dict(user_info)
+        user_email = user_info.get('email')
+        if not search_user(user_email):
+            # CRUD.py: create new user
+            new_user(user_email)
+            # CRUD.py: search user & get user_id
+            user_id = search_user(user_email)[0][0]
+            request.session['user_id'] = user_id
+            
+            # CRUD.py: create new file
+            new_file("untitled", user_id)
+            user_file = search_file(user_id)
+            request.session['user_file'] = user_file[0][0]
+            
+            
+ 
+        else:
+            user_id = search_user(user_email)[0][0]
+            request.session['user_id'] = user_id
+            
+            user_file = search_file(user_id)[0][0]
+            request.session['user_file'] = user_file
+            
+            print(request.session)
+        
+        
+              
     return RedirectResponse('whiteboard')
+
+
+#----
 
 # logout
 @router.get('/logout')
