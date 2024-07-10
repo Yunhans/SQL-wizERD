@@ -83,8 +83,8 @@ DROP TABLE IF EXISTS `graduated_project`.`foreign_key` ;
 
 CREATE TABLE IF NOT EXISTS `graduated_project`.`foreign_key` (
   `FK_id` INT NOT NULL AUTO_INCREMENT,
-  `From_tbl` INT NOT NULL,
-  `Ref_tbl` INT NOT NULL,
+  `From_tbl` VARCHAR(45) NOT NULL,
+  `Ref_tbl` VARCHAR(45) NOT NULL,
   `From_col` VARCHAR(45) NOT NULL,
   `To_col` VARCHAR(45) NOT NULL,
   `File_id` INT NULL DEFAULT NULL,
