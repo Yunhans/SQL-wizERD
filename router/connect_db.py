@@ -6,16 +6,10 @@ from mysql.connector import Error
 def connect_to_database():
     connection = mysql.connector.connect(
         host="localhost",
-        user="boshiou",
-        password="920108200387",
+        user="[enter_user_name]",
+        password="[enter_user_pwd]",
         database="graduated_project"
     )
-    # connection = mysql.connector.connect(
-    #     host="localhost",
-    #     user="[enter_user_name]",
-    #     password="[enter_user_pwd]",
-    #     database="graduated_project"
-    # )
 
     if connection.is_connected():
         print("connection success")
