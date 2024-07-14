@@ -170,5 +170,27 @@ def search_user(email):
 
 
 
+#-------------------------Get all功能---------------------------------#
 
+#獲取同一file內所有table與外來建
+def get_all_tables(file_id):
+    connection = connect_to_database()
+    if connection.is_connected():
+        cursor = connection.cursor()
+        sql_search_query = """ 
+                        SELECT * FROM `table_list` , `FK_id` 
+                        JOIN foreign_key ON table_list.File = foreign_key.File_id
+                        WHERE `File` = %s"""
+        cursor.execute(sql_search_query, (file_id,))
+        records = cursor.fetchall()
+        return records
 
+#獲取同一user所有file
+def get_all_files(user_id):
+    connection = connect_to_database()
+    if connection.is_connected():
+        cursor = connection.cursor()
+        sql_search_query = """ SELECT * FROM `files` WHERE `User_id` = %s"""
+        cursor.execute(sql_search_query, (user_id,))
+        records = cursor.fetchall()
+        return records
