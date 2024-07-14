@@ -53,6 +53,12 @@ header{
 	z-index: 0;
 }
 
+#offcanvasScrolling_file{
+	margin-left: 3.5rem;
+	margin-top: 65px;
+	z-index: 0;
+}
+
 #script_editor{
 	height: 100%;
 	width: 100%;
