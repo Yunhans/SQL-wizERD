@@ -2,14 +2,22 @@ from fastapi import APIRouter, Request
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 
-from .sql_grammar import sql_parse_middle
-from .script_json import middle_parse_json
+from utils.sql_grammar import sql_parse_middle
+from utils.script_json import middle_parse_json
+
+
+'''
+
+--- script interface trigger ---
+
+'''
+
+
 
 router = APIRouter(
     prefix="/editor",
     tags=["editor"],
 )
-
 
 
 ## api -------------------------------------------------

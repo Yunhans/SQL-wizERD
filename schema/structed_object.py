@@ -1,4 +1,4 @@
-from .CRUD import new_table, new_foreign_key 
+from router.CRUD import new_table, new_foreign_key 
 
 
 '''

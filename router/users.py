@@ -5,7 +5,7 @@ from starlette.middleware.sessions import SessionMiddleware
 from authlib.integrations.starlette_client import OAuth, OAuthError
 from fastapi.templating import Jinja2Templates
 
-from .CRUD import search_user, new_user, new_file, search_file
+from crud.user import search_user, new_user
 from myconfig import get_client_id, get_client_secret
 #from myconfig import GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET
 
@@ -52,12 +52,12 @@ def index(request: Request):
 def whiteboard(request: Request):
     user = request.session.get('user')
     user_id = request.session.get('user_id')
-    user_file = request.session.get('user_file')
+   
     if not user:
         return RedirectResponse('/')
     return templates.TemplateResponse(
         name='whiteboard.html',
-        context={'request': request, 'user': user, 'user_id': user_id, 'user_file': user_file}
+        context={'request': request, 'user': user, 'user_id': user_id}
     )
 
 # login (after chick signin with google button) 
@@ -88,21 +88,12 @@ async def auth_google(request: Request):
             # CRUD.py: search user & get user_id
             user_id = search_user(user_email)[0][0]
             request.session['user_id'] = user_id
-            
-            # CRUD.py: create new file
-            new_file("untitled", user_id)
-            user_file = search_file(user_id)
-            request.session['user_file'] = user_file[0][0]
-            
-            
+               
  
         else:
             user_id = search_user(user_email)[0][0]
             request.session['user_id'] = user_id
-            
-            user_file = search_file(user_id)[0][0]
-            request.session['user_file'] = user_file
-            
+  
             print(request.session)
         
         

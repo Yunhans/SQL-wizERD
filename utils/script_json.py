@@ -1,8 +1,8 @@
 import re
 
 
-from .CRUD import search_specific_table
-from .structed_object import table_list, foreign_key
+from router.CRUD import search_specific_table
+from schema.structed_object import table_list, foreign_key
 
 
 # The extracted information
