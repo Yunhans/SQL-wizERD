@@ -5,7 +5,7 @@ from fastapi.templating import Jinja2Templates
 
 from router.users import add_middleware
 
-from router import files, tables, users, tutorial, editor
+from router import files, tables, users, tutorial, editor, whiteboard
 
 app = FastAPI()
 
@@ -14,6 +14,7 @@ app.include_router(files.router)
 app.include_router(tables.router)
 app.include_router(tutorial.router)
 app.include_router(editor.router)
+app.include_router(whiteboard.router)
 
 # add middleware
 add_middleware(app)

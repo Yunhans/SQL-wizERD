@@ -18,6 +18,12 @@ header{
 	height: 65px;
 }
 
+#post:hover {
+    box-shadow: 10px 10px rgb(0, 0, 0, 0.5);
+    transform: translate(-5px, -5px);
+    cursor: pointer;
+  }
+
 #whiteboard-border {
 	height: calc(100vh - 65px);
 	max-width: calc(100vw - 3.5rem);

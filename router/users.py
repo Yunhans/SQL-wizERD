@@ -40,7 +40,7 @@ oauth.register(
 def index(request: Request):
     user = request.session.get('user')
     if user:
-        return RedirectResponse('whiteboard')
+        return RedirectResponse('files')
 
     return templates.TemplateResponse(
         name="home.html",
@@ -48,15 +48,15 @@ def index(request: Request):
     )
 
 
-@router.get('/whiteboard')
-def whiteboard(request: Request):
+@router.get('/files')
+def files(request: Request):
     user = request.session.get('user')
     user_id = request.session.get('user_id')
    
     if not user:
         return RedirectResponse('/')
     return templates.TemplateResponse(
-        name='whiteboard.html',
+        name='files.html',
         context={'request': request, 'user': user, 'user_id': user_id}
     )
 
@@ -73,7 +73,7 @@ async def auth_google(request: Request):
         token = await oauth.google.authorize_access_token(request)
     except OAuthError as e:
         return templates.TemplateResponse(
-            name='whiteboard.html',
+            name='files.html',
             context={'request': request, 'error': e.error}
         )
     user_info = token.get('userinfo')
@@ -98,7 +98,7 @@ async def auth_google(request: Request):
         
         
               
-    return RedirectResponse('whiteboard')
+    return RedirectResponse('files')
 
 
 #----
