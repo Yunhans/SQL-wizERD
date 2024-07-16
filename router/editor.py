@@ -27,7 +27,7 @@ class Item(BaseModel):
     
 @router.post("/api/table_transform")
 async def sql_parse_json(item: Item):
-    print(item.file_id)
+
     file_id = item.file_id
     raw_sql = item.text
     #print(raw_sql)

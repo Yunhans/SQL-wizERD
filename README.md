@@ -49,3 +49,25 @@ uvicorn main:app --reload
 - [ ] 小教程 (林)
 - [ ] 雲端存檔 (林)
 
+
+5. test data:
+
+CREATE TABLE Customers (
+    CustomerID INT PRIMARY KEY,
+    FirstName VARCHAR(255) NOT NULL UNIQUE,
+    LastName VARCHAR(255) NOT NULL,
+    Email VARCHAR(255) UNIQUE,
+    PhoneNumber VARCHAR(20)
+);
+
+CREATE TABLE Orders (
+    OrderID INT PRIMARY KEY,
+    CustomerID INT,
+    OrderDate DATE NOT NULL,
+    TotalAmount DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+
+
+
+

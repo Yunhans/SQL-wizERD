@@ -1,7 +1,7 @@
 import re
 
 
-from router.CRUD import search_specific_table
+from crud.table import get_specific_table
 from schema.structed_object import table_list, foreign_key
 
 
@@ -99,11 +99,10 @@ def middle_parse_json(file_id, info):
         table_list(_Table_name, _Script, 0, 0, file_id)
         
         # search specific table and return id
-        table_id = search_specific_table(_Table_name)
+        table_id = get_specific_table(_Table_name)
         table_id = table_id[0]
         # add foreign key to db
         foreign_keys = table_dict.get("foreign_keys", [])
-        print("--test foreign", foreign_keys)
 
         # if nothing in foreign key
         if foreign_keys:
@@ -119,7 +118,7 @@ def middle_parse_json(file_id, info):
             print("No foreign key in this table")
         
         tables.append(table_dict)
-    print("--table--\n",tables)
+    
     return tables
 
 # Parsing the extracted information
