@@ -1,7 +1,9 @@
 from fastapi import APIRouter
+from pydantic import BaseModel
 
 
 from crud.file import new_file, get_all_files
+
 
 
 
@@ -19,10 +21,17 @@ router = APIRouter(
 
 '''
 
-@router.post("/create/{user_id}/{file_name}")
-async def create_new_file(user_id, file_name):
-    message = new_file(file_name, user_id)
+class FileCreateRequest(BaseModel):
+    user_id: str
+    file_name: str
+
+
+@router.post("/create")
+async def create_new_file(request: FileCreateRequest):  
+    user_id = request.user_id
+    file_name = request.file_name
     
+    message = new_file(file_name, user_id)
     return {"message": message}
 
 
