@@ -49,7 +49,7 @@ def get_all_tables(file_id):
                 ON 
                   tbl.`file_id` = fk.`file_id`
                 WHERE 
-                  `tbl_table`.`file_id` = %s
+                  tbl.`file_id` = %s
                 """
         cursor.execute(sql_search_query, (file_id,))
         records = cursor.fetchall()
