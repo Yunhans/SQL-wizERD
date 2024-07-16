@@ -1,6 +1,6 @@
 .DS_Store
 __pycache__/
 router/__pycache__/
-
+connect_db.py
 env
 myconfig.py
