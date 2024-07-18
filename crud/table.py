@@ -32,18 +32,14 @@ def get_all_tables(file_id):
         cursor = connection.cursor()
         sql_search_query = """
                 SELECT
-                  tbl.`table_id`,
-                  tbl.`script`,
-                  tbl.`x`,
-                  tbl.`y`
+                  `table_id`,
+                  `script`,
+                  `x`,
+                  `y`
                 FROM 
-                  `tbl_table` AS tbl
-                JOIN 
-                  `tbl_fk` AS fk 
-                ON 
-                  tbl.`file_id` = fk.`file_id`
+                  `tbl_table`
                 WHERE 
-                  tbl.`file_id` = %s
+                  `file_id` = %s
                 """
         cursor.execute(sql_search_query, (file_id,))
         records = cursor.fetchall()
