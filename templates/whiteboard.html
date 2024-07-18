@@ -16,6 +16,7 @@
     </style>
 </head>
 <body>
+    <div id="file_info" class="d-none">{{file_id}}</div>
     <header>
         <div class="container-fluid bg-body-tertiary">
             <div class="d-flex flex-wrap align-items-center justify-content-between py-3 border-bottom">
@@ -34,10 +35,10 @@
                         <img class="img rounded-circle" src="{{ user['picture'] }}" style="width: 2rem;">
                     </a>
                     <ul class="dropdown-menu text-small">
-                        <li><a class="dropdown-item" href="#">New project...</a></li>
+                        <!-- <li><a class="dropdown-item" href="#">New project...</a></li>
                         <li><a class="dropdown-item" href="#">Settings</a></li>
                         <li><a class="dropdown-item" href="#">Profile</a></li>
-                        <li><hr class="dropdown-divider"></li>
+                        <li><hr class="dropdown-divider"></li> -->
                         <li><a class="dropdown-item" href="/logout">Sign out</a></li>
                     </ul>
                 </div>
@@ -122,50 +123,54 @@
             </div>
         </div>
 
-        <!-- offcanvas files -->
-        <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" id="offcanvasScrolling_file" aria-labelledby="offcanvasScrollingLabel_file">
-            <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasScrollingLabel_script">Files</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body">
-                <div class="card">
-                    <div class="card-header">
-                        File 1
+        <!-- offcanvas -->
+        <div>
+            <!-- offcanvas files -->
+            <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" id="offcanvasScrolling_file" aria-labelledby="offcanvasScrollingLabel_file">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasScrollingLabel_script">Files</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <div class="card">
+                        <div class="card-header">
+                            File 1
+                        </div>
+                        <img src="..." class="card-img-top" alt="..." height="250px">
+                        <!-- <div class="card-body">
+                            <h5 class="card-title">File name</h5>
+                            <a type="button" class="btn btn-sm btn-primary ">Go</a>
+                        </div> -->
                     </div>
-                    <img src="..." class="card-img-top" alt="..." height="250px">
-                    <!-- <div class="card-body">
-                        <h5 class="card-title">File name</h5>
-                        <a type="button" class="btn btn-sm btn-primary ">Go</a>
-                    </div> -->
+    
                 </div>
-
             </div>
-        </div>
-
-        <!-- offcanvas chat -->
-        <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" id="offcanvasScrolling_chat" aria-labelledby="offcanvasScrollingLabel_chat">
-            <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasScrollingLabel_chat">Chatbot</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    
+            <!-- offcanvas chat -->
+            <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" id="offcanvasScrolling_chat" aria-labelledby="offcanvasScrollingLabel_chat">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasScrollingLabel_chat">Chatbot</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <p>This is the place users chat with chatbot.</p>
+                </div>
             </div>
-            <div class="offcanvas-body">
-                <p>This is the place users chat with chatbot.</p>
-            </div>
-        </div>
-
-        <!-- offcanvas script -->
-        <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" id="offcanvasScrolling_script" aria-labelledby="offcanvasScrollingLabel_script">
-            <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasScrollingLabel_script">Script</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body" id="script_editor"><!-- add ace editor-->
-                <div >
-                    <!-- 左側程式碼編輯區域 -->
+    
+            <!-- offcanvas script -->
+            <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" id="offcanvasScrolling_script" aria-labelledby="offcanvasScrollingLabel_script">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasScrollingLabel_script">Script</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body" id="script_editor"><!-- add ace editor-->
+                    <div >
+                        <!-- 左側程式碼編輯區域 -->
+                    </div>
                 </div>
             </div>
         </div>
+        
     </main>
     <!-- ace editor -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.9.5/ace.js"></script>
@@ -173,10 +178,11 @@
     <!--dragging-->
     <script src="/static/js/dragcard.js"></script>
     <script>
+        var file_id = $("#file_info").text();
+        // console.log(file_id);
         makeTableDraggable();
 
-        getAllFiles(user_id);
-        //getTableData();
+        getTableData(file_id);
 
         function addNewTable(){
             var table_html = '\
@@ -198,9 +204,9 @@
             makeTableDraggable();
         }
 
-        function getTableData(){
+        function getTableData(file_id){
             $.ajax({
-                url: '/editor/api/get_transformed_sql',
+                url: '/api/table/get/' + file_id,
                 type: 'GET',
                 crossDomain: true,
                 cache: false,
@@ -208,7 +214,7 @@
                 timeout: 5000,
                 success: function(data){
                     loadTableData(data);
-                    // console.log(data);
+                    console.log(data);
                 },
                 error: function () {
                   alert("無法連線到伺服器！");
@@ -218,30 +224,27 @@
 
         function loadTableData(data) {
             // console.log(data["table"].keys(JSON[0]));
+            $("#whiteboard").empty();
             var table_html = '';
-            for (var table_name in data["table"]) {
-                console.log(table_name);
-                console.log(data["table"][table_name]);
+            $.each(data, function(index, value) {
                 table_html += '\
-                    <div class="mytable card position-absolute" draggable="true" id="table_'+ table_name +'" style="width: 300px; left: 0px; top: 0px;">\
-                        <div class="myheader card-header d-flex px-2" draggable="true" id="table_'+ table_name +'_header">\
-                            <span class="flex-grow-1 text-center">'+ table_name +'</span>\
+                    <div class="mytable card position-absolute" draggable="true" id="table_product" style="width: 300px; left: 0px; top: 0px;">\
+                        <div class="myheader card-header d-flex px-2" draggable="true" id="table_product_header">\
+                            <span class="flex-grow-1 text-center">' + value["name"] + '</span>\
                             <button type="button" class="btn btn-sm border-0 p-0" onclick="alert();"><i class="bi bi-three-dots-vertical"></i></button>\
                         </div>\
-                        <ul class="list-group list-group-flush my-1" id="table_'+ table_name +'_data">';
-                for(var table_data in data["table"][table_name]){
-                    // console.log(table_data);
+                        <ul class="list-group list-group-flush my-1" id="table_product_data">';
+                $.each(value["attribute"], function(index, val){
                     table_html += '\
-                        <li class="list-group-item border-0 py-1">\
-                            <div class="my-0 w-100 d-flex justify-content-between">\
-                                <span class="text-secondary">'+ table_data + (data["table"][table_name][table_data]["constraint"].includes('PRIMARY KEY') ? ' <i class="bi bi-key-fill text-warning"></i>' : '') +'</span>\
-                                <span class="text-body-tertiary">'+ data["table"][table_name][table_data]["data_type"] +'</span>\
-                            </div>\
-                        </li>';
-                }
-                table_html +='</ul>\
-                </div>';
-            }
+                            <li class="list-group-item border-0 py-1">\
+                                <div class="my-0 w-100 d-flex justify-content-between">\
+                                    <span class="text-secondary">'+ val["name"] + (val["primary_key"]? ' <i class="bi bi-key-fill text-warning"></i>': '') +'</span>\
+                                    <span class="text-body-tertiary">'+ val["type"] +'</span>\
+                                </div>\
+                            </li>';
+                })
+                table_html += '</ul></div>';
+            })
             document.getElementById("whiteboard").innerHTML += table_html;
             makeTableDraggable();
         }
