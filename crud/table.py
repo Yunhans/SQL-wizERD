@@ -1,5 +1,5 @@
 from connect_db import connect_to_database, close_connection
-
+from utils.extract_table_detail import extract_detail
 
 
 '''
@@ -33,15 +33,9 @@ def get_all_tables(file_id):
         sql_search_query = """
                 SELECT
                   tbl.`table_id`,
-                  tbl.`table_name`,
                   tbl.`script`,
                   tbl.`x`,
-                  tbl.`y`,
-                  fk.`fk_id`,
-                  fk.`from_tbl`,
-                  fk.`ref_tbl`,
-                  fk.`from_col`,
-                  fk.`ref_col`
+                  tbl.`y`
                 FROM 
                   `tbl_table` AS tbl
                 JOIN 
@@ -54,7 +48,10 @@ def get_all_tables(file_id):
         cursor.execute(sql_search_query, (file_id,))
         records = cursor.fetchall()
         
-        return records
+        # extract detail from the records
+        records_dict = extract_detail(records)
+        
+        return records_dict
       
  
 

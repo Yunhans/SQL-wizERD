@@ -22,4 +22,4 @@ router = APIRouter(
 @router.get("/get/{file_id}")
 async def get_all_table(file_id):
     table_list = get_all_tables(file_id)
-    return {"tables": table_list}
+    return table_list
