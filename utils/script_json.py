@@ -2,7 +2,7 @@ import re
 
 
 from crud.table import get_specific_table
-from schema.structed_object import table_list, foreign_key
+from schema.structed_object import add_table, add_fk, alter_table
 
 
 # The extracted information
@@ -93,29 +93,37 @@ def middle_parse_json(file_id, info):
                     
                     table_dict["attributes"].append(attr_dict)
         
-        # add table to db      
+             
         _Table_name = table_dict["name"]
         _Script = str(table_dict)
-        table_list(_Table_name, _Script, 0, 0, file_id)
+        foreign_keys = table_dict.get("foreign_keys", [])
         
         # search specific table and return id
         table_id = get_specific_table(_Table_name)
-        table_id = table_id[0]
-        # add foreign key to db
-        foreign_keys = table_dict.get("foreign_keys", [])
-
-        # if nothing in foreign key
-        if foreign_keys:
+        
+        # table don't exist
+        if not table_id:
+            # add new table
+            add_table(_Table_name, _Script, 0, 0, file_id)
             
-            for fk in table_dict["foreign_keys"]:
-                _From_tbl = fk["from"].split(".")[0]
-                _Ref_tbl = fk["references"].split(".")[0]
-                _From_col = fk["from"].split(".")[1]
-                _To_col = fk["references"].split(".")[1]
+            # if nothing in foreign key[]
+            if foreign_keys:
+                
+                for fk in table_dict["foreign_keys"]:
+                    _From_tbl = fk["from"].split(".")[0]
+                    _Ref_tbl = fk["references"].split(".")[0]
+                    _From_col = fk["from"].split(".")[1]
+                    _To_col = fk["references"].split(".")[1]
 
-                foreign_key(_From_tbl, _Ref_tbl, _From_col, _To_col, file_id, table_id)
-        else:  
-            print("No foreign key in this table")
+                    add_fk(_From_tbl, _Ref_tbl, _From_col, _To_col, file_id, table_id)
+            else:  
+                print("No foreign key in this table")
+                
+        # table already existed
+        else:
+            table_id = table_id[0]
+            alter_table(table_id, _Table_name, _Script)
+            
         
         tables.append(table_dict)
     

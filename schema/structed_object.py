@@ -1,15 +1,15 @@
-from crud.table import new_table
+from crud.table import new_table, update_table
 from crud.fk import new_foreign_key 
 
 
 '''
 
---table_list
+--tbl_table
 
 '''
 
 # insert new table
-def table_list(Table_name, script, x, y, File):
+def add_table(Table_name, script, x, y, File):
     Table_name = Table_name
     script = script
     x = x
@@ -21,17 +21,25 @@ def table_list(Table_name, script, x, y, File):
 
 
 
+def alter_table(Table_id, Table_name, script):
+    Table_id = Table_id
+    Table_name = Table_name
+    script = script
+    
+    update_table(Table_id, Table_name, script)
+    return "structed_boject: successfully update existed table!"
+
 
 '''
 
--- foreign_key
+-- tbl_fk
 
 '''
 
 
 
 # insert new foreign key
-def foreign_key(From_tbl, Ref_tbl, From_col, to_col, File_id, Table_id):
+def add_fk(From_tbl, Ref_tbl, From_col, to_col, File_id, Table_id):
     From_tbl = From_tbl
     Ref_tbl = Ref_tbl
     From_col = From_col
