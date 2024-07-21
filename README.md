@@ -15,12 +15,23 @@
 
 > 需要 python3.10 或以上版本
 
-1. 將 cmd 或 terminal 路徑 cd 至本資料夾
+1. 下載 
+    - MySQL Server 8.0.38 [點此下載](https://dev.mysql.com/downloads/mysql/)
+    - MySQL WorkBench 8.0.38 [點此下載](https://dev.mysql.com/downloads/mysql/)
+
+2. 利用 MySQL WorkBench 與 MySQL Server Localhost 連線之後跑 [schema](Graduated_Project_test.sql) 建立資料庫
+
+4. 下載並將下面兩個檔案放進本資料夾最外層(與main.py同層級)
+    - [myconfig.py](https://drive.google.com/drive/u/0/folders/15-sAc_Mu2l6ROezuPmi5HhFCdFezt0ED)
+    - [connectdb.py](https://drive.google.com/drive/u/0/folders/15-sAc_Mu2l6ROezuPmi5HhFCdFezt0ED)
+    > 記得修改 Localhost 連線 user & password
+
+3. 建立python虛擬環境並將 cmd 或 terminal 路徑 cd 至本資料夾
 ```bash
 cd graduate_project
 ```
 
-2. 下載 pip 套件
+4. 下載 pip 套件
 ```bash
 pip install fastapi
 
@@ -29,12 +40,12 @@ pip install "uvicorn[standard]"
 pip install -r requirements.txt
 ```
 
-3. 執行 main.py
+5. 執行 main.py
 ```bash
 uvicorn main:app --reload
 ```
 
-4. 打開瀏覽器路由 http://127.0.0.1:8000/
+6. 打開瀏覽器路由 `http://127.0.0.1:8000/`
 
 # 預計製作功能
 
@@ -49,25 +60,5 @@ uvicorn main:app --reload
 - [ ] 小教程 (林)
 - [ ] 雲端存檔 (林)
 
-
-5. test data:
-
-CREATE TABLE Customers (
-    CustomerID INT PRIMARY KEY,
-    FirstName VARCHAR(255) NOT NULL UNIQUE,
-    LastName VARCHAR(255) NOT NULL,
-    Email VARCHAR(255) UNIQUE,
-    PhoneNumber VARCHAR(20)
-);
-
-CREATE TABLE Orders (
-    OrderID INT PRIMARY KEY,
-    CustomerID INT,
-    OrderDate DATE NOT NULL,
-    TotalAmount DECIMAL(10, 2) NOT NULL,
-    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
-);
-
-
-
-
+# 參考連結
+1. [雲端硬碟](https://drive.google.com/drive/u/0/folders/15-sAc_Mu2l6ROezuPmi5HhFCdFezt0ED)
