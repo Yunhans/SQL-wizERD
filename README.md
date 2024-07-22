@@ -18,20 +18,21 @@
 1. 下載 
     - MySQL Server 8.0.38 [點此下載](https://dev.mysql.com/downloads/mysql/)
     - MySQL WorkBench 8.0.38 [點此下載](https://dev.mysql.com/downloads/mysql/)
+    - NodeJS 20.15.1 [點此下載](https://nodejs.org/en/download/prebuilt-installer)
 
 2. 利用 MySQL WorkBench 與 MySQL Server Localhost 連線之後跑 [schema](Graduated_Project_test.sql) 建立資料庫
 
-4. 下載並將下面兩個檔案放進本資料夾最外層(與main.py同層級)
+3. 下載並將下面兩個檔案放進本資料夾最外層(與main.py同層級)
     - [myconfig.py](https://drive.google.com/drive/u/0/folders/15-sAc_Mu2l6ROezuPmi5HhFCdFezt0ED)
     - [connectdb.py](https://drive.google.com/drive/u/0/folders/15-sAc_Mu2l6ROezuPmi5HhFCdFezt0ED)
     > 記得修改 Localhost 連線 user & password
 
-3. 建立python虛擬環境並將 cmd 或 terminal 路徑 cd 至本資料夾
+4. 建立python虛擬環境並將 cmd 或 terminal 路徑 cd 至本資料夾
 ```bash
 cd graduate_project
 ```
 
-4. 下載 pip 套件
+5. 下載 pip 套件
 ```bash
 pip install fastapi
 
@@ -40,12 +41,21 @@ pip install "uvicorn[standard]"
 pip install -r requirements.txt
 ```
 
-5. 執行 main.py
+6. 執行 main.py
 ```bash
 uvicorn main:app --reload
 ```
 
-6. 打開瀏覽器路由 `http://127.0.0.1:8000/`
+7. 新增 cmd 視窗 cd 進去 frontend 資料夾，下載 React 所需套件並執行
+```bash
+cd frontend
+
+npm install
+
+npm start
+```
+
+8. 打開瀏覽器路由 `http://127.0.0.1:8000/`
 
 # 預計製作功能
 
@@ -53,6 +63,8 @@ uvicorn main:app --reload
 - [x] 登入系統(google 帳號) (朱)
 - 白板功能 (石)
     - [x] 資料表拖拉
+    - [x] 白板縮放
+    - [x] 白板拖拉
     - [ ] 關聯線條呈現
     - [ ] json 資料 API 串接
 - [ ] 語法偵錯 (朱)
