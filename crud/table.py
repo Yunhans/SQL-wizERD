@@ -53,11 +53,11 @@ def get_all_tables(file_id):
  
 
 # get specific table     
-def get_specific_table(table_name):
+def get_specific_table(file_id, table_name):
     connection = connect_to_database()
     cursor = connection.cursor()
-    sql_search_query = """ SELECT `table_id` FROM `tbl_table` WHERE `table_name` = %s"""
-    cursor.execute(sql_search_query, (table_name,))
+    sql_search_query = """ SELECT `table_id` FROM `tbl_table` WHERE `file_id` = %s AND `table_name` = %s"""
+    cursor.execute(sql_search_query, (file_id, table_name,))
     
     record = cursor.fetchone()
     
