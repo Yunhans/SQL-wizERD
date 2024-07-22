@@ -14,19 +14,30 @@ aside {
 	z-index: 1;
 }
 
-header{
+header > div > div{
 	height: 65px;
+	z-index: 1;
+}
+
+iframe{
+	height: calc(100vh - 65px);
+	width: calc(100vw - 3.5rem);
+	margin-left: 3.5rem;
+	margin-top: auto;
+	overflow: auto;
+	border: 1px solid black;
+	z-index: 0;
 }
 
 #post:hover {
     box-shadow: 10px 10px rgb(0, 0, 0, 0.5);
     transform: translate(-5px, -5px);
     cursor: pointer;
-  }
+}
 
 #whiteboard-border {
 	height: calc(100vh - 65px);
-	max-width: calc(100vw - 3.5rem);
+	width: calc(100vw - 3.5rem);
 	margin-left: 3.5rem;
 	margin-top: auto;
 	overflow: auto;
@@ -68,4 +79,10 @@ header{
 #script_editor{
 	height: 100%;
 	width: 100%;
+}
+
+#ollama-nodejs{
+	height: 100%;
+	width: 100%;
+	margin-left: 0px;
 }
