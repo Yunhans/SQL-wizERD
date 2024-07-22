@@ -19,13 +19,19 @@
     - MySQL Server 8.0.38 [點此下載](https://dev.mysql.com/downloads/mysql/)
     - MySQL WorkBench 8.0.38 [點此下載](https://dev.mysql.com/downloads/mysql/)
     - NodeJS 20.15.1 [點此下載](https://nodejs.org/en/download/prebuilt-installer)
+> 檢查版本
+```bash
+python3 -V      # should print Python 3.11.9(recommend)  or above
+node -v         # should print `v20.15.1` or above
+npm -v          # should print `10.7.0` or above
+```
 
 2. 利用 MySQL WorkBench 與 MySQL Server Localhost 連線之後跑 [schema](Graduated_Project_test.sql) 建立資料庫
 
 3. 下載並將下面兩個檔案放進本資料夾最外層(與main.py同層級)
     - [myconfig.py](https://drive.google.com/drive/u/0/folders/15-sAc_Mu2l6ROezuPmi5HhFCdFezt0ED)
     - [connectdb.py](https://drive.google.com/drive/u/0/folders/15-sAc_Mu2l6ROezuPmi5HhFCdFezt0ED)
-    > 記得修改 Localhost 連線 user & password
+> 記得修改 Localhost 連線 user & password
 
 4. 建立python虛擬環境並將 cmd 或 terminal 路徑 cd 至本資料夾
 ```bash
