@@ -32,7 +32,7 @@ async def create_new_file(request: FileCreateRequest):
     file_name = request.file_name
     
     message = new_file(file_name, user_id)
-    return {"message": message}
+    return message
 
 
 

@@ -44,9 +44,20 @@ aceEditor.getSession().on('change', function() {
         
       })
       .then(response => response.json())
-      .then(data => console.log(data))
+      .then(data => {
+        console.log(data);
+        triggerFunction();
+      })
       .catch(error => console.error('Error:', error));
     
   }, 1000);
 });
 
+
+
+
+// trigger when getting response
+function triggerFunction() {
+  
+  // write here
+}

@@ -93,8 +93,7 @@ async def auth_google(request: Request):
         else:
             user_id = search_user(user_email)[0][0]
             request.session['user_id'] = user_id
-  
-            print(request.session)
+
         
         
               

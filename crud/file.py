@@ -16,7 +16,9 @@ def new_file(file_name, user_id):
             sql_insert_query = """ INSERT INTO `tbl_file` (`file_name`, `user_id`) VALUES (%s, %s) """
             cursor.execute(sql_insert_query, (file_name, user_id))
             connection.commit()
-            return "successfully add new file"
+            file_id = cursor.lastrowid
+            print("successfully add new file. file_id: ", file_id)
+            return {"file_id": file_id}
         
     except Exception as e:
         return f"failed to add new file: {e}"

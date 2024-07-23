@@ -33,6 +33,5 @@ def search_user(email):
         cursor.execute(sql_search_query, (email,))
         print("successfully searched user!")
         records = cursor.fetchall()
-        print("user_match:", records)
         
         return records
