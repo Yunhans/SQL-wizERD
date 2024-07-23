@@ -19,13 +19,12 @@ header > div > div{
 	z-index: 1;
 }
 
-iframe{
+#whiteboard-react{
 	height: calc(100vh - 65px);
 	width: calc(100vw - 3.5rem);
 	margin-left: 3.5rem;
 	margin-top: auto;
 	overflow: auto;
-	border: 1px solid black;
 	z-index: 0;
 }
 
