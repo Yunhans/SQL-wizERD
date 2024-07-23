@@ -48,4 +48,4 @@ async def create_new_file(request: FileCreateRequest):
 async def get_all_file(user_id):
     file_list = get_all_files(user_id)
     
-    return {"files": file_list}
+    return file_list

@@ -82,19 +82,24 @@ async def auth_google(request: Request):
     if user_info:
         request.session['user'] = dict(user_info)
         user_email = user_info.get('email')
-        if not search_user(user_email):
-            # CRUD.py: create new user
-            new_user(user_email)
-            # CRUD.py: search user & get user_id
-            user_id = search_user(user_email)[0][0]
-            request.session['user_id'] = user_id
-               
- 
-        else:
-            user_id = search_user(user_email)[0][0]
-            request.session['user_id'] = user_id
-
         
+        search_result = search_user(user_email)
+        
+        if search_result['status_code'] == 404:
+            # CRUD.py: create new user
+            create_result = new_user(user_email)
+            # CRUD.py: search user & get user_id
+            user_id = create_result['data']
+            request.session['user_id'] = user_id
+        
+        elif search_result['status_code'] == 200:
+            
+            user_id = search_result['data'][0][0]
+            request.session['user_id'] = user_id
+            
+        else:
+            return "Server error occurred. Please try again later."
+
         
               
     return RedirectResponse('files')

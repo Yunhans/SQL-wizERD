@@ -9,6 +9,7 @@ from connect_db import connect_to_database, close_connection
 '''
 
 def new_file(file_name, user_id):
+    
     try:
         connection = connect_to_database()
         if connection.is_connected():
@@ -17,12 +18,9 @@ def new_file(file_name, user_id):
             cursor.execute(sql_insert_query, (file_name, user_id))
             connection.commit()
             file_id = cursor.lastrowid
-            print("successfully add new file. file_id: ", file_id)
-            return {"file_id": file_id}
-        
+            return {"status_code": 200, "message": "Successfully added new file.", "data": file_id}
     except Exception as e:
-        return f"failed to add new file: {e}"
-    
+        return {"status_code": 500, "message": f"Failed to add new file: {e}"}
     finally:
         if connection.is_connected():
             cursor.close()
@@ -36,6 +34,7 @@ def new_file(file_name, user_id):
 '''
 
 def get_all_files(user_id):
+    
     try:
         connection = connect_to_database()
         if connection.is_connected():
@@ -43,11 +42,15 @@ def get_all_files(user_id):
             sql_search_query = """ SELECT `file_id`, `file_name` FROM `tbl_file` WHERE `user_id` = %s"""
             cursor.execute(sql_search_query, (user_id,))
             records = cursor.fetchall()
-            return records
+            
+            if records:
+                return {"status_code": 200, "message": "Successfully retrieved files.", "data": records}
+            else:
+                return {"status_code": 404, "message": "No files found for the user."}
             # example records: [(1, 'file1'), (2, 'file2'), (3, 'file3')]
         
     except Exception as e:
-        return f"Failed to retrieve files: {e}"
+        return {"status_code": 500, "message": f"Failed to retrieve files: {e}"}
     
     finally:
         if connection.is_connected():

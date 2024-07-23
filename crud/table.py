@@ -9,14 +9,21 @@ from utils.extract_table_detail import extract_detail
 '''
 
 def new_table (table_name, script, x, y, file_id):
-    connection = connect_to_database()
-    if connection.is_connected():
-        cursor = connection.cursor()
-        sql_insert_query = """ INSERT INTO `tbl_table` (`table_name`,`script`, `x`, `y`, `file_id`) VALUES (%s, %s, %s, %s,%s)"""
-        cursor.execute(sql_insert_query, (table_name, script, x, y, file_id))
-        connection.commit()
-        print("db: Successfully added new table!")
-        
+    
+    try:
+        connection = connect_to_database()
+        if connection.is_connected():
+            cursor = connection.cursor()
+            sql_insert_query = """ INSERT INTO `tbl_table` (`table_name`,`script`, `x`, `y`, `file_id`) VALUES (%s, %s, %s, %s,%s)"""
+            cursor.execute(sql_insert_query, (table_name, script, x, y, file_id))
+            connection.commit()
+            return {"status_code": 200, "message": "Successfully added new table."}
+    except Exception as e:
+        return {"status_code": 500, "message": f"Failed to add new table: {e}"}
+    finally:
+        if connection.is_connected():
+            cursor.close()
+            connection.close()
         
         
 
@@ -28,40 +35,61 @@ def new_table (table_name, script, x, y, file_id):
 
 # get ALL tables
 def get_all_tables(file_id):
-    connection = connect_to_database()
-    if connection.is_connected():
-        cursor = connection.cursor()
-        sql_search_query = """
-                SELECT
-                  `table_id`,
-                  `script`,
-                  `x`,
-                  `y`
-                FROM 
-                  `tbl_table`
-                WHERE 
-                  `file_id` = %s
-                """
-        cursor.execute(sql_search_query, (file_id,))
-        records = cursor.fetchall()
-        
-        # extract detail from the records
-        records_dict = extract_detail(records)
-        
-        return records_dict
+    
+    try:
+        connection = connect_to_database()
+        if connection.is_connected():
+            cursor = connection.cursor()
+            sql_search_query = """
+                    SELECT
+                      `table_id`,
+                      `script`,
+                      `x`,
+                      `y`
+                    FROM 
+                      `tbl_table`
+                    WHERE 
+                      `file_id` = %s
+                    """
+            cursor.execute(sql_search_query, (file_id,))
+            records = cursor.fetchall()
+            
+            # extract detail from the records
+            if records:
+                records_dict = extract_detail(records)
+                return {"status_code": 200, "message": "Successfully retrieved tables.", "data": records_dict}
+            else:
+                return {"status_code": 404, "message": "No tables found for the file."}
+    except Exception as e:
+        return {"status_code": 500, "message": f"Failed to retrieve tables: {e}"}
+    finally:
+        if connection.is_connected():
+            cursor.close()
+            connection.close()
       
  
 
 # get specific table     
 def get_specific_table(file_id, table_name):
-    connection = connect_to_database()
-    cursor = connection.cursor()
-    sql_search_query = """ SELECT `table_id` FROM `tbl_table` WHERE `file_id` = %s AND `table_name` = %s"""
-    cursor.execute(sql_search_query, (file_id, table_name,))
-    
-    record = cursor.fetchone()
-    
-    return record
+    connection = None
+    try:
+        connection = connect_to_database()
+        if connection.is_connected():
+            cursor = connection.cursor()
+            sql_search_query = """ SELECT `table_id` FROM `tbl_table` WHERE `file_id` = %s AND `table_name` = %s"""
+            cursor.execute(sql_search_query, (file_id, table_name,))
+            
+            record = cursor.fetchone()
+            if record:
+                return {"status_code": 200, "message": "Successfully retrieved table.", "data": record}
+            else:
+                return {"status_code": 404, "message": "Table not found."}
+    except Exception as e:
+        return {"status_code": 500, "message": f"Failed to retrieve table: {e}"}
+    finally:
+        if connection.is_connected():
+            cursor.close()
+            connection.close()
 
 
 
@@ -74,10 +102,17 @@ def get_specific_table(file_id, table_name):
 
 # 
 def update_table(table_id, table_name, script):
-    connection = connect_to_database()
-    if connection.is_connected():
-        cursor = connection.cursor()
-        sql_update_query = """ UPDATE `tbl_table` SET `table_name` = %s, `script` = %s WHERE `table_id` = %s"""
-        cursor.execute(sql_update_query, (table_name, script, table_id,))
-        connection.commit()
-        print("Successfully updated table!")
+    try:
+        connection = connect_to_database()
+        if connection.is_connected():
+            cursor = connection.cursor()
+            sql_update_query = """ UPDATE `tbl_table` SET `table_name` = %s, `script` = %s WHERE `table_id` = %s"""
+            cursor.execute(sql_update_query, (table_name, script, table_id,))
+            connection.commit()
+            return {"status_code":200, "message": "Successfully updated table!"}
+    except Exception as error:
+        return {"status_code":500, "message": f"Failed to update table: {error}"}
+    finally:
+        if connection and connection.is_connected():
+            cursor.close()
+            connection.close()
