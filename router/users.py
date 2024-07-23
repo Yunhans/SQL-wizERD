@@ -94,7 +94,7 @@ async def auth_google(request: Request):
         
         elif search_result['status_code'] == 200:
             
-            user_id = search_result['data'][0][0]
+            user_id = search_result['data'][0]
             request.session['user_id'] = user_id
             
         else:

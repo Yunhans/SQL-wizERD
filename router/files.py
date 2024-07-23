@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, status
 from pydantic import BaseModel
 
 
@@ -26,7 +26,7 @@ class FileCreateRequest(BaseModel):
     file_name: str
 
 
-@router.post("/create")
+@router.post("/create", status_code=status.HTTP_201_CREATED)
 async def create_new_file(request: FileCreateRequest):  
     user_id = request.user_id
     file_name = request.file_name
@@ -44,8 +44,9 @@ async def create_new_file(request: FileCreateRequest):
 
 '''
 
-@router.get("/get/{user_id}")
+@router.get("/get/{user_id}", status_code=status.HTTP_200_OK)
 async def get_all_file(user_id):
+   
     file_list = get_all_files(user_id)
     
-    return file_list
+    return {"files": file_list}

@@ -99,10 +99,10 @@ def middle_parse_json(file_id, info):
         foreign_keys = table_dict.get("foreign_keys", [])
         
         # search specific table and return id
-        get_table_result = get_specific_table(file_id, _Table_name)
+        table_id = get_specific_table(file_id, _Table_name)
         
         # table don't exist
-        if get_table_result['status_code'] == 404:
+        if not table_id:
             # add new table
             add_table(_Table_name, _Script, 0, 0, file_id)
             
@@ -120,8 +120,8 @@ def middle_parse_json(file_id, info):
                 print("No foreign key in this table")
                 
         # table already existed
-        elif get_table_result['status_code'] == 200:
-            table_id = get_table_result['data'][0]
+        else:
+            table_id = table_id[0]
             alter_table(table_id, _Table_name, _Script)
             
         

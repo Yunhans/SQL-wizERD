@@ -42,7 +42,7 @@ def search_user(email):
             cursor = connection.cursor()
             sql_search_query = """ SELECT * FROM `tbl_user` WHERE `mail` = %s"""
             cursor.execute(sql_search_query, (email,))
-            records = cursor.fetchall()
+            records = cursor.fetchone()
             if records:
                 return {"status_code": 200, "message": "Successfully searched user!", "data": records}
             else:

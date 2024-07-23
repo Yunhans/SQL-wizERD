@@ -18,9 +18,9 @@ def new_foreign_key(from_table, ref_table, from_column, ref_column, file_id, tab
             params = (from_table, ref_table, from_column, ref_column, file_id, table_id)
             cursor.execute(sql_insert_query, params)
             connection.commit()
-            return {"status_code": 200, "message": "Successfully added new foreign key."}
+            return "Successfully added new foreign key."
     except Exception as e:
-        return {"status_code": 500, "message": f"Failed to add new foreign key: {e}"}
+        return f"Failed to add new foreign key: {e}"
     finally:
         if connection.is_connected():
             cursor.close()
