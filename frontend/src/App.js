@@ -125,7 +125,6 @@ function App() {
 			>
 				<Panel position="bottom-center">
 					<button type="button" className="btn btn-success" onClick={onAdd}>add Table</button>
-					{/* <button type="button" className="btn btn-success" onClick={onRestore}>restore</button> */}
 				</Panel>
 				<Background />
 				<Controls position = 'bottom-right'/>

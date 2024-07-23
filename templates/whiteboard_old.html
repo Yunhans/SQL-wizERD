@@ -27,8 +27,8 @@
             <div class="d-flex flex-wrap align-items-center justify-content-between">
                 <div>
                     <a class="navbar-brand d-flex" href="#">
-                        <img src="/static/img/icon.png" alt="" width="35" height="35" class="d-inline-block align-text-top mx-2">
-                        <i style="font-size: 1.3rem" class="d-inline-block">SQL WizERD</i>
+                        <img src="/static/img/icon.png" alt="" width="35" height="35" class="d-inline-block align-text-top me-2">
+                        <i style="font-size: 1.3rem">SQL WizERD</i>
                     </a>
                 </div>
 
@@ -52,43 +52,48 @@
         <div class="d-flex flex-column flex-shrink-0 bg-body-tertiary" style="width: 3.5rem;">
             <ul class="nav nav-pills nav-flush flex-column mb-auto text-center border-0">
                 <li class="nav-item">
-                    <a id="files_btn" href="#" class="nav-link py-3 shadow-none px-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling_file" aria-controls="offcanvasScrolling_file">
-                        <button type="button" class="btn border-0 mx-0" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Files">
-                            <i class="bi bi-folder" style="font-size: 1.5rem; "></i>
-                        </button>
+                    <a id="files_btn" href="#" class="nav-link py-3 shadow-none rounded-0" title="Files" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling_file" aria-controls="offcanvasScrolling_file">
+                        <i class="bi bi-folder" style="font-size: 1.5rem;"></i>
                     </a>
                 </li>
                 <li>
-                    <a id="chat_btn" href="#" class="nav-link py-3 shadow-none px-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling_chat" aria-controls="offcanvasScrolling_chat">
-                        <button type="button" class="btn border-0 mx-0" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Chatbot">
-                            <i class="bi bi-robot"  style="font-size: 1.5rem;"></i>
-                        </button>
+                    <a id="chat_btn" href="#" class="nav-link py-3 shadow-none rounded-0" title="Chat" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling_chat" aria-controls="offcanvasScrolling_chat">
+                        <i class="bi bi-robot"  style="font-size: 1.5rem;"></i>
                     </a>
                 </li>
                 <li>
-                    <a id="script_btn" href="#" class="nav-link py-3 shadow-none px-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling_script" aria-controls="offcanvasScrolling_script">
-                        <button type="button" class="btn border-0 mx-0" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Sql Scripts">
-                            <i class="bi bi-code-slash" style="font-size: 1.5rem;"></i>
-                        </button>
+                    <a id="script_btn" href="#" class="nav-link py-3 shadow-none rounded-0" title="Script" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling_script" aria-controls="offcanvasScrolling_script">
+                        <i class="bi bi-code-slash" style="font-size: 1.5rem;"></i>
                     </a>
                 </li>
                 <li>
-                    <a id="info_btn" href="/tutorial" target="_blank" class="nav-link py-3 shadow-none px-0">
-                        <button type="button" class="btn border-0 mx-0" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Tutorial">
-                            <i class="bi bi-info-circle" style="font-size: 1.5rem;"></i>
-                        </button>
+                    <a id="info_btn" href="/tutorial" target="_blank" class="nav-link py-3 shadow-none rounded-0" title="Hint">
+                        <i class="bi bi-info-circle" style="font-size: 1.5rem;"></i>
                     </a>
                 </li>
             </ul>
         </div>
     </aside>
 
-    <iframe id="whiteboard-react" class="position-fixed" src="http://localhost:8080"></iframe>
-    <!-- <iframe id="whiteboard-react" class="position-fixed" src="../api/table/get/{{ file_id }}"></iframe> -->
+    <!-- <iframe id="whiteboard-react" class="position-fixed" src="http://localhost:8080"></iframe> -->
+    <iframe id="whiteboard-react" class="position-fixed" src="../api/table/get/{{ file_id }}"></iframe>
 
     <main class="d-flex flex-nowrap">
+        <!-- buttons -->
+
+        <!-- <div class="z-3 d-flex justify-content-evenly position-fixed bottom-0 my-4 w-100 px-3 d-none">
+            <div>
+                <button type="button" class="btn btn-success me-2 px-3" onclick="addNewTable()">Add table</button>
+            </div>
+            <div>
+                <button type="button" class="btn btn-primary me-2"><i class="bi bi-crosshair"></i></button>
+                <button type="button" class="btn btn-primary me-2"><i class="bi bi-plus-lg"></i></button>
+                <button type="button" class="btn btn-primary"><i class="bi bi-dash-lg"></i></button>
+            </div>
+        </div> -->
 
         <!-- whiteboard -->
+
         <!-- <div id="whiteboard-border" class="position-absolute">
             <div id="whiteboard" draggable="true">
 
@@ -197,13 +202,15 @@
     <!-- ace editor -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.9.5/ace.js"></script>
     <script src="/static/js/script-editor.js"></script>
-    <script src="/static/js/bootstrap-5.3.js"></script>
+    <!-- make table draggable -->
+    <script src="/static/js/dragcard.js"></script>
     <!-- update table data -->
     <script>
         var file_id = $("#file_info").text();
         var user_id = $("#userInfo").text();
         
         getAllFiles(user_id);
+        // makeTableDraggable();
 
         document.getElementById("whiteboard-react").onload = function() {
             // passTableData({ key: 'value' });
@@ -249,6 +256,27 @@
                 }
             })
             $("#file_container").append(file_html);
+        }
+
+
+        function addNewTable(){
+            var table_html = '\
+                    <div class="mytable card position-absolute" draggable="true" id="table_product" style="width: 300px; left: 0px; top: 0px;">\
+                        <div class="myheader card-header d-flex px-2" draggable="true" id="table_product_header">\
+                            <span class="flex-grow-1 text-center">Table</span>\
+                            <button type="button" class="btn btn-sm border-0 p-0" onclick="alert();"><i class="bi bi-three-dots-vertical"></i></button>\
+                        </div>\
+                        <ul class="list-group list-group-flush my-1">\
+                            <li class="list-group-item border-0 py-1">\
+                                <div class="my-0 w-100 d-flex justify-content-between">\
+                                    <span class="text-secondary">id <i class="bi bi-key-fill text-warning"></i></span>\
+                                    <span class="text-body-tertiary">int</span>\
+                                </div>\
+                            </li>\
+                        </ul>\
+                    </div>';
+            document.getElementById("whiteboard").innerHTML += table_html;
+            makeTableDraggable();
         }
 
         function getTableData(file_id){
@@ -334,6 +362,34 @@
                 console.error("Failed to send data:", error);
             }
         }
+
+        function loadTableData(data) {
+            // console.log(data["table"].keys(JSON[0]));
+            $("#whiteboard").empty();
+            var table_html = '';
+            $.each(data, function(index, value) {
+                table_html += '\
+                    <div class="mytable card position-absolute" draggable="true" id="table_product" style="width: 300px; left: 0px; top: 0px;">\
+                        <div class="myheader card-header d-flex px-2" draggable="true" id="table_product_header">\
+                            <span class="flex-grow-1 text-center">' + value["name"] + '</span>\
+                            <button type="button" class="btn btn-sm border-0 p-0" onclick="alert();"><i class="bi bi-three-dots-vertical"></i></button>\
+                        </div>\
+                        <ul class="list-group list-group-flush my-1" id="table_product_data">';
+                $.each(value["attribute"], function(index, val){
+                    table_html += '\
+                            <li class="list-group-item border-0 py-1">\
+                                <div class="my-0 w-100 d-flex justify-content-between">\
+                                    <span class="text-secondary">'+ val["name"] + (val["primary_key"]? ' <i class="bi bi-key-fill text-warning"></i>': '') +'</span>\
+                                    <span class="text-body-tertiary">'+ val["type"] +'</span>\
+                                </div>\
+                            </li>';
+                })
+                table_html += '</ul></div>';
+            })
+            document.getElementById("whiteboard").innerHTML += table_html;
+            makeTableDraggable();
+        }
+
     </script>
 </body>
 </html>
