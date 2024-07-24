@@ -58,7 +58,8 @@ cd frontend
 
 npm install
 
-npm start
+npm start       # Mac
+npm start-pc    # Windows
 ```
 
 8. 打開瀏覽器路由 `http://127.0.0.1:8000/`
