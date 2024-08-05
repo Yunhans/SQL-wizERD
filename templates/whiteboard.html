@@ -251,6 +251,9 @@
                             id: `${sourceTable.trim()}->${targetTable.trim()}`,
                             source: nodes.find(node => node.data.label === sourceTable.trim()).id,
                             target: nodes.find(node => node.data.label === targetTable.trim()).id,
+                            markerStart: 'hasManyReversed',
+                            sourceHandle: 'a', 
+                            targetHandle: 'b',
                             type: "floating"
                         };
                         })
