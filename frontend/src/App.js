@@ -1,7 +1,10 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import ReactFlow, { Controls, Background, applyNodeChanges, applyEdgeChanges, addEdge, Panel,} from 'reactflow';
-import 'reactflow/dist/style.css';
+import { ReactFlow, MarkerType, MiniMap, Controls, Background, useNodesState, useEdgesState, applyNodeChanges, applyEdgeChanges, addEdge, Panel, ConnectionMode,} from '@xyflow/react';
+import '@xyflow/react/dist/style.css';
+
 import TableNode from './TableNode';
+import SimpleFloatingEdge from './SimpleFloatingEdge';
+import { LinkMarkers } from './Markers';
 
 const proOptions = { hideAttribution: true };
 
@@ -9,11 +12,17 @@ const nodeTypes = {
 	table: TableNode,
 };
 
+const edgeTypes = {
+	floating: SimpleFloatingEdge,
+};
+
+
 const initialNodes = [
 	{
 		id: '1',
 		"type": 'table',
 		data: {
+			id: '1',
 			label: 'Product',
 			attribute: [
 			{ name: 'product_id', type: 'int', isKey: true },
@@ -27,6 +36,7 @@ const initialNodes = [
 		id: '2',
 		type: 'table',
 		data: {
+			id: '2',
 			label: 'Order',
 			attribute: [
 			{ name: 'order_id', type: 'int', isKey: true },
@@ -39,28 +49,22 @@ const initialNodes = [
 ];
 
 const initialEdges = [
-	{ id: '1->2', source: '1', target: '2', label: '1-m', type: 'smoothstep' },
+	{ id: '1->2', source: '1', target: '2', markerStart: 'hasManyReversed',sourceHandle: 'a', targetHandle: 'b', label: '1-m', type: 'floating' },
 ];
 
 const getNodeId = () => `randomnode_${+new Date()}`;
 
 function App() {
-	const [nodes, setNodes] = useState(initialNodes);
-	const [edges, setEdges] = useState(initialEdges);
-
-	const onNodesChange = useCallback(
-		(changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
-		[],
-	);
-	const onEdgesChange = useCallback(
-		(changes) => setEdges((eds) => applyEdgeChanges(changes, eds)),
-		[],
-	);
+	const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
+	const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
 	const onConnect = useCallback(
-		(params) => setEdges((eds) => addEdge(params, eds)),
-		[],
-	);
+		(connection) => {
+		  const edge = { ...connection, type: 'floating', markerStart: 'hasManyReversed' };
+		  setEdges((eds) => addEdge(edge, eds));
+		},
+		[setEdges],
+	  );
 
 	const onAdd = useCallback(() => {
 		const newNode = {
@@ -113,6 +117,7 @@ function App() {
 
 	return (
 		<div style={{ height: '100%', width: '100%'}}>
+			<LinkMarkers />
 			<ReactFlow
 				nodes={nodes}
 				onNodesChange={onNodesChange}
@@ -120,14 +125,18 @@ function App() {
 				onEdgesChange={onEdgesChange}
 				onConnect={onConnect}
 				fitView
+				minZoom={0.2}
+				edgeTypes={edgeTypes}
 				nodeTypes={nodeTypes}
 				proOptions={proOptions}
+        		connectionMode={ConnectionMode.Loose}
 			>
 				<Panel position="bottom-center">
 					<button type="button" className="btn btn-success" onClick={onAdd}>add Table</button>
 				</Panel>
 				<Background />
-				<Controls position = 'bottom-right'/>
+				<Controls position = 'bottom-right' showInteractive={false}/>
+				<MiniMap position='top-right' nodeStrokeWidth={3} />
 			</ReactFlow>
 		</div>
 	);

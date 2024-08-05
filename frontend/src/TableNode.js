@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactFlow, { Handle, Position } from 'reactflow';
+import { Handle, Position } from '@xyflow/react';
 
 const TableNode = ({ data }) => {
     return (
@@ -22,9 +22,8 @@ const TableNode = ({ data }) => {
                     ))}
                 </ul>
             </div>
-            <Handle type="target" position={Position.Left} id="a" />
-            <Handle type="source" position={Position.Right} id="b" />
-
+            <Handle type="source" position={Position.Right} id="a" />
+            <Handle type="source" position={Position.Left} id="b" />
         </>
     );
 };

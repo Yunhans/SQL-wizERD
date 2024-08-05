@@ -58,7 +58,7 @@ cd frontend
 
 npm install
 
-npm start       # Mac
+npm start           # Mac
 npm run start-pc    # Windows
 ```
 

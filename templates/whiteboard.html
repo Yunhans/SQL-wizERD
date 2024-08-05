@@ -49,23 +49,23 @@
     </header>
 
     <aside class="d-flex flex-nowrap border-end">
-        <div class="d-flex flex-column flex-shrink-0 bg-body-tertiary" style="width: 3.5rem;">
-            <ul class="nav nav-pills nav-flush flex-column mb-auto text-center border-0">
-                <li class="nav-item">
+        <div class="d-flex flex-column flex-shrink-0 bg-white" style="width: 3.5rem;">
+            <ul class="nav nav-pills nav-flush flex-column text-center border-0">
+                <li id="files_li" class="nav-item">
                     <a id="files_btn" href="#" class="nav-link py-3 shadow-none px-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling_file" aria-controls="offcanvasScrolling_file">
                         <button type="button" class="btn border-0 mx-0" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Files">
                             <i class="bi bi-folder" style="font-size: 1.5rem; "></i>
                         </button>
                     </a>
                 </li>
-                <li>
+                <li id="chat_li">
                     <a id="chat_btn" href="#" class="nav-link py-3 shadow-none px-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling_chat" aria-controls="offcanvasScrolling_chat">
                         <button type="button" class="btn border-0 mx-0" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Chatbot">
                             <i class="bi bi-robot"  style="font-size: 1.5rem;"></i>
                         </button>
                     </a>
                 </li>
-                <li>
+                <li id="script_li">
                     <a id="script_btn" href="#" class="nav-link py-3 shadow-none px-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling_script" aria-controls="offcanvasScrolling_script">
                         <button type="button" class="btn border-0 mx-0" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Sql Scripts">
                             <i class="bi bi-code-slash" style="font-size: 1.5rem;"></i>
@@ -83,116 +83,57 @@
         </div>
     </aside>
 
-    <iframe id="whiteboard-react" class="position-fixed" src="http://localhost:8080"></iframe>
-    <!-- <iframe id="whiteboard-react" class="position-fixed" src="../api/table/get/{{ file_id }}"></iframe> -->
-
-    <main class="d-flex flex-nowrap">
-
+    
+    <main>
         <!-- whiteboard -->
-        <!-- <div id="whiteboard-border" class="position-absolute">
-            <div id="whiteboard" draggable="true">
+        <iframe id="whiteboard-react" class="position-fixed" src="http://localhost:8080"></iframe>
 
-                <div class="mytable card position-absolute" draggable="true" id="1" style="width: 300px; left: 200px; top: 200px;">
-                    <div class="myheader card-header d-flex px-2" draggable="true" id="1_header">
-                        <span class="flex-grow-1 text-center">product</span>
-                        <button type="button" class="btn btn-sm border-0 p-0" onclick="alert('edit table test');"><i class="bi bi-three-dots-vertical"></i></button>
-                    </div>
-                    <ul class="list-group list-group-flush my-1" id="1_data">
-                        <li class="list-group-item border-0 py-1">
-                            <div class="my-0 w-100 d-flex justify-content-between">
-                                <span class="text-secondary">product_id <i class="bi bi-key-fill text-warning"></i></span>
-                                <span class="text-body-tertiary">int</span>
-                            </div>
-                        </li>
-                        <li class="list-group-item border-0 py-1">
-                            <div class="my-0 w-100 d-flex justify-content-between">
-                                <span class="text-secondary">quantity</span>
-                                <span class="text-body-tertiary">int</span>
-                            </div>
-                        </li>
-                        <li class="list-group-item border-0 py-1">
-                            <div class="my-0 w-100 d-flex justify-content-between">
-                                <span class="text-secondary">product_type</span>
-                                <span class="text-body-tertiary">char</span>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-
-            
-                <div class="mytable card position-absolute" draggable="true" id="2" style="width: 300px; left: 200px; top: 200px;">
-                    <div class="myheader card-header d-flex px-2" draggable="true" id="2_header">
-                        <span class="flex-grow-1 text-center">product</span>
-                        <button type="button" class="btn btn-sm border-0 p-0" onclick="alert('edit table test');"><i class="bi bi-three-dots-vertical"></i></button>
-                    </div>
-                    <ul class="list-group list-group-flush my-1" id="2_data">
-                        <li class="list-group-item border-0 py-1">
-                            <div class="my-0 w-100 d-flex justify-content-between">
-                                <span class="text-secondary">product_id <i class="bi bi-key-fill text-warning"></i></span>
-                                <span class="text-body-tertiary">int</span>
-                            </div>
-                        </li>
-                        <li class="list-group-item border-0 py-1">
-                            <div class="my-0 w-100 d-flex justify-content-between">
-                                <span class="text-secondary">quantity</span>
-                                <span class="text-body-tertiary">int</span>
-                            </div>
-                        </li>
-                        <li class="list-group-item border-0 py-1">
-                            <div class="my-0 w-100 d-flex justify-content-between">
-                                <span class="text-secondary">product_type</span>
-                                <span class="text-body-tertiary">char</span>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-
-            </div>
-        </div> -->
-
-        <!-- offcanvas -->
-        <div>
-            <!-- offcanvas files -->
-            <div class="offcanvas offcanvas-start border-top" data-bs-scroll="true" data-bs-backdrop="false" id="offcanvasScrolling_file" aria-labelledby="offcanvasScrollingLabel_file">
-                <div class="offcanvas-header">
-                    <h5 class="offcanvas-title" id="offcanvasScrollingLabel_file">Files</h5>
-                    <button type="button" class="btn-close shadow-none" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                </div>
-                <div class="offcanvas-body" id="file_container">
-                    <div class="card">
-                        <div class="card-header">
-                            File 1
-                        </div>
-                        <img src="/static/img/eer_default.png" class="card-img-top" alt="..." height="250px">
-                    </div>
+        <!-- api test frame -->
+        <!-- <iframe id="whiteboard-react" class="position-fixed" src="../api/table/get/{{ file_id }}"></iframe> -->
+    </main>
     
-                </div>
+    <!-- offcanvas -->
+    <div id="offcanvas-container">
+
+        <!-- offcanvas files -->
+        <div class="offcanvas offcanvas-start border-top" data-bs-scroll="true" data-bs-backdrop="false" id="offcanvasScrolling_file" aria-labelledby="offcanvasScrollingLabel_file">
+            <div class="offcanvas-header border-bottom">
+                <h5 class="offcanvas-title" id="offcanvasScrollingLabel_file">Files</h5>
+                <button type="button" class="btn-close shadow-none" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
-    
-            <!-- offcanvas chat -->
-            <div class="offcanvas offcanvas-start border-top" data-bs-backdrop="false" id="offcanvasScrolling_chat" aria-labelledby="offcanvasScrollingLabel_chat">
-                <div class="offcanvas-header">
-                    <h5 class="offcanvas-title" id="offcanvasScrollingLabel_chat">Chatbot</h5>
-                    <button type="button" class="btn-close shadow-none" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                </div>
-                <iframe id="ollama-nodejs" src="http://localhost:3000" frameborder="0"></iframe>
-            </div>
-    
-            <!-- offcanvas script -->
-            <div class="offcanvas offcanvas-start border-top" data-bs-backdrop="false" id="offcanvasScrolling_script" aria-labelledby="offcanvasScrollingLabel_script">
-                <div class="offcanvas-header">
-                    <h5 class="offcanvas-title" id="offcanvasScrollingLabel_script">Script</h5>
-                    <button type="button" class="btn-close shadow-none" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                </div>
-                <div class="offcanvas-body" id="script_editor"><!-- add ace editor-->
-                    <div >
-                        <!-- 左側程式碼編輯區域 -->
+            <div class="offcanvas-body" id="file_container">
+                <div class="card">
+                    <div class="card-header">
+                        File 1
                     </div>
+                    <img src="/static/img/eer_default.png" class="card-img-top" alt="..." height="250px">
                 </div>
+    
             </div>
         </div>
-        
-    </main>
+    
+        <!-- offcanvas chat -->
+        <div class="offcanvas offcanvas-start border-top" data-bs-backdrop="false" id="offcanvasScrolling_chat" aria-labelledby="offcanvasScrollingLabel_chat">
+            <div class="offcanvas-header border-bottom">
+                <h5 class="offcanvas-title" id="offcanvasScrollingLabel_chat">Chatbot</h5>
+                <button type="button" class="btn-close shadow-none" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <iframe id="ollama-nodejs" src="http://localhost:3000" frameborder="0"></iframe>
+        </div>
+    
+        <!-- offcanvas script -->
+        <div class="offcanvas offcanvas-start border-top" data-bs-backdrop="false" id="offcanvasScrolling_script" aria-labelledby="offcanvasScrollingLabel_script">
+            <div class="offcanvas-header border-bottom">
+                <h5 class="offcanvas-title" id="offcanvasScrollingLabel_script">Script</h5>
+                <button type="button" class="btn-close shadow-none" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body" id="script_editor"><!-- add ace editor-->
+                <!-- 左側程式碼編輯區域 -->
+            </div>
+        </div>
+
+    </div>
+
 
     <!-- ace editor -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.9.5/ace.js"></script>
@@ -208,7 +149,7 @@
         document.getElementById("whiteboard-react").onload = function() {
             // passTableData({ key: 'value' });
             setTimeout(function(){
-                console.log("Executed after 1 second");
+                // console.log("Executed after 1 second");
                 getTableData(file_id);
             }, 500);
         };
@@ -260,7 +201,7 @@
                 dataType: 'json',
                 timeout: 5000,
                 success: function(data){
-                    console.log(data);
+                    // console.log(data);
                     passTableData(data);
                     // loadTableData(data);
                 },
@@ -310,7 +251,7 @@
                             id: `${sourceTable.trim()}->${targetTable.trim()}`,
                             source: nodes.find(node => node.data.label === sourceTable.trim()).id,
                             target: nodes.find(node => node.data.label === targetTable.trim()).id,
-                            type: "smoothstep"
+                            type: "floating"
                         };
                         })
                     );
@@ -322,18 +263,19 @@
                 };
 
                 const outputJson = JSON.stringify(convertJson(table_data));
-                console.log(JSON.stringify(outputJson, null, 2));
+                // console.log(JSON.stringify(outputJson, null, 2));
 
 
                 // Send the message
                 iframe.contentWindow.postMessage(outputJson, "http://localhost:8080");
 
-                console.log("Data sent:", outputJson);
+                // console.log("Data sent:", outputJson);
 
             } catch (error) {
                 console.error("Failed to send data:", error);
             }
         }
     </script>
+        
 </body>
 </html>
