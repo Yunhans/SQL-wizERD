@@ -1,5 +1,5 @@
 from connect_db import connect_to_database, close_connection
-from utils.extract_table_detail import extract_detail
+
 
 
 '''
@@ -17,7 +17,7 @@ def new_table (table_name, script, x, y, file_id):
             sql_insert_query = """ INSERT INTO `tbl_table` (`table_name`,`script`, `x`, `y`, `file_id`) VALUES (%s, %s, %s, %s,%s)"""
             cursor.execute(sql_insert_query, (table_name, script, x, y, file_id))
             connection.commit()
-            return "Successfully added new table."
+            return {"table_id": cursor.lastrowid}
     except Exception as e:
         return f"Failed to add new table: {e}"
     finally:
@@ -53,13 +53,8 @@ def get_all_tables(file_id):
                     """
             cursor.execute(sql_search_query, (file_id,))
             records = cursor.fetchall()
-            
-            # extract detail from the records
-            if records:
-                records_dict = extract_detail(records)
-                return records_dict
-            else:
-                return None
+            return records
+
     except Exception as e:
         return f"Failed to retrieve tables: {e}"
     finally:
@@ -69,8 +64,8 @@ def get_all_tables(file_id):
       
  
 
-# get specific table     
-def get_specific_table(file_id, table_name):
+# get specific table (check)
+def get_specific_table_id(file_id, table_name):
     connection = None
     try:
         connection = connect_to_database()
@@ -80,10 +75,8 @@ def get_specific_table(file_id, table_name):
             cursor.execute(sql_search_query, (file_id, table_name,))
             
             record = cursor.fetchone()
-            if record:
-                return record
-            else:
-                return None
+            return record
+            
     except Exception as e:
         return f"Failed to retrieve table: {e}"
     finally:
@@ -92,7 +85,22 @@ def get_specific_table(file_id, table_name):
             connection.close()
 
 
-
+# get specific table (for update)
+def get_table(table_id):
+    try:
+        connection = connect_to_database()
+        if connection.is_connected():
+            cursor = connection.cursor()
+            sql_search_query = """ SELECT `table_name`, `script` FROM `tbl_table` WHERE `table_id` = %s"""
+            cursor.execute(sql_search_query, (table_id,))
+            record = cursor.fetchone()
+            return record
+    except Exception as error:
+        return f"Failed to retrieve table: {error}"
+    finally:
+        if connection and connection.is_connected():
+            cursor.close()
+            connection.close()
 
 '''
 
@@ -100,7 +108,7 @@ def get_specific_table(file_id, table_name):
 
 '''
 
-# 
+# update table from writing script
 def update_table(table_id, table_name, script):
     try:
         connection = connect_to_database()
@@ -109,10 +117,73 @@ def update_table(table_id, table_name, script):
             sql_update_query = """ UPDATE `tbl_table` SET `table_name` = %s, `script` = %s WHERE `table_id` = %s"""
             cursor.execute(sql_update_query, (table_name, script, table_id,))
             connection.commit()
-            return "Successfully updated table!"
+            return 1
     except Exception as error:
         return f"Failed to update table: {error}"
     finally:
         if connection and connection.is_connected():
             cursor.close()
             connection.close()
+            
+
+# update table from moving position (erd)
+def update_table_position(table_id, x, y):
+    try:
+        connection = connect_to_database()
+        if connection.is_connected():
+            cursor = connection.cursor()
+            sql_update_query = """ UPDATE `tbl_table` SET `x` = %s, `y` = %s WHERE `table_id` = %s"""
+            cursor.execute(sql_update_query, (x, y, table_id,))
+            connection.commit()
+            return 1
+    except Exception as error:
+        return f"Failed to update table position: {error}"
+    finally:
+        if connection and connection.is_connected():
+            cursor.close()
+            connection.close()
+            
+
+# update table from changing table info (erd)
+def update_table_info(table_id, table_name, script):
+    try:
+        connection = connect_to_database()
+        if connection.is_connected():
+            cursor = connection.cursor()
+            sql_update_query = """ UPDATE `tbl_table` SET `table_name` = %s, `script` = %s WHERE `table_id` = %s"""
+            cursor.execute(sql_update_query, (table_name, script, table_id,))
+            connection.commit()
+            return 1
+    except Exception as error:
+        return f"Failed to update table info: {error}"
+    finally:
+        if connection and connection.is_connected():
+            cursor.close()
+            connection.close()
+            
+ 
+            
+            
+'''
+
+--- DELETE ---   
+
+'''
+
+def delete_table(table_id):
+    try:
+        connection = connect_to_database()
+        if connection.is_connected():
+            cursor = connection.cursor()
+            sql_delete_query = """ DELETE FROM `tbl_table` WHERE `table_id` = %s"""
+            cursor.execute(sql_delete_query, (table_id,))
+            connection.commit()
+            return 1
+    except Exception as error:
+        return f"Failed to delete table: {error}"
+    finally:
+        if connection and connection.is_connected():
+            cursor.close()
+            connection.close()
+            
+

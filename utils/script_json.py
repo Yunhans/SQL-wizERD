@@ -1,7 +1,7 @@
 import re
 
 
-from crud.table import get_specific_table
+from crud.table import get_specific_table_id
 from schema.structed_object import add_table, add_fk, alter_table
 
 
@@ -99,7 +99,7 @@ def middle_parse_json(file_id, info):
         foreign_keys = table_dict.get("foreign_keys", [])
         
         # search specific table and return id
-        table_id = get_specific_table(file_id, _Table_name)
+        table_id = get_specific_table_id(file_id, _Table_name)
         
         # table don't exist
         if not table_id:
