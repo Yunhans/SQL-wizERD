@@ -7,7 +7,7 @@ const TableNode = ({ data }) => {
             <div className="mytable card" draggable="true" style={{ width: '300px' }}>
                 <div className="myheader card-header d-flex px-2" draggable="true">
                     <span className="flex-grow-1 text-center">{data.label}</span>
-                    <button type="button" className="btn btn-sm border-0 p-0" onClick={() => alert('edit table test')}>
+                    <button type="button" className="btn btn-sm border-0 p-0" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                         <i className="bi bi-three-dots-vertical"></i>
                     </button>
                 </div>
