@@ -111,6 +111,7 @@ def get_table(table_id):
 
 # update table from writing script
 def update_table(table_id, table_name, script):
+    
     try:
         connection = connect_to_database()
         if connection.is_connected():

@@ -1,9 +1,10 @@
 from fastapi import APIRouter, Request, status
 from pydantic import BaseModel
+from typing import List, Optional, Union
 
 
 from crud.table import new_table, get_all_tables, get_table, update_table_info, update_table_position, delete_table
-from utils.extract_table_detail import extract_details, extract_detail
+from utils.extract_table_detail import extract_details, extract_detail, reverse_info
 from utils.json_script import generate_sql_script
 
 
@@ -104,17 +105,21 @@ async def get_specific_table(table_id):
 '''
 
 class TableUpdateInfoRequest(BaseModel):
-    table_id: str
-    table_name: str
-    script: str
-
+    id: str
+    name: str
+    attribute: Optional[List] = []
+    foreign_keys: Optional[List] = [] 
 
 
 @router.put("/update/info", status_code=status.HTTP_200_OK)
 async def update_table_info_(request: TableUpdateInfoRequest):
-    table_id = request.table_id
-    table_name = request.table_name
-    script = request.script
+
+    table_id = request.id
+    table_name = request.name
+    attributes = request.attribute
+    foreign_keys = request.foreign_keys
+    
+    script = str(reverse_info(table_name, attributes, foreign_keys))
     
     result = update_table_info(table_id, table_name, script)
     
@@ -131,15 +136,22 @@ async def update_table_info_(request: TableUpdateInfoRequest):
 '''
 
 class TableUpdatePositionRequest(BaseModel):
-    table_id: str
-    x: str
-    y: str
+    id: str
+    location: dict
+    
+    @property
+    def x(self):
+        return self.location.get('x')
+
+    @property
+    def y(self):
+        return self.location.get('y')
 
 
 
 @router.put("/update/position", status_code=status.HTTP_200_OK)
 async def update_table_position_(request: TableUpdatePositionRequest):
-    table_id = request.table_id
+    table_id = request.id
     x = request.x
     y = request.y
     
