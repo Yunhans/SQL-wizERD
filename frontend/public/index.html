@@ -36,17 +36,17 @@
 		<div id="root"></div>
 
 		<!-- Modal -->
-		<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal fade" id="editTableModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editTableModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-lg">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Table</h1>
+						<h1 class="modal-title fs-5" id="editTableModalLabel">Edit Table</h1>
 						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
 
 					<div class="modal-body">
 						
-						<form>
+						<form id="editTableForm">
 							<div class="col-md-12">
 								<label for="inputTableName" class="form-label">Table name</label>
 								<input type="text" class="form-control" id="inputTableName">
@@ -64,59 +64,64 @@
 								</div>
 							</div>
 
-							<div class="row mb-2">
-								<div class="col-md-4">
-									<input type="text" class="form-control" id="inputAttrName">
-								</div>
-								<div class="col-md-4">
-									<input class="form-control" list="datalistOptions" id="inputType" placeholder="Type to search...">
-									<datalist id="datalistOptions">
-										<option value="INT">
-										<option value="VARCHAR(255)">
-										<option value="DATE">
-									</datalist>
-								</div>
-								<div class="col-md-4 d-flex justify-content-around">
-									<!-- primary key -->
-									<input type="checkbox" class="btn-check" id="key-check-1" autocomplete="off">
-									<label class="btn btn-outline-warning" for="key-check-1" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="primary key">
-										<i class="bi bi-key-fill"></i>
-									</label>
-									<!-- notnull -->
-									<input type="checkbox" class="btn-check" id="null-check-1" autocomplete="off">
-									<label class="btn btn-outline-danger" for="null-check-1" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="not null">
-										<i class="bi bi-ban"></i>
-									</label>
-									<!-- unique -->
-									<input type="checkbox" class="btn-check" id="uni-check-1" autocomplete="off">
-									<label class="btn btn-outline-dark" for="uni-check-1" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="unique">
-										<i class="bi bi-star-fill"></i>
-									</label>	
-									<!-- edit -->
-									<div class="btn-group">
-										<button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-											<i class="bi bi-three-dots"></i>
-										</button>
-										<div class="dropdown-menu" style="min-width: 250px;">
-											<p class="dropdown-header">Other Constraints</p>
-											<div class="form-check mx-3 mb-2">
-												<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-												<label class="form-check-label" for="flexCheckDefault">
-													auto increment
-												</label>
+							<div id="attribute-container" >
+								<div class="row mb-2">
+									<div class="col-md-4">
+										<input type="text" class="form-control" id="inputAttrName">
+									</div>
+									<div class="col-md-4">
+										<input class="form-control" list="datalistOptions" id="inputType" placeholder="Type to search...">
+										<datalist id="datalistOptions">
+											<option value="INT">
+											<option value="VARCHAR(255)">
+											<option value="DATE">
+										</datalist>
+									</div>
+									<div class="col-md-4 d-flex justify-content-around">
+										
+										<input type="checkbox" class="btn-check" id="key-check-1" autocomplete="off">
+										<label class="btn btn-outline-warning" for="key-check-1" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="primary key">
+											<i class="bi bi-key-fill"></i>
+										</label>
+	
+										<input type="checkbox" class="btn-check" id="null-check-1" autocomplete="off">
+										<label class="btn btn-outline-danger" for="null-check-1" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="not null">
+											<i class="bi bi-ban"></i>
+										</label>
+	
+										<input type="checkbox" class="btn-check" id="uni-check-1" autocomplete="off">
+										<label class="btn btn-outline-dark" for="uni-check-1" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="unique">
+											<i class="bi bi-star-fill"></i>
+										</label>	
+	
+										<div class="btn-group">
+											<button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+												<i class="bi bi-three-dots"></i>
+											</button>
+											<div class="dropdown-menu" style="min-width: 250px;">
+												<p class="dropdown-header">Other constraints</p>
+												<div class="form-check mx-3 mb-2">
+													<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+													<label class="form-check-label" for="flexCheckDefault">
+														auto increment
+													</label>
+												</div>
+												<div class="mx-3">
+													<label for="default" class="form-label mb-0">default</label>
+													<input type="text" class="form-control form-control-sm" id="default">
+												</div>
+												<div class="dropdown-divider"></div>
+												<p class="dropdown-header">Actions</p>
+												<button type="button" class="btn btn-sm btn-danger mx-3 mb-2"><i class="bi bi-trash3"></i> Delete attribute</button>
 											</div>
-											<div class="mx-3">
-												<label for="default" class="form-label mb-0">default</label>
-												<input type="text" class="form-control form-control-sm" id="default">
-											</div>
-											<div class="dropdown-divider"></div>
-											<p class="dropdown-header">Actions</p>
-											<button type="button" class="btn btn-sm btn-danger mx-3 mb-2"><i class="bi bi-trash3"></i> Delete attribute</button>
 										</div>
 									</div>
 								</div>
 							</div>
 
+							<div>
+								<button type="button" class="btn btn-sm border-0 text-primary mb-0"><i class="bi bi-plus-circle"></i> Add attribute</button>
+							</div>
 
 						</form>
 						
@@ -128,10 +133,11 @@
 				</div>
 			</div>
 		</div>
+
+		<script>
+			const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+			const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+		</script>
 		
 	</body>
-	<script>
-		const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-		const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
-	</script>
 </html>

@@ -150,7 +150,7 @@
             // passTableData({ key: 'value' });
             setTimeout(function(){
                 // console.log("Executed after 1 second");
-                getTableData(file_id);
+                getAllTableData(file_id);
             }, 500);
         };
 
@@ -192,7 +192,7 @@
             $("#file_container").append(file_html);
         }
 
-        function getTableData(file_id){
+        function getAllTableData(file_id){
             $.ajax({
                 url: '/api/table/get/' + file_id,
                 type: 'GET',
@@ -202,8 +202,7 @@
                 timeout: 5000,
                 success: function(data){
                     // console.log(data);
-                    passTableData(data);
-                    // loadTableData(data);
+                    passAllTableData(data);
                 },
                 error: function () {
                   alert("無法連線到伺服器！");
@@ -211,7 +210,7 @@
             });
         }
 
-        function passTableData(data) {
+        function passAllTableData(data) {
             try {
                 var table_data = JSON.parse(JSON.stringify(data));
 
@@ -229,16 +228,19 @@
                 }
 
                 const convertJson = (input) => {
+                    const task = "allTables";
+
                     const nodes = input.map(table => ({
                         id: table.id.toString(),
                         type: "table",
                         data: {
-                        label: table.name,
-                        attribute: table.attribute.map(attr => ({
-                            name: attr.name,
-                            type: attr.type,
-                            isKey: attr.primary_key
-                        }))
+                            id: table.id.toString(),
+                            label: table.name,
+                            attribute: table.attribute.map(attr => ({
+                                name: attr.name,
+                                type: attr.type,
+                                isKey: attr.primary_key
+                            }))
                         },
                         position: table.location
                     }));
@@ -260,6 +262,7 @@
                     );
 
                     return {
+                        task,
                         nodes,
                         edges
                     };
@@ -278,6 +281,61 @@
                 console.error("Failed to send data:", error);
             }
         }
+    </script>
+    <script>
+            function receiveMessage(e) {
+                const data = JSON.parse(e.data);
+                if (data.action === "edit info") {
+                    console.log("Parent Data received:", data);
+                    getTableData(data.table_id);
+                }
+            }
+            
+            // 監聽 message 事件
+            window.addEventListener('message', receiveMessage, false);
+
+            function getTableData(table_id) {
+                $.ajax({
+                    url: '/api/table/get/specific/' + table_id,
+                    type: 'GET',
+                    crossDomain: true,
+                    cache: false,
+                    dataType: 'json',
+                    timeout: 5000,
+                    success: function(data){
+                        console.log(data);
+                        passTableData(data);
+                    },
+                    error: function () {
+                        alert("無法連線到伺服器！");    
+                    }
+                });
+            }
+
+            function passTableData(data){
+                try {
+                    const message = JSON.stringify({ task: 'specificTable', table_data: data });
+
+                    // Ensure the iframe exists
+                    var iframe = document.getElementById("whiteboard-react");
+                    if (!iframe) {
+                        console.error("Iframe with id 'whiteboard-react' not found");
+                        return;
+                    }
+
+                    // Check if contentWindow is available
+                    if (!iframe.contentWindow) {
+                        console.error("contentWindow is not available");
+                        return;
+                    }
+
+                    // Send the message
+                    iframe.contentWindow.postMessage(message, "http://localhost:8080");
+
+                } catch (error) {
+                    console.error("Failed to send data:", error);
+                }
+            }
     </script>
         
 </body>
