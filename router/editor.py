@@ -4,6 +4,7 @@ from pydantic import BaseModel
 
 from utils.sql_grammar import sql_parse_middle
 from utils.script_json import middle_parse_json
+from utils.json_script import generate_sql_script
 
 
 '''
@@ -21,12 +22,16 @@ router = APIRouter(
 
 
 ## api -------------------------------------------------
-class Item(BaseModel):
+
+
+# script to erd
+
+class Script(BaseModel):
     file_id: str
     text: str
     
-@router.post("/api/table_transform")
-async def sql_parse_json(item: Item):
+@router.post("/api/script_to_erd")
+async def sql_parse_json(item: Script):
 
     file_id = item.file_id
     raw_sql = item.text
@@ -39,9 +44,17 @@ async def sql_parse_json(item: Item):
 
     
 
-# @router.get("/api/get_transformed_sql")
-# async def get_trandform_sql():
+# erd to script
 
-#     return table_data
+class Erd(BaseModel):
+    file_id: str
+    table_data: dict
+    
+@router.post("/api/erd_to_script")
+async def json_parse_sql(item: Erd):
 
-# http://127.0.0.1:8000/editor/api/get_transformed_sql
+    file_id = item.file_id
+    table_data = item.table_data
+    sql_script = generate_sql_script(table_data)
+
+    return sql_script
