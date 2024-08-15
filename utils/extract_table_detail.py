@@ -31,7 +31,6 @@ def extract_details(records):
         }
         
         formatted_records.append(formatted_record)
-        print(formatted_record)
         
     return formatted_records
 
