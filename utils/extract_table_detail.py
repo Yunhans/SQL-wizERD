@@ -37,7 +37,7 @@ def extract_details(records):
 
 def extract_detail(record):
     # convert the script from string to dict
-    script = ast.literal_eval(record[1])
+    script = ast.literal_eval(record[2])
     
     formatted_record = {
         "id": record[0],
@@ -45,8 +45,8 @@ def extract_detail(record):
         "attribute": script.get("attributes"),
         "foreign_keys": script.get("foreign_keys", []),
         "location": {
-            "x": record[2],
-            "y": record[3]
+            "x": record[3],
+            "y": record[4]
         }
     }
     
