@@ -88,9 +88,9 @@ async def get_all_table_to_script(file_id):
 
 '''
 
-@router.get("/get/specific/{file_id}", status_code=status.HTTP_200_OK)
-async def get_specific_table(file_id):
-    table_list = get_table(file_id)
+@router.get("/get/specific/{table_id}", status_code=status.HTTP_200_OK)
+async def get_specific_table(table_id):
+    table_list = get_table(table_id)
     table_list_extract = extract_detail(table_list)
     
     return table_list_extract

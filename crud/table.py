@@ -91,9 +91,10 @@ def get_table(table_id):
         connection = connect_to_database()
         if connection.is_connected():
             cursor = connection.cursor()
-            sql_search_query = """ SELECT `table_name`, `script` FROM `tbl_table` WHERE `table_id` = %s"""
+            sql_search_query = """ SELECT `table_name`, `script`, `x`, `y` FROM `tbl_table` WHERE `table_id` = %s"""
             cursor.execute(sql_search_query, (table_id,))
             record = cursor.fetchone()
+
             return record
     except Exception as error:
         return f"Failed to retrieve table: {error}"
