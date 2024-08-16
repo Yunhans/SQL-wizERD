@@ -126,8 +126,11 @@ def middle_parse_json(file_id, info):
             
         
         tables.append(table_dict)
+        
+        # if no error, return 1 else 0
+    return 1
     
-    return tables
+    #return tables
 
 # Parsing the extracted information
 # parsed_tables = parse_info(extracted_info2)

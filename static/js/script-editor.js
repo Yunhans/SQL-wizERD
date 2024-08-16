@@ -112,7 +112,9 @@ async function updateERDFromSQL(script) {
   try {
       isUserChange = false;
       const result = await transformScriptToERD(script);
-      //erdDisplay.value = result;
+      if (result) {
+          getAllTableData(get_file_id);
+      }
   } catch (error) {
       console.error('Error updating ERD from SQL:', error);
   } finally {
@@ -127,7 +129,7 @@ const debouncedSyncEditor = debounce(() => {
       const script = editor.getValue();
       updateERDFromSQL(script);
   }
-}, 500);
+}, 400);
 
 
 // Add event listeners
@@ -179,7 +181,7 @@ async function updateSQLFromERD(erdData) {
   try {
       isUserChange = false;
       const result = await transformERDToScript(erdData);
-      //editor.setValue(result);
+      editor.setValue(result);
   } catch (error) {
       console.error('Error updating SQL from ERD:', error);
   } finally {

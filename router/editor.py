@@ -37,9 +37,9 @@ async def sql_parse_json(item: Script):
     raw_sql = item.text
     #print(raw_sql)
     middle_format = sql_parse_middle(raw_sql)
-    table_data = middle_parse_json(file_id, middle_format)
+    result = middle_parse_json(file_id, middle_format)
 
-    return table_data
+    return result
     
 
     
