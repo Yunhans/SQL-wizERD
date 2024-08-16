@@ -69,7 +69,7 @@ export function handleSpecificTable(data) {
     document.getElementById('add-attr-btn').innerHTML = '<button type="button" class="btn btn-sm border-0 text-primary mb-0" onclick="addAttributes('+ total_index +')"><i class="bi bi-plus-circle"></i> Add attribute</button>';
 }
 
-export function handleTableDrag(data) {
-    const message = JSON.stringify({ action: 'edit position', table_id: data.id }); 
+export function handleTableDrag(nodeData) {
+    const message = JSON.stringify({ action: 'edit position', nodeData: nodeData });
     window.parent.postMessage(message, 'http://127.0.0.1:8000/whiteboard/');
 }

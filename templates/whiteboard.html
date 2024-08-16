@@ -292,6 +292,9 @@
                 if (data.action === "edit info") {
                     console.log("Parent Data received:", data);
                     getTableData(data.table_id);
+                } else if (data.action === "edit position") {
+                    console.log("Parent Data received:", data.nodeData);
+                    updataTablePosition(data.nodeData);
                 }
             }
             
@@ -339,6 +342,36 @@
                 } catch (error) {
                     console.error("Failed to send data:", error);
                 }
+            }
+
+            function updataTablePosition(nodeData){
+                $.each(nodeData, function(index, value) {
+                    var request = {
+                        'id': value.id,
+                        'x': value.position.x.toFixed(2),
+                        'y': value.position.y.toFixed(2)
+                    };
+    
+                    var data_string = JSON.stringify(request);
+    
+                    console.log(data_string);
+
+                    $.ajax({
+                        type: "PUT",
+                        url: "/api/table/update/position",
+                        crossDomain: true,
+                        contentType: "application/json",
+                        data: data_string,
+                        cache: false,
+                        dataType: 'json',
+                        timeout: 5000,
+                        statusCode: {
+                            200: function(response) {
+                                console.log("Position update successfully");
+                            },
+                        }
+                    });
+                })
             }
     </script>
         

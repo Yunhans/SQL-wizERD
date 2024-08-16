@@ -159,9 +159,11 @@
                 cache: false,
                 dataType: 'json',
                 timeout: 5000,
-                success: function (response) {
-                    console.log(response);
-                    alert("新增檔案成功");
+                statusCode: {
+                    201: function(response) {
+                        console.log("File created successfully");
+                        alert("新增檔案成功");
+                    },
                 }
             });
         }

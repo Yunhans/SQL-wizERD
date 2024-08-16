@@ -73,7 +73,14 @@ function App() {
 		console.log('Node drag stopped for 2 seconds. Triggering function...');
 		// to do
 		const nodes = window.nodesRef.current;
-		console.log(nodes);
+		const nodeData = nodes.map(function(value) {
+			return {
+				id: value.id,
+				position: value.position
+			};
+		});
+		// console.log(nodeData);
+		handleTableDrag(nodeData);
 	};
 
 	// 當移動節點時觸發
