@@ -4,7 +4,7 @@ import { Handle, Position } from '@xyflow/react';
 const TableNode = ({ data }) => {
     return (
         <>
-            <div className="mytable card" draggable="true" style={{ width: '300px' }}>
+            <div className="mytable card" draggable="true" style={{ minWidth: '300px' }}>
                 <div className="myheader card-header d-flex px-2" draggable="true">
                     <span className="flex-grow-1 text-center">{data.label}</span>
                     <button type="button" className="btn btn-sm border-0 p-0" onClick={ () => { const message = JSON.stringify({ action: 'edit info', table_id: data.id }); window.parent.postMessage(message, 'http://127.0.0.1:8000/whiteboard/'); } } data-bs-toggle="modal" data-bs-target="#editTableModal">

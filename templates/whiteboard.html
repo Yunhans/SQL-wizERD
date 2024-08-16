@@ -242,7 +242,10 @@
                                 isKey: attr.primary_key
                             }))
                         },
-                        position: table.location
+                        position: {
+                            x: parseFloat(table.location.x),
+                            y: parseFloat(table.location.y)
+                        }
                     }));
 
                     const edges = input.flatMap(table => 
@@ -303,7 +306,7 @@
                     dataType: 'json',
                     timeout: 5000,
                     success: function(data){
-                        console.log(data);
+                        // console.log(data);
                         passTableData(data);
                     },
                     error: function () {
