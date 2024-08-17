@@ -104,7 +104,7 @@ def get_table(table_id):
             
             
             
-# get table position
+# get table position (for create)
 def get_tables_position(file_id):
     try:
         connection = connect_to_database()
@@ -121,6 +121,23 @@ def get_tables_position(file_id):
             cursor.close()
             connection.close()
 
+
+# get tables script
+def get_tables_script(file_id):
+    try:
+        connection = connect_to_database()
+        if connection.is_connected():
+            cursor = connection.cursor()
+            sql_search_query = """ SELECT `script` FROM `tbl_table` WHERE `file_id` = %s"""
+            cursor.execute(sql_search_query, (file_id,))
+            records = cursor.fetchall()
+            return records
+    except Exception as error:
+        return f"Failed to retrieve tables script: {error}"
+    finally:
+        if connection and connection.is_connected():
+            cursor.close()
+            connection.close()
 
 '''
 

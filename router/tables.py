@@ -74,6 +74,7 @@ async def get_all_table(file_id):
 
 @router.get("/get/toscript/{file_id}", status_code=status.HTTP_200_OK)
 async def get_all_table_to_script(file_id):
+    
     table_list = get_all_tables(file_id)
     script = generate_sql_script(table_list)
     
