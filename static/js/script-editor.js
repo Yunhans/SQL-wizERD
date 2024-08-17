@@ -149,18 +149,14 @@ editor.getSession().on('change', () => {
   
   // send to backend
   
-async function transformERDToScript(erdData) {
+async function transformERDToScript() {
   let file_id = get_file_id;
   try {
-      const response = await fetch("http://127.0.0.1:8000/editor/api/erd_to_script", {
-          method: 'POST',
+      const response = await fetch(`http://127.0.0.1:8000/editor/api/erd_to_script/${file_id}`, {
+          method: 'GET',
           headers: {
               'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-              file_id: file_id,
-              erd_data: erdData
-          }),
+          }
       });
       
       if (!response.ok) {
@@ -177,11 +173,11 @@ async function transformERDToScript(erdData) {
 
 
 // Update the SQL script display
-async function updateSQLFromERD(erdData) {
+async function updateSQLFromERD() {
   try {
       isUserChange = false;
-      const result = await transformERDToScript(erdData);
-      editor.setValue(result);
+      const script = await transformERDToScript();
+      editor.setValue(script,-1);
   } catch (error) {
       console.error('Error updating SQL from ERD:', error);
   } finally {
@@ -189,83 +185,3 @@ async function updateSQLFromERD(erdData) {
   }
 }
 
-// Button event listeners
-
-
-
-// function transformERDToScript(erd) {
-//   return erd;
-//}
-// async function updateSQLFromERD(erd) {
-//   try {
-//       const result = transformERDToScript(erd);
-//       isUserChange = false;
-//       editor.setValue(result, -1);
-//       isUserChange = true;
-//       console.log('2');
-//   } catch (error) {
-//       console.error('Error updating SQL from ERD:', error);
-//   }
-// }
-
-
-// const debouncedSyncERD = debounce(() => {
-//   if (isUserChange) {
-//       const erd = erdDisplay.value;
-//       updateSQLFromERD(erd);
-//   }
-// }, 500);
-
-
-
-// erdDisplay.addEventListener('input', () => {
-//   if (isUserChange) {
-//       debouncedSyncERD();
-//   }
-// });
-
-
-
-//
-// from the ace editor, send the text to the server
-//
-
-
-// let timeout = null;
-
-// aceEditor.getSession().on('change', function() {
-//   if (timeout !== null) {
-//     clearTimeout(timeout);
-//   }
-//   timeout = setTimeout(function() {
-
-//     let text = aceEditor.getValue();
-//     let file_id = get_file_id
-
-//     // console.log(text);
-//       fetch('http://127.0.0.1:8000/editor/api/table_transform', {
-//         method: 'POST',
-//         headers: {
-//           'Content-Type': 'application/json'
-//         },
-//         body: JSON.stringify({ file_id: file_id, text: text })
-        
-//       })
-//       .then(response => response.json())
-//       .then(data => {
-//         console.log(data);
-//         triggerFunction();
-//       })
-//       .catch(error => console.error('Error:', error));
-    
-//   }, 1000);
-// });
-
-
-
-
-// trigger when getting response
-// function triggerFunction() {
-  
-//   // write here
-// }
