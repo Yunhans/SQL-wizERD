@@ -135,27 +135,27 @@ async def update_table_info_(request: TableUpdateInfoRequest):
 
 '''
 
+class TablePosition(BaseModel):
+    x: float
+    y: float
+
 class TableUpdatePositionRequest(BaseModel):
     id: str
-    location: dict
-    
-    @property
-    def x(self):
-        return self.location.get('x')
+    position: TablePosition
 
-    @property
-    def y(self):
-        return self.location.get('y')
+class TableUpdatePositionsRequest(BaseModel):
+    updates: List[TableUpdatePositionRequest]
 
 
 
 @router.put("/update/position", status_code=status.HTTP_200_OK)
-async def update_table_position_(request: TableUpdatePositionRequest):
-    table_id = request.id
-    x = request.x
-    y = request.y
-    
-    result = update_table_position(table_id, x, y)
+async def update_table_position_(request: TableUpdatePositionsRequest):
+    for update in request.updates:
+        table_id = update.id
+        x = update.position.x
+        y = update.position.y
+        print(table_id, x, y)
+        result = update_table_position(table_id, x, y)
     
     return result
 

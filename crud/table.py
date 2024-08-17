@@ -101,6 +101,26 @@ def get_table(table_id):
         if connection and connection.is_connected():
             cursor.close()
             connection.close()
+            
+            
+            
+# get table position
+def get_tables_position(file_id):
+    try:
+        connection = connect_to_database()
+        if connection.is_connected():
+            cursor = connection.cursor()
+            sql_search_query = """ SELECT MAX(`x`) + 400, ROUND(AVG(`y`)) FROM `tbl_table` WHERE `file_id` = %s"""
+            cursor.execute(sql_search_query, (file_id,))
+            record = cursor.fetchone()
+            return record
+    except Exception as error:
+        return f"Failed to retrieve table position: {error}"
+    finally:
+        if connection and connection.is_connected():
+            cursor.close()
+            connection.close()
+
 
 '''
 

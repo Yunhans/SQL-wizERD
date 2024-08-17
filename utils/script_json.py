@@ -1,7 +1,7 @@
 import re
 
 
-from crud.table import get_specific_table_id
+from crud.table import get_specific_table_id, get_tables_position
 from schema.structed_object import add_table, add_fk, alter_table
 
 
@@ -103,8 +103,13 @@ def middle_parse_json(file_id, info):
         
         # table don't exist
         if not table_id:
+            x, y = get_tables_position(file_id)
+            
+            if x == None or y == None:
+                x, y = 0, 0  
+            
             # add new table
-            add_table(_Table_name, _Script, 0, 0, file_id)
+            add_table(_Table_name, _Script, x, y, file_id)
             
             # if nothing in foreign key[]
             if foreign_keys:
