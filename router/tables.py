@@ -154,7 +154,6 @@ async def update_table_position_(request: TableUpdatePositionsRequest):
         table_id = update.id
         x = update.position.x
         y = update.position.y
-        print(table_id, x, y)
         result = update_table_position(table_id, x, y)
     
     return result

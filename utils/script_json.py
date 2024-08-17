@@ -41,8 +41,8 @@ def middle_parse_json(file_id, info):
                 if fk_details:
                     local_field, referenced_table, referenced_field = fk_details.groups()
                     fk_dict = {
-                        "from": f"{table_dict['name']}.{local_field}",
-                        "references": f"{referenced_table}.{referenced_field}"
+                        "from": f"{table_dict['name']}.{local_field.strip()}",
+                        "references": f"{referenced_table}.{referenced_field.strip()}"
                     }
                     table_dict["foreign_keys"].append(fk_dict)
             
