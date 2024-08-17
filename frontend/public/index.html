@@ -24,12 +24,6 @@
 		Learn how to configure a non-root public URL by running `npm run build`.
 		-->
 		<title>React App</title>
-
-		<style>
-			/* .no-caret::after {
-				display: none !important;
-			} */
-		</style>
 	</head>
 	<body>
 		<noscript>You need to enable JavaScript to run this app.</noscript>
@@ -37,10 +31,10 @@
 
 		<!-- Modal -->
 		<div class="modal fade" id="editTableModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editTableModalLabel" aria-hidden="true">
-			<div class="modal-dialog modal-lg">
+			<div class="modal-dialog modal-lg modal-fullscreen-lg-down modal-dialog-scrollable">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h1 class="modal-title fs-5" id="editTableModalLabel">Edit Table</h1>
+						<h1 class="modal-title fs-5" id="editTableModalLabel">Edit Table <span id="edit_table_id" class="d-none"></span></h1>
 						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
 
@@ -64,7 +58,7 @@
 								</div>
 							</div>
 
-							<div id="attribute-container" >
+							<div id="attribute-container">
 								<div class="row mb-2">
 									<div class="col-md-4">
 										<input type="text" class="form-control" id="inputAttrName">
@@ -118,9 +112,43 @@
 									</div>
 								</div>
 							</div>
-
 							<div id="add-attr-btn">
 								<button type="button" class="btn btn-sm border-0 text-primary mb-0"><i class="bi bi-plus-circle"></i> Add attribute</button>
+							</div>
+
+							<div class="row mt-3">
+								<div class="col-md-4">
+									<label class="form-label">Foreign key Attrubute</label>
+								</div>
+								<div class="col-md-4">
+									<label class="form-label">Reference Table</label>
+								</div>
+								<div class="col-md-4">
+									<label class="form-label">Reference Attribute</label>
+								</div>
+							</div>
+
+							<div id="fk-container">
+								<div class="row mb-2">
+									<div class="col-md-4">
+										<select id="fk-attr-options" class="form-select" aria-label="Default select example">
+											<option selected>Choose</option>
+										</select>
+									</div>
+									<div class="col-md-4">
+										<select class="form-select" aria-label="Default select example">
+											<option selected>Open this select menu</option>
+										  </select>
+									</div>
+									<div class="col-md-4">
+										<select class="form-select" aria-label="Default select example">
+											<option selected>Open this select menu</option>
+										  </select>
+									</div>
+								</div>
+							</div>
+							<div id="add-attr-btn">
+								<button type="button" class="btn btn-sm border-0 text-primary mb-0"><i class="bi bi-plus-circle"></i> Add Foreign key</button>
 							</div>
 
 						</form>
@@ -128,18 +156,80 @@
 					</div>
 
 					<div class="modal-footer">
-						<button type="button" class="btn btn-primary">Confirm</button>
+						<button type="button" class="btn btn-primary" onclick="editSpecificTable()" data-bs-dismiss="modal">Confirm</button>
 					</div>
 				</div>
 			</div>
 		</div>
 
 		<script>
-			const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-			const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+			var tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+			var tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 
 			function addAttributes(index) {
 				console.log(index);
+			}
+
+			function editSpecificTable() {
+				const message = JSON.stringify({ action: 'edit table info', data: getAttributeData() });
+    			window.parent.postMessage(message, 'http://127.0.0.1:8000/whiteboard/');
+			}
+
+			function getAttributeData() {
+				const rows = document.querySelectorAll('#attribute-container .row.mb-2');
+				const table_data = {
+					"id": document.querySelector('#edit_table_id')?.innerText || '',
+					"name": document.querySelector('#inputTableName')?.value || '',
+					"attribute": [],
+					"foreign_keys": []
+				};
+
+				// Collect attribute data
+				rows.forEach(row => {
+					const index = row.querySelector('input[id^="inputAttrName-"]')?.id.split('-').pop();
+
+					if (index) {
+						const name = row.querySelector(`#inputAttrName-${index}`)?.value || '';
+						const type = row.querySelector(`#inputType-${index}`)?.value || '';
+						const primaryKey = row.querySelector(`#key-check-${index}`)?.checked || false;
+						const notNull = row.querySelector(`#null-check-${index}`)?.checked || false;
+						const unique = row.querySelector(`#uni-check-${index}`)?.checked || false;
+						const defaultValue = row.querySelector(`#default-${index}`)?.value || null;
+						const autoIncrement = row.querySelector(`#auto-check-${index}`)?.checked || false;
+
+						table_data.attribute.push({
+							"name": name,
+							"type": type,
+							"primary_key": primaryKey,
+							"not_null": notNull,
+							"unique": unique,
+							"auto_increment": autoIncrement,
+							"default": defaultValue
+						});
+					}
+				});
+
+				// Collect foreign key data
+				const fkRows = document.querySelectorAll('#fk-container .row.mb-2');
+				fkRows.forEach(row => {
+					const index = row.querySelector('select[id^="fk-attr-options-"]')?.id.split('-').pop();
+
+					if (index) {
+						const from = row.querySelector(`#fk-attr-options-${index}`)?.value || '';
+						const refTable = row.querySelector(`#ref-table-options-${index}`)?.value || '';
+						const refAttr = row.querySelector(`#ref-attr-options-${index}`)?.value || '';
+
+						if (from && refTable && refAttr) {
+							table_data.foreign_keys.push({
+								"from": `${table_data.name}.${from}`,
+								"references": `${refTable}.${refAttr}`
+							});
+						}
+					}
+				});
+
+				// console.log(JSON.stringify(table_data, null, 2));
+				return JSON.stringify(table_data, null, 2)
 			}
 		</script>
 	</body>

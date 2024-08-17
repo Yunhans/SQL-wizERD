@@ -1,9 +1,12 @@
 export function handleSpecificTable(data) {
+
     const table_data = data.table_data;
     document.getElementById('inputTableName').value = table_data.name;
 
     var attribute_html = '';
-    var total_index = 0;
+    var foreign_key_html = '';
+    var total_attrbute_index = 0;
+    var total_foreign_key_index = 0;
     table_data.attribute.forEach(function(value, index){
         attribute_html += '\
             <div class="row mb-2">\
@@ -39,7 +42,7 @@ export function handleSpecificTable(data) {
                         <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">\
                             <i class="bi bi-three-dots"></i>\
                         </button>\
-                        <div class="dropdown-menu" style="min-width: 250px;">\
+                        <div class="dropdown-menu shadow" style="min-width: 250px;">\
                             <p class="dropdown-header">Other Constraints</p>\
                             <div class="form-check mx-3 mb-2">\
                                 <input class="form-check-input" type="checkbox" value="" id="auto-check-'+ index + '"  >\
@@ -49,7 +52,7 @@ export function handleSpecificTable(data) {
                             </div>\
                             <div class="mx-3">\
                                 <label for="default-'+ index + '" class="form-label mb-0">default</label>\
-                                <input type="text" class="form-control form-control-sm" id="default-'+ index + '">\
+                                <input type="text" class="form-control form-control-sm" id="default-'+ index + '" value='+ (value.default === null? "": value.default) +'>\
                             </div>\
                             <div class="dropdown-divider"></div>\
                             <p class="dropdown-header">Actions</p>\
@@ -59,14 +62,49 @@ export function handleSpecificTable(data) {
                 </div>\
             </div>\
         ';	
-        total_index = index;
+        total_attrbute_index = index;
     });
+
+    table_data.foreign_keys.forEach(function(value, index){
+        foreign_key_html += '\
+            <div class="row mb-2">\
+                <div class="col-md-4">\
+                    <select id="fk-attr-options-'+ index + '" class="form-select" aria-label="Default select example">\
+                        <option selected>'+ value.from.split('.')[1] +'</option>\
+                    </select>\
+                </div>\
+                <div class="col-md-4">\
+                    <select id="ref-table-options-'+ index + '" class="form-select" aria-label="Default select example">\
+                        <option selected>'+ value.references.split('.')[0] +'</option>\
+                        </select>\
+                </div>\
+                <div class="col-md-4">\
+                    <select id="ref-attr-options-'+ index + '" class="form-select" aria-label="Default select example">\
+                        <option selected>'+ value.references.split('.')[1] +'</option>\
+                        </select>\
+                </div>\
+            </div>\
+        ';
+        total_foreign_key_index = index;
+    });
+
+
+    document.getElementById('edit_table_id').innerHTML = table_data.id;
 
     // attr rows
     document.getElementById('attribute-container').innerHTML = attribute_html;
 
+    // foreign key rows
+    document.getElementById('fk-container').innerHTML = foreign_key_html;
+
     // add attr btn
-    document.getElementById('add-attr-btn').innerHTML = '<button type="button" class="btn btn-sm border-0 text-primary mb-0" onclick="addAttributes('+ total_index +')"><i class="bi bi-plus-circle"></i> Add attribute</button>';
+    document.getElementById('add-attr-btn').innerHTML = '<button type="button" class="btn btn-sm border-0 text-primary mb-0" onclick="addAttributes('+ total_attrbute_index +')"><i class="bi bi-plus-circle"></i> Add attribute</button>';
+
+    // Reinitialize Bootstrap tooltips
+    /* eslint-disable no-undef */
+    tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    /* eslint-enable no-undef */
 }
 
 export function handleTableDrag(nodeData) {

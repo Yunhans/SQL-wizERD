@@ -58,7 +58,6 @@ const initialEdges = [
 const getNodeId = () => `randomnode_${+new Date()}`;
 
 function App() {
-
 	// // with initial
 	// const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
 	// const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
@@ -70,7 +69,7 @@ function App() {
 	const timerRef = useRef(null);
 
 	const handleNodeStopDrag = () => {
-		console.log('Node drag stopped for 2 seconds. Triggering function...');
+		console.log('Node drag stopped for 1.5 seconds. Triggering function...');
 		// to do
 		const nodes = window.nodesRef.current;
 		const nodeData = nodes.map(function(value) {
@@ -95,7 +94,7 @@ function App() {
 		// 如果節點移動，則啟動計時器
 		timerRef.current = setTimeout(() => {
 			handleNodeStopDrag();
-		}, 2000);
+		}, 1500);
 	};
 	
 	const onConnect = useCallback(

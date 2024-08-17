@@ -245,8 +245,8 @@
 
                     const edges = input.flatMap(table => 
                         table.foreign_keys.map(fk => {
-                        const [sourceTable, sourceColumn] = fk.from.split(". ");
-                        const [targetTable, targetColumn] = fk.references.split(". ");
+                        const [sourceTable, sourceColumn] = fk.from.split(".");
+                        const [targetTable, targetColumn] = fk.references.split(".");
                         return {
                             id: `${sourceTable.trim()}->${targetTable.trim()}`,
                             source: nodes.find(node => node.data.label === sourceTable.trim()).id,
@@ -290,6 +290,9 @@
                 } else if (data.action === "edit position") {
                     console.log("Parent Data received:", data.nodeData);
                     updataTablePosition(data.nodeData);
+                } else if (data.action === "edit table info") {
+                    console.log("Parent Data received:", data.data);
+                    updataTableInfo(data.data);
                 }
             }
             
@@ -346,7 +349,7 @@
 
                 var data_string = JSON.stringify(request);
 
-                console.log(data_string);
+                // console.log(data_string);
 
                 $.ajax({
                     type: "PUT",
@@ -364,7 +367,32 @@
                     }
                 });
             }
+
+            function updataTableInfo(data){
+                const data_string = data;
+
+                // console.log(data_string);
+
+                $.ajax({
+                    type: "PUT",
+                    url: "/api/table/update/info",
+                    crossDomain: true,
+                    contentType: "application/json",
+                    data: data_string,
+                    cache: false,
+                    dataType: 'json',
+                    timeout: 5000,
+                    statusCode: {
+                        200: function(response) {
+                            console.log("Table info update successfully");
+                            getAllTableData(file_id);
+                        },
+                    }
+                });
+            }
+
     </script>
+
         
 </body>
 </html>
