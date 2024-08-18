@@ -40,7 +40,7 @@
 
 					<div class="modal-body">
 						
-						<form id="editTableForm">
+						<form id="editTableForm" onsubmit="handleFormSubmit(event)">
 							<div class="col-md-12">
 								<label for="inputTableName" class="form-label">Table name</label>
 								<input type="text" class="form-control" id="inputTableName">
@@ -113,7 +113,7 @@
 								</div>
 							</div>
 							<div id="add-attr-btn">
-								<button type="button" class="btn btn-sm border-0 text-primary mb-0"><i class="bi bi-plus-circle"></i> Add attribute</button>
+								<button type="button" class="btn btn-sm border-0 text-primary mb-0" onclick="document.getElementById('editTableForm').submit();"><i class="bi bi-plus-circle"></i> Add attribute</button>
 							</div>
 
 							<div class="row mt-3">
@@ -151,12 +151,13 @@
 								<button type="button" class="btn btn-sm border-0 text-primary mb-0"><i class="bi bi-plus-circle"></i> Add Foreign key</button>
 							</div>
 
+							<button type="submit" id="submit-form-btn" class="btn btn-primary d-none" data-bs-dismiss="modal">Confirm</button>
 						</form>
 						
 					</div>
 
 					<div class="modal-footer">
-						<button type="button" class="btn btn-primary" onclick="editSpecificTable()" data-bs-dismiss="modal">Confirm</button>
+						<button type="button" class="btn btn-primary" onclick="document.getElementById('submit-form-btn').click();">Confirm</button>
 					</div>
 				</div>
 			</div>
@@ -165,6 +166,11 @@
 		<script>
 			var tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
 			var tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+
+			function handleFormSubmit(event) {
+				event.preventDefault(); // Prevent the default form submission
+				editSpecificTable(); // Call the function to handle the form data
+			}
 
 			function editSpecificTable() {
 				const message = JSON.stringify({ action: 'edit table info', data: getAttributeData() });
