@@ -9,7 +9,7 @@ export function handleSpecificTable(data) {
     var total_foreign_key_index = 0;
     table_data.attribute.forEach(function(value, index){
         attribute_html += '\
-            <div class="row mb-2">\
+            <div class="row mb-2" id="attribute-row-'+ index + '">\
                 <div class="col-md-4">\
                     <input type="text" class="form-control" id="inputAttrName-'+ index + '" value='+ value.name +'>\
                 </div>\
@@ -56,7 +56,9 @@ export function handleSpecificTable(data) {
                             </div>\
                             <div class="dropdown-divider"></div>\
                             <p class="dropdown-header">Actions</p>\
-                            <button type="button" class="btn btn-sm btn-danger mx-3 mb-2"><i class="bi bi-trash3"></i> Delete attribute</button>\
+                            <button type="button" class="btn btn-sm btn-danger mx-3 mb-2" id="delete-attr-btn-'+ index +'" onclick="deleteAttribute('+ index +')">\
+                                <i class="bi bi-trash3"></i> Delete attribute\
+                            </button>\
                         </div>\
                     </div>\
                 </div>\
@@ -98,7 +100,7 @@ export function handleSpecificTable(data) {
     document.getElementById('fk-container').innerHTML = foreign_key_html;
 
     // add attr btn
-    document.getElementById('add-attr-btn').innerHTML = '<button type="button" class="btn btn-sm border-0 text-primary mb-0" onclick="addAttributes('+ total_attrbute_index +')"><i class="bi bi-plus-circle"></i> Add attribute</button>';
+    document.getElementById('add-attr-btn').innerHTML = '<button type="button" class="btn btn-sm border-0 text-primary mb-0" onclick="addAttribute('+ total_attrbute_index +')"><i class="bi bi-plus-circle"></i> Add attribute</button>';
 
     // Reinitialize Bootstrap tooltips
     /* eslint-disable no-undef */

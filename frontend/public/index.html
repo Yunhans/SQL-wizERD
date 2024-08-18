@@ -166,10 +166,6 @@
 			var tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
 			var tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 
-			function addAttributes(index) {
-				console.log(index);
-			}
-
 			function editSpecificTable() {
 				const message = JSON.stringify({ action: 'edit table info', data: getAttributeData() });
     			window.parent.postMessage(message, 'http://127.0.0.1:8000/whiteboard/');
@@ -231,6 +227,88 @@
 				// console.log(JSON.stringify(table_data, null, 2));
 				return JSON.stringify(table_data, null, 2)
 			}
+
+			function deleteAttribute(index) {
+				let answer = confirm('Are you sure you want to delete this attribute?');
+				if (!answer) return;
+				document.getElementById(`attribute-row-${index}`).remove();
+			}
+			
+			function addAttribute(currentIndex) {
+				const newIndex = currentIndex + 1;
+
+				const attributeRowHTML = `
+					<div class="row mb-2" id="attribute-row-${newIndex}">
+						<div class="col-md-4">
+							<input type="text" class="form-control" id="inputAttrName-${newIndex}" value="">
+						</div>
+						<div class="col-md-4">
+							<input class="form-control" list="datalistOptions" id="inputType-${newIndex}" value="">
+							<datalist id="datalistOptions">
+								<option value="INT">
+								<option value="VARCHAR(255)">
+								<option value="DATE">
+							</datalist>
+						</div>
+						<div class="col-md-4 d-flex justify-content-around">
+							<!-- primary key -->
+							<input type="checkbox" class="btn-check" id="key-check-${newIndex}" autocomplete="off">
+							<label class="btn btn-outline-warning" for="key-check-${newIndex}" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="primary key">
+								<i class="bi bi-key-fill"></i>
+							</label>
+							<!-- notnull -->
+							<input type="checkbox" class="btn-check" id="null-check-${newIndex}" autocomplete="off">
+							<label class="btn btn-outline-danger" for="null-check-${newIndex}" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="not null">
+								<i class="bi bi-ban"></i>
+							</label>
+							<!-- unique -->
+							<input type="checkbox" class="btn-check" id="uni-check-${newIndex}" autocomplete="off">
+							<label class="btn btn-outline-dark" for="uni-check-${newIndex}" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="unique">
+								<i class="bi bi-star-fill"></i>
+							</label>
+							<!-- edit -->
+							<div class="btn-group">
+								<button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+									<i class="bi bi-three-dots"></i>
+								</button>
+								<div class="dropdown-menu shadow" style="min-width: 250px;" data-bs-auto-close="inside">
+									<p class="dropdown-header">Other Constraints</p>
+									<div class="form-check mx-3 mb-2">
+										<input class="form-check-input" type="checkbox" value="" id="auto-check-${newIndex}">
+										<label class="form-check-label" for="auto-check-${newIndex}">
+											auto increment
+										</label>
+									</div>
+									<div class="mx-3">
+										<label for="default-${newIndex}" class="form-label mb-0">default</label>
+										<input type="text" class="form-control form-control-sm" id="default-${newIndex}" value="">
+									</div>
+									<div class="dropdown-divider"></div>
+									<p class="dropdown-header">Actions</p>
+									<button type="button" class="btn btn-sm btn-danger mx-3 mb-2" id="delete-attr-btn-${newIndex}" onclick="deleteAttribute(${newIndex})">
+										<i class="bi bi-trash3"></i> Delete attribute
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				`;
+
+				// Append the new attribute row to the container
+				document.getElementById('attribute-container').insertAdjacentHTML('beforeend', attributeRowHTML);
+
+				// Reinitialize Bootstrap tooltips for the newly added elements
+				tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+				tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+
+				// update index of add-attr-btn to add new attribute
+				document.getElementById('add-attr-btn').innerHTML = `
+					<button type="button" class="btn btn-sm border-0 text-primary mb-0" onclick="addAttribute(${newIndex})">
+						<i class="bi bi-plus-circle"></i> Add attribute
+					</button>
+				`;
+			}
+
 		</script>
 	</body>
 </html>
