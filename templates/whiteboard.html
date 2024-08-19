@@ -363,6 +363,7 @@
                     statusCode: {
                         200: function(response) {
                             console.log("Position update successfully");
+                            updateSQLFromERD();
                         },
                     }
                 });
@@ -385,6 +386,7 @@
                     statusCode: {
                         200: function(response) {
                             console.log("Table info update successfully");
+                            updateSQLFromERD();
                             getAllTableData(file_id);
                         },
                     }

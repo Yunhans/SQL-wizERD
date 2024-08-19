@@ -62,7 +62,8 @@ export function handleSpecificTable(data) {
                         </div>
                     </div>
                 </div>
-            </div>`;
+            </div>
+        `;
         total_attrbute_index = index;
     });
 
@@ -84,7 +85,8 @@ export function handleSpecificTable(data) {
                         <option selected>${value.references.split('.')[1]}</option>
                         </select>
                 </div>
-            </div>`;
+            </div>
+        `;
         total_foreign_key_index = index;
     });
 
