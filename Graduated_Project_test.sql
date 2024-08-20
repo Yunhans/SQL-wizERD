@@ -68,7 +68,8 @@ CREATE TABLE IF NOT EXISTS `graduated_project`.`tbl_table` (
   INDEX `File_id_idx2` (`file_id` ASC) VISIBLE,
   CONSTRAINT `fk_tablelist_ref_files`
     FOREIGN KEY (`file_id`)
-    REFERENCES `graduated_project`.`tbl_file` (`file_id`))
+    REFERENCES `graduated_project`.`tbl_file` (`file_id`)
+    ON DELETE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 

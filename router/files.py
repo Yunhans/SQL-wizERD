@@ -66,8 +66,8 @@ class FileUpdateRequest(BaseModel):
     file_id: str
     file_name: str
 
-@router.put("/update/{file_id}", status_code=status.HTTP_200_OK)
-async def update_file_name(request: FileUpdateRequest):
+@router.put("/update", status_code=status.HTTP_200_OK)
+async def update_file_name_(request: FileUpdateRequest):
     file_id = request.file_id
     file_name = request.file_name
     
@@ -86,7 +86,7 @@ async def update_file_name(request: FileUpdateRequest):
 '''
 
 @router.delete("/delete/{file_id}", status_code=status.HTTP_200_OK)
-async def delete_file(file_id):
+async def delete_file_(file_id):
     
     result = delete_file(file_id)
     
