@@ -26,7 +26,7 @@ class FileCreateRequest(BaseModel):
     file_name: str
 
 
-@router.post("/create", status_code=status.HTTP_201_CREATED)
+@router.post("/create", status_code=status.HTTP_200_OK)
 async def create_new_file(request: FileCreateRequest):  
     user_id = request.user_id
     file_name = request.file_name
@@ -50,3 +50,32 @@ async def get_all_file(user_id):
     file_list = get_all_files(user_id)
     
     return {"files": file_list}
+
+
+
+'''
+
+--- UPDATE ---
+
+    -update file name
+    -params: file_id, file_name
+
+'''
+
+@router.put("/update/{file_id}", status_code=status.HTTP_200_OK)
+async def update_file_name(file_id, file_name):
+    pass
+
+
+
+'''
+
+--- DELETE ---
+
+    -delete file
+    -params: file_id
+'''
+
+@router.delete("/delete/{file_id}", status_code=status.HTTP_200_OK)
+async def delete_file(file_id):
+    pass

@@ -24,21 +24,23 @@ router = APIRouter(
 
 class TableCreateRequest(BaseModel):
     file_id: str
-    table_name: str
-    script: str
-    x: str
-    y: str
+    name: str
+    attribute: Optional[List] = []
+    foreign_keys: Optional[List] = []
+    location:dict
 
 
 
-@router.post("/create", status_code=status.HTTP_201_CREATED)
+@router.post("/create", status_code=status.HTTP_200_OK)
 async def create_new_table(request: TableCreateRequest):
     file_id = request.file_id
-    table_name = request.table_name
-    script = request.script
-    x = request.x
-    y = request.y
+    table_name = request.name
+    attributes = request.attribute
+    foreign_keys = request.foreign_keys
+    x = request.location['x']
+    y = request.location['y']
     
+    script = str(reverse_info(table_name, attributes, foreign_keys))
     result = new_table(table_name, script, x, y, file_id)
     
     return result

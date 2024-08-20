@@ -1,4 +1,4 @@
-from connect_db import connect_to_database, close_connection
+from connect_db import connect_to_database
 
 
 
@@ -63,8 +63,26 @@ def get_all_tables(file_id):
             connection.close()
       
  
+# get all table name (check)
+def get_all_tables_idname(file_id):
+    try:
+        connection = connect_to_database()
+        if connection.is_connected():
+            cursor = connection.cursor()
+            sql_search_query = """ SELECT `table_id`, `table_name` FROM `tbl_table` WHERE `file_id` = %s"""
+            cursor.execute(sql_search_query, (file_id,))
+            records = cursor.fetchall()
+            return records
+    except Exception as error:
+        return f"Failed to retrieve tables name: {error}"
+    finally:
+        if connection and connection.is_connected():
+            cursor.close()
+            connection.close()
+ 
+ 
 
-# get specific table (check)
+# get all table name (check)
 def get_specific_table_id(file_id, table_name):
     connection = None
     try:

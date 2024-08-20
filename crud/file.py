@@ -1,4 +1,4 @@
-from connect_db import connect_to_database, close_connection
+from connect_db import connect_to_database
 
 
 
