@@ -186,7 +186,6 @@ function App() {
 						connectionMode={ConnectionMode.Loose}
 					>
 						<Panel position="bottom-center">
-							{/* <button type="button" className="btn btn-success" onClick={onAdd}>add Table</button> */}
 							<button type="button" className="btn btn-success" onClick={ () => { addTable() }}>add Table</button>
 						</Panel>
 						<Background/>

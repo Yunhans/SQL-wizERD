@@ -309,10 +309,10 @@
             }
         }
 
-        function addTable(x,y){
+        function addTable(x, y){
             var request = {
                 'file_id': file_id,
-                'table_name': 'table',
+                'name': 'table',
                 'attribute': [
                     {
                         "name": "id",
@@ -325,9 +325,9 @@
                     }
                 ],
                 'foreign_keys': [],
-                'position': {
-                    'x': (x + (Math.random() - 0.5) * 400).toFixed(2),
-                    'y': (y + (Math.random() - 0.5) * 400).toFixed(2)
+                'location': {
+                    'x': x.toFixed(2),
+                    'y': y.toFixed(2)
                 }
             };
 
@@ -347,10 +347,10 @@
                 statusCode: {
                     200: function(response) {
                         console.log("Table create successfully");
-                        updateSQLFromERD();
                     },
                 }
             });
+            getAllTableData(file_id);
         }
 
     </script>  
