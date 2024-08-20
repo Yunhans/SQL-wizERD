@@ -2,7 +2,7 @@ from fastapi import APIRouter, status
 from pydantic import BaseModel
 
 
-from crud.file import new_file, get_all_files
+from crud.file import new_file, get_all_files, update_file_name, delete_file
 
 
 
@@ -62,9 +62,18 @@ async def get_all_file(user_id):
 
 '''
 
+class FileUpdateRequest(BaseModel):
+    file_id: str
+    file_name: str
+
 @router.put("/update/{file_id}", status_code=status.HTTP_200_OK)
-async def update_file_name(file_id, file_name):
-    pass
+async def update_file_name(request: FileUpdateRequest):
+    file_id = request.file_id
+    file_name = request.file_name
+    
+    result = update_file_name(file_id, file_name)
+    
+    return result
 
 
 
@@ -78,4 +87,7 @@ async def update_file_name(file_id, file_name):
 
 @router.delete("/delete/{file_id}", status_code=status.HTTP_200_OK)
 async def delete_file(file_id):
-    pass
+    
+    result = delete_file(file_id)
+    
+    return result

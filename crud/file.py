@@ -55,4 +55,52 @@ def get_all_files(user_id):
         if connection.is_connected():
             cursor.close()
             connection.close()
+
+
+'''
+
+--- UPDATE ---
+
+
+'''
+
+def update_file_name(file_id, file_name):
     
+    try:
+        connection = connect_to_database()
+        if connection.is_connected():
+            cursor = connection.cursor()
+            sql_update_query = """ UPDATE `tbl_file` SET `file_name` = %s WHERE `file_id` = %s """
+            cursor.execute(sql_update_query, (file_name, file_id))
+            connection.commit()
+            return 1
+    except Exception as e:
+        return f"Failed to update file name: {e}"
+    finally:
+        if connection.is_connected():
+            cursor.close()
+            connection.close()
+            
+
+'''
+
+--- DELETE ---
+
+'''
+
+def delete_file(file_id):
+    
+    try:
+        connection = connect_to_database()
+        if connection.is_connected():
+            cursor = connection.cursor()
+            sql_delete_query = """ DELETE FROM `tbl_file` WHERE `file_id` = %s """
+            cursor.execute(sql_delete_query, (file_id,))
+            connection.commit()
+            return 1
+    except Exception as e:
+        return f"Failed to delete file: {e}"
+    finally:
+        if connection.is_connected():
+            cursor.close()
+            connection.close()
