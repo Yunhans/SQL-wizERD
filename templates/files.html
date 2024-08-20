@@ -81,13 +81,13 @@
                 </div>
                 <div class="modal-body mb-2">
                    
-                    <form class="row g-3">
+                    <form class="row g-3" onsubmit="add_file()">
                         <div class="col-12">
                             <label for="add_file_name" class="form-label">檔案名稱</label>
                             <input type="text" class="form-control" id="add_file_name" placeholder="Untitled">
                         </div>
                         <div class="col-12 text-center">
-                            <button type="submit" class="btn btn-primary" onclick="add_file()">新增</button>
+                            <button type="submit" class="btn btn-primary">新增</button>
                         </div>
                     </form>
 
@@ -160,11 +160,15 @@
                 cache: false,
                 dataType: 'json',
                 timeout: 5000,
-                statusCode: {
-                    201: function(response) {
-                        console.log("File created successfully");
-                        alert("新增檔案成功");
-                    },
+                success: function(data, textStatus, xhr) {
+                    // This callback should capture both 200 and 201 status codes
+                    console.log("Response Data:", data);
+                    console.log("Status Code:", xhr.status);
+                },
+                error: function(xhr, textStatus, errorThrown) {
+                    // Handle errors here
+                    console.log("Error Response Data:", xhr.responseText);
+                    console.log("Status Code:", xhr.status);
                 }
             });
         }

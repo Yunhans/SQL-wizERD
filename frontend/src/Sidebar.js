@@ -15,6 +15,7 @@ export default ({ nodes, setNodes }) => {
 
   // Expose nodesRef outside of React, e.g., to window object
   window.nodesRef = nodesRef;
+  window.transform = transform;
 
   return (
     <aside>

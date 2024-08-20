@@ -139,3 +139,10 @@ export function handleReference(data) {
     insertReferenceAttrOptions(reference_data);
     /* eslint-enable no-undef */
 }
+
+export function addTable() {
+    const transform = window.transform;
+    const message = JSON.stringify({ action: 'add table', x: transform[0], y: transform[1], ratio: transform[2]});
+    window.parent.postMessage(message, 'http://127.0.0.1:8000/whiteboard/');
+    // alert(message);
+}

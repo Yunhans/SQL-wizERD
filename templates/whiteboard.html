@@ -144,14 +144,18 @@
                 console.log("Parent Data received:", data);
                 getTableData(data.table_id);
                 getReferenceData(file_id);
-
-            } else if (data.action === "edit position") {
+            }
+            else if (data.action === "edit position") {
                 console.log("Parent Data received:", data.nodeData);
                 updataTablePosition(data.nodeData);
-
-            } else if (data.action === "edit table info") {
+            }
+            else if (data.action === "edit table info") {
                 console.log("Parent Data received:", data.data);
                 updataTableInfo(data.data);
+            } 
+            else if (data.action === "add table") {
+                console.log("Parent Data received:", [data.x, data.y]);
+                addTable(data.x, data.y);
             }
         }
         
@@ -303,6 +307,50 @@
             } catch (error) {
                 console.error("Failed to send data:", error);
             }
+        }
+
+        function addTable(x,y){
+            var request = {
+                'file_id': file_id,
+                'table_name': 'table',
+                'attribute': [
+                    {
+                        "name": "id",
+                        "type": "INT",
+                        "primary_key": true,
+                        "not_null": false,
+                        "unique": false,
+                        "auto_increment": false,
+                        "default": null
+                    }
+                ],
+                'foreign_keys': [],
+                'position': {
+                    'x': (x + (Math.random() - 0.5) * 400).toFixed(2),
+                    'y': (y + (Math.random() - 0.5) * 400).toFixed(2)
+                }
+            };
+
+            var data_string = JSON.stringify(request);
+
+            // console.log(data_string);
+
+            $.ajax({
+                type: "POST",
+                url: "/api/table/create",
+                crossDomain: true,
+                contentType: "application/json",
+                data: data_string,
+                cache: false,
+                dataType: 'json',
+                timeout: 5000,
+                statusCode: {
+                    200: function(response) {
+                        console.log("Table create successfully");
+                        updateSQLFromERD();
+                    },
+                }
+            });
         }
 
     </script>  

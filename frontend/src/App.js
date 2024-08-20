@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback, useRef } from 'react';
+import React, { useEffect, useCallback, useRef } from 'react';
 import { ReactFlow, ReactFlowProvider, MarkerType, MiniMap, Controls, Background, useNodesState, useEdgesState, applyNodeChanges, applyEdgeChanges, addEdge, Panel, ConnectionMode,} from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 
@@ -7,7 +7,7 @@ import SimpleFloatingEdge from './SimpleFloatingEdge';
 import { LinkMarkers } from './Markers';
 import Sidebar from './Sidebar';
 
-import { handleSpecificTable, handleTableDrag, handleReference } from './messageHandlers';
+import { handleSpecificTable, handleTableDrag, handleReference, addTable } from './messageHandlers';
 
 const proOptions = { hideAttribution: true };
 
@@ -185,10 +185,11 @@ function App() {
 						proOptions={proOptions}
 						connectionMode={ConnectionMode.Loose}
 					>
-						{/* <Panel position="bottom-center">
-							<button type="button" className="btn btn-success" onClick={onAdd}>add Table</button>
-						</Panel> */}
-						<Background />
+						<Panel position="bottom-center">
+							{/* <button type="button" className="btn btn-success" onClick={onAdd}>add Table</button> */}
+							<button type="button" className="btn btn-success" onClick={ () => { addTable() }}>add Table</button>
+						</Panel>
+						<Background/>
 						<Controls position = 'bottom-right' showInteractive={false}/>
 						<MiniMap position='top-right' nodeStrokeWidth={3} />
 					</ReactFlow>
