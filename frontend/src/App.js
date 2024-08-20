@@ -7,7 +7,7 @@ import SimpleFloatingEdge from './SimpleFloatingEdge';
 import { LinkMarkers } from './Markers';
 import Sidebar from './Sidebar';
 
-import { handleSpecificTable, handleTableDrag } from './messageHandlers';
+import { handleSpecificTable, handleTableDrag, handleReference } from './messageHandlers';
 
 const proOptions = { hideAttribution: true };
 
@@ -144,8 +144,12 @@ function App() {
 
 				} 
 				else if (data.task === 'specificTable') {
-					console.log('Iframe Data received:', data.table_data);
+					console.log('Iframe Data received - specificTable:', data.table_data);
 					handleSpecificTable(data);
+				}
+				else if (data.task === 'reference') {
+					console.log('Iframe Data received - reference:', data.reference_data);
+					handleReference(data.reference_data);
 				}				
 
 			} catch (error) {
@@ -181,9 +185,9 @@ function App() {
 						proOptions={proOptions}
 						connectionMode={ConnectionMode.Loose}
 					>
-						<Panel position="bottom-center">
+						{/* <Panel position="bottom-center">
 							<button type="button" className="btn btn-success" onClick={onAdd}>add Table</button>
-						</Panel>
+						</Panel> */}
 						<Background />
 						<Controls position = 'bottom-right' showInteractive={false}/>
 						<MiniMap position='top-right' nodeStrokeWidth={3} />

@@ -1,5 +1,8 @@
 export function handleSpecificTable(data) {
 
+    /* eslint-disable no-undef */
+    fk_attr=[];
+    /* eslint-enable no-undef */
     const table_data = data.table_data;
     document.getElementById('inputTableName').value = table_data.name;
 
@@ -10,10 +13,10 @@ export function handleSpecificTable(data) {
     table_data.attribute.forEach(function(value, index){
         attribute_html += `
             <div class="row mb-2" id="attribute-row-${index}">
-                <div class="col-md-4">
+                <div class="col-4">
                     <input type="text" class="form-control" id="inputAttrName-${index}" value=${value.name}>
                 </div>
-                <div class="col-md-4">
+                <div class="col-4">
                     <input class="form-control" list="datalistOptions" id="inputType-${index}" value=${value.type}>
                     <datalist id="datalistOptions">
                         <option value="INT">
@@ -21,7 +24,7 @@ export function handleSpecificTable(data) {
                         <option value="DATE">
                     </datalist>
                 </div>
-                <div class="col-md-4 d-flex justify-content-around">
+                <div class="col-4 d-flex justify-content-around">
                     <!-- primary key -->
                     <input type="checkbox" class="btn-check" id="key-check-${index}" autocomplete="off" ${(value.primary_key? "checked" : "")}>
                     <label class="btn btn-outline-warning" for="key-check-${index}" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="primary key">
@@ -65,25 +68,34 @@ export function handleSpecificTable(data) {
             </div>
         `;
         total_attrbute_index = index;
+        /* eslint-disable no-undef */
+        fk_attr.push(value.name);
+        /* eslint-enable no-undef */
     });
 
     table_data.foreign_keys.forEach(function(value, index){
         foreign_key_html += `
-            <div class="row mb-2">
-                <div class="col-md-4">
-                    <select id="fk-attr-options-${index}" class="form-select" aria-label="Default select example">
-                        <option selected>${value.from.split('.')[1]}</option>
+            <div class="row mb-2" id="fk-row-${index}">
+                <div class="col-4">
+                    <select id="fk-attr-options-${index}" class="form-select">
+                        <option value="${value.from.split('.')[1]}" selected>${value.from.split('.')[1]}</option>
                     </select>
                 </div>
-                <div class="col-md-4">
-                    <select id="ref-table-options-${index}" class="form-select" aria-label="Default select example">
-                        <option selected>${value.references.split('.')[0]}</option>
+                <div class="col-7">
+                    <div class="input-group">
+                        <select id="ref-table-options-${index}" class="form-select" onchange="populateAttributes(this.value, ${index})">
+                            <option selected>${value.references.split('.')[0]}</option>
                         </select>
+                        <span class="input-group-text rounded-0">.</span>
+                        <select id="ref-attr-options-${index}" class="form-select">
+                            <option selected>${value.references.split('.')[1]}</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <select id="ref-attr-options-${index}" class="form-select" aria-label="Default select example">
-                        <option selected>${value.references.split('.')[1]}</option>
-                        </select>
+                <div class="col-1">
+                    <button type="button" class="btn btn-outline-danger border-0" onclick="deleteForeignKey(${index})">
+                        <i class="bi bi-trash3"></i>
+                    </button>  
                 </div>
             </div>
         `;
@@ -102,14 +114,28 @@ export function handleSpecificTable(data) {
     // add attr btn
     document.getElementById('add-attr-btn').innerHTML = `<button type="button" class="btn btn-sm border-0 text-primary mb-0" onclick="addAttribute(${total_attrbute_index})"><i class="bi bi-plus-circle"></i> Add attribute</button>`;
 
+    // add attr btn
+    document.getElementById('add-fk-btn').innerHTML = `<button type="button" class="btn btn-sm border-0 text-primary mb-0" onclick="addForeignKey(${total_foreign_key_index})"><i class="bi bi-plus-circle"></i> Add Foreign key</button>`;
+
     // Reinitialize Bootstrap tooltips
     /* eslint-disable no-undef */
     tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
     tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    insertFKOptions(fk_attr);
     /* eslint-enable no-undef */
 }
 
 export function handleTableDrag(nodeData) {
     const message = JSON.stringify({ action: 'edit position', nodeData: nodeData });
     window.parent.postMessage(message, 'http://127.0.0.1:8000/whiteboard/');
+}
+
+export function handleReference(data) {
+    /* eslint-disable no-undef */
+    reference_table = data.map(table => table.name);
+    reference_data = data;
+    // console.log(reference_table);
+    insertReferenceTableOptions(reference_table);
+    insertReferenceAttrOptions(reference_data);
+    /* eslint-enable no-undef */
 }
