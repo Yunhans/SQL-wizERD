@@ -112,8 +112,16 @@ async function updateERDFromSQL(script) {
   try {
       isUserChange = false;
       const result = await transformScriptToERD(script);
-      if (result) {
-          getAllTableData(get_file_id);
+
+      if (result.status === 'success') {
+        // clear existing syntax error
+
+        // update the erd display
+        getAllTableData(get_file_id);
+      }
+      else if(result.status === 'error') {
+        // show syntax error
+        
       }
   } catch (error) {
       console.error('Error updating ERD from SQL:', error);
@@ -160,7 +168,7 @@ async function transformERDToScript() {
       });
       
       if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
       
       const data = await response.json();

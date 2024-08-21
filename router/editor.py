@@ -1,10 +1,9 @@
-from fastapi import APIRouter, Request  
-from fastapi.templating import Jinja2Templates
+from fastapi import APIRouter
 from pydantic import BaseModel
 
 from crud.table import get_tables_script
-from utils.sql_grammar import sql_parse_middle
-from utils.script_json import middle_parse_json
+from utils.sql_lexer import sql_parse_middle, middle_parse_json
+# from utils.sql_lexer import 
 from utils.json_script import generate_sql_script
 
 
@@ -37,10 +36,14 @@ async def sql_parse_json(item: Script):
     file_id = item.file_id
     raw_sql = item.text
     #print(raw_sql)
-    middle_format = sql_parse_middle(raw_sql)
+    middle_format, error = sql_parse_middle(raw_sql)
+
+    if error:
+        return {"status": "error", "message": error}
+    
     result = middle_parse_json(file_id, middle_format)
 
-    return result
+    return {"status": "success", "result": result}
     
 
     
