@@ -115,6 +115,7 @@ async function updateERDFromSQL(script) {
 
       if (result.status === 'success') {
         // clear existing syntax error
+        alert('ERD updated successfully');
 
         // update the erd display
         getAllTableData(get_file_id);

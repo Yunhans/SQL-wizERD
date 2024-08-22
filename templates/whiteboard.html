@@ -113,7 +113,7 @@
                 <h5 class="offcanvas-title" id="offcanvasScrollingLabel_chat">Chatbot</h5>
                 <button type="button" class="btn-close shadow-none" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
-            <iframe id="ollama-nodejs" src="http://localhost:3000" frameborder="0"></iframe>
+            <iframe id="ollama-nodejs" src="http://127.0.0.1:3000" frameborder="0"></iframe>
         </div>
     
         <!-- offcanvas script -->
@@ -124,6 +124,21 @@
             </div>
             <div class="offcanvas-body" id="script_editor"><!-- add ace editor-->
                 <!-- 左側程式碼編輯區域 -->
+            </div>
+            <div id="script-error-message" style="font-size: 14px;">
+                <!-- 成功&錯誤訊息 -->
+                <!-- <div class="p-1 text-success border-start border-success border-5 bg-dark">
+                    <div>
+                        <i class="bi bi-check-circle-fill me-1"></i>
+                        No error found
+                    </div>
+                </div>
+                <div class="p-1 text-danger border-start border-danger border-5 bg-dark">
+                    <div>
+                        <i class="bi bi-exclamation-circle-fill me-1"></i>
+                        An example alert with an icon
+                    </div>
+                </div> -->
             </div>
         </div>
 
@@ -136,6 +151,7 @@
     <script src="/static/js/bootstrap-5.3.js"></script>
     <!-- update table data -->
     <script src="/static/js/get-pass-all-file.js"></script>
+    <script src="/static/js/handle-script-error.js"></script>
     <script src="/static/js/script-editor.js"></script>
     <script>
         function receiveMessage(e) {

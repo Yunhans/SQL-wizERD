@@ -16,7 +16,7 @@ const TableNode = ({ data }) => {
                         <li key={index} className="list-group-item border-0 py-1">
                             <div className="my-0 w-100 d-flex justify-content-between">
                                 <span className="text-secondary">{attribute.name} {attribute.isKey && <i className="bi bi-key-fill text-warning"></i>}</span>
-                                <span className="text-body-tertiary">{attribute.type}</span>
+                                <span className="text-body-tertiary ms-3">{attribute.type}</span>
                             </div>
                         </li>
                     ))}

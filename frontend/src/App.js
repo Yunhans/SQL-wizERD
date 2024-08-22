@@ -103,26 +103,7 @@ function App() {
 		  setEdges((eds) => addEdge(edge, eds));
 		},
 		[setEdges],
-	  );
-
-	const onAdd = useCallback(() => {
-		const newNode = {
-		  id: getNodeId(),
-		  type: 'table',
-		  data: {
-			id: 'id',
-			label: 'new Table',
-			attribute:[
-				{ name: 'id', type: 'INT', isKey: true }
-			]
-		   },
-		  position: {
-			x: (Math.random() - 0.5) * 400,
-			y: (Math.random() - 0.5) * 400,
-		  },
-		};
-		setNodes((nds) => nds.concat(newNode));
-	}, [setNodes]);
+	);
 
 	useEffect(() => {
 		console.log('useEffect');
