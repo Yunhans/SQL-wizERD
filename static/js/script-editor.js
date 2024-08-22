@@ -110,19 +110,20 @@ async function transformScriptToERD(script) {
 
 async function updateERDFromSQL(script) {
   try {
+
       isUserChange = false;
       const result = await transformScriptToERD(script);
 
       if (result.status === 'success') {
         // clear existing syntax error
         alert('ERD updated successfully');
-
+        showScriptSuccess();
         // update the erd display
         getAllTableData(get_file_id);
       }
       else if(result.status === 'error') {
         // show syntax error
-        
+        showScriptError(result.message);
       }
   } catch (error) {
       console.error('Error updating ERD from SQL:', error);
@@ -135,8 +136,17 @@ async function updateERDFromSQL(script) {
 // Debounce the update functions
 const debouncedSyncEditor = debounce(() => {
   if (isUserChange) {
-      const script = editor.getValue();
-      updateERDFromSQL(script);
+      let script = editor.getValue();
+
+      // if script = -- Type your script... then do not update ERD
+      if (script === "-- Type your script...") {
+        showScriptSuccess();
+        return;
+      }
+      else{
+        updateERDFromSQL(script);
+      }
+      
   }
 }, 400);
 

@@ -80,7 +80,7 @@ def t_newline(t):
     t.lexer.lineno += len(t.value)
 
 def t_error(t):
-    add_error(f"Illegal character '{t.value[0]}'", t.lineno)
+    add_error(f"Illegal character '{t.value[0]}'", t.lexer.lineno)
     t.lexer.skip(1)
 
 # Build the lexer
@@ -115,13 +115,65 @@ def p_statement(p):
             'elements': table_elements
         }
         
-        # Set the current_table attribute for the parser
-        p.parser.current_table = current_table
+        # Process foreign key constraints after all columns are defined
+        process_foreign_keys(current_table, p.lineno(3))
         
         # Add the table to parsed_tables
         parsed_tables.append(current_table)
     
     p[0] = ('CREATE_TABLE', table_name, table_elements)
+    
+
+def process_foreign_keys(current_table, lineno):
+    current_table_columns = {col[1]: col[2] for col in current_table['elements'] if col[0] == 'COLUMN'}
+    
+    for element in current_table['elements']:
+        if element[0] == 'TABLE_CONSTRAINT' and element[1] == 'FOREIGN_KEY':
+            referencing_columns = element[2]
+            referenced_table = element[3]
+            referenced_columns = element[4]
+
+            # Check if referencing columns exist in the current table
+            non_existent_columns = set(referencing_columns) - set(current_table_columns.keys())
+            if non_existent_columns:
+                add_error(f"Foreign key columns {', '.join(non_existent_columns)} do not exist in the current table", lineno)
+                continue
+
+            # Check if referenced table exists
+            referenced_table_obj = next((table for table in parsed_tables if table['name'] == referenced_table), None)
+            if not referenced_table_obj:
+                add_error(f"Referenced table does not exist: {referenced_table}", lineno)
+                continue
+
+            # Check if referenced columns exist in the referenced table
+            referenced_table_columns = {col[1]: col[2] for col in referenced_table_obj['elements'] if col[0] == 'COLUMN'}
+            non_existent_columns = set(referenced_columns) - set(referenced_table_columns.keys())
+            if non_existent_columns:
+                add_error(f"Referenced columns {', '.join(non_existent_columns)} do not exist in table {referenced_table}", lineno)
+                continue
+
+            # Check if referenced columns are the primary key or have a unique constraint
+            primary_key_columns = []
+            unique_columns = []
+            for elem in referenced_table_obj['elements']:
+                if elem[0] == 'TABLE_CONSTRAINT' and elem[1] == 'PRIMARY_KEY':
+                    primary_key_columns.extend(elem[2])
+                elif elem[0] == 'COLUMN':
+                    column_name = elem[1]
+                    constraints = elem[3]
+                    if 'PRIMARY KEY' in constraints:
+                        primary_key_columns.append(column_name)
+                    if 'UNIQUE' in constraints:
+                        unique_columns.append(column_name)
+
+            if not (set(referenced_columns).issubset(set(primary_key_columns)) or set(referenced_columns).issubset(set(unique_columns))):
+                add_error(f"Referenced columns {', '.join(referenced_columns)} must be the primary key or have a unique constraint in table {referenced_table}", lineno)
+
+            # Check data type compatibility
+            for ref_col, child_col in zip(referenced_columns, referencing_columns):
+                if referenced_table_columns[ref_col] != current_table_columns[child_col]:
+                    add_error(f"Data type mismatch: {child_col} ({current_table_columns[child_col]}) in child table does not match {ref_col} ({referenced_table_columns[ref_col]}) in parent table {referenced_table}", lineno)
+
 
 def p_table_elements(p):
     '''table_elements : table_element
@@ -205,38 +257,12 @@ def p_table_constraint(p):
         referenced_table = p[7]
         referenced_columns = p[9]
         
-        # Check if referencing columns exist in the current table
-        current_table_columns = set(col[1] for col in p.parser.current_table['elements'] if col[0] == 'COLUMN')
-        non_existent_columns = set(referencing_columns) - current_table_columns
-        if non_existent_columns:
-            add_error(f"Foreign key columns {', '.join(non_existent_columns)} do not exist in the current table", p.lineno(3))
-        
-        # Check if referenced table exists
-        referenced_table_obj = next((table for table in parsed_tables if table['name'] == referenced_table), None)
-        if not referenced_table_obj:
-            add_error(f"Referenced table does not exist: {referenced_table}", p.lineno(7))
-        else:
-            # Check if referenced columns exist in the referenced table
-            table_columns = set(col[1] for col in referenced_table_obj['elements'] if col[0] == 'COLUMN')
-            if not set(referenced_columns).issubset(table_columns):
-                non_existent_columns = set(referenced_columns) - table_columns
-                add_error(f"Referenced columns {', '.join(non_existent_columns)} do not exist in table {referenced_table}", p.lineno(7))
-            
-            # Check if referenced columns are the primary key of the referenced table
-            primary_key_columns = next((constraint[2] for constraint in referenced_table_obj['elements'] 
-                                        if constraint[0] == 'TABLE_CONSTRAINT' and constraint[1] == 'PRIMARY_KEY'), None)
-            if primary_key_columns is None:
-                primary_key_columns = [col[1] for col in referenced_table_obj['elements'] 
-                                       if col[0] == 'COLUMN' and any('PRIMARY KEY' in constraint for constraint in col[3])]
-            
-            if set(referenced_columns) != set(primary_key_columns):
-                add_error(f"Referenced columns {', '.join(referenced_columns)} must be the primary key of table {referenced_table}", p.lineno(7))
-        
         if len(p) == 11:
-            p[0] = ('TABLE_CONSTRAINT', 'FOREIGN_KEY', p[4], referenced_table, referenced_columns)
+            p[0] = ('TABLE_CONSTRAINT', 'FOREIGN_KEY', referencing_columns, referenced_table, referenced_columns)
         else:
-            p[0] = ('TABLE_CONSTRAINT', 'FOREIGN_KEY', p[4], referenced_table, referenced_columns, p[11], p[12], p[13])
-
+            p[0] = ('TABLE_CONSTRAINT', 'FOREIGN_KEY', referencing_columns, referenced_table, referenced_columns, p[11], p[12], p[13])
+            
+            
 def p_column_list(p):
     '''column_list : IDENTIFIER
                    | column_list COMMA IDENTIFIER'''
@@ -251,7 +277,7 @@ def p_empty(p):
 
 def p_error(p):
     if p:
-        add_error(f"Syntax error at token ({p.value})", p.lineno)
+        add_error(f"Syntax error at token '{p.value}'", p.lineno)
     else:
         add_error("Syntax error at EOF", lexer.lineno)
 
@@ -269,16 +295,27 @@ def sql_parse_middle(sql):
     error_list = []
     parsed_tables = []
     lexer.lineno = 1
+    
+    # Check for placeholder input
+    # if sql.strip() == "":
+    #     return [], None
+    
     result = parser.parse(sql)
-
+    #print(result)
+    #print(error_list)
     return result, error_list
 
 
 # convert parsed result to json
 def middle_parse_json(file_id, parsed_result):
     tables = []
-    
     existing_tables = get_all_tables_idname(file_id)
+    
+    if parsed_result is None:
+        for table in existing_tables:
+            delete_table(table[0])
+        return 1
+        
     existing_table_dict = {table[1]: table[0] for table in existing_tables}
     
     for table in parsed_result:
