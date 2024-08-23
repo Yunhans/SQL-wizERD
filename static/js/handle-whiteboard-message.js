@@ -17,6 +17,10 @@ function receiveMessage(e) {
         console.log("Parent Data received:", [data.x, data.y]);
         addTable(data.x, data.y);
     }
+    else if (data.action === "delete table") {
+        console.log("Parent Data received:", data);
+        deleteTable(data.table_id);
+    }
 }
 
 // 監聽 message 事件
@@ -211,4 +215,21 @@ function addTable(x, y){
         }
     });
     getAllTableData(file_id);
+}
+
+function deleteTable(table_id){
+    $.ajax({
+        type: "DELETE",
+        url: "/api/table/delete/" + table_id,
+        crossDomain: true,
+        cache: false,
+        timeout: 5000,
+        statusCode: {
+            200: function(response) {
+                console.log("Table delete successfully");
+                getAllTableData(file_id);
+                updateSQLFromERD();
+            },
+        }
+    });
 }

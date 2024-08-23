@@ -103,7 +103,9 @@ export function handleSpecificTable(data) {
     });
 
 
+    // insert table id to card-header & delete button
     document.getElementById('edit_table_id').innerHTML = table_data.id;
+    document.getElementById('delete-table-btn').setAttribute( "onclick", `javascript: deleteTable(${table_data.id});` );
 
     // attr rows
     document.getElementById('attribute-container').innerHTML = attribute_html;

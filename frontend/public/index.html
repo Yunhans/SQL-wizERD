@@ -143,6 +143,11 @@
 											</select>
 										</div>
 									</div>
+									<div class="col-1">
+										<button type="button" class="btn btn-outline-danger border-0" onclick="">
+											<i class="bi bi-trash3"></i>
+										</button>  
+									</div>
 								</div>
 							</div>
 							<div id="add-fk-btn">
@@ -154,7 +159,8 @@
 						
 					</div>
 
-					<div class="modal-footer">
+					<div class="modal-footer d-flex justify-content-between">
+						<button type="button" id="delete-table-btn" class="btn btn-outline-danger" data-bs-dismiss="modal"><i class="bi bi-trash3"></i> Delete table</button>
 						<button type="button" class="btn btn-primary" onclick="document.getElementById('submit-form-btn').click();">Confirm</button>
 					</div>
 				</div>
@@ -177,6 +183,13 @@
 			function editSpecificTable() {
 				const message = JSON.stringify({ action: 'edit table info', data: getAttributeData() });
     			window.parent.postMessage(message, 'http://127.0.0.1:8000/whiteboard/');
+			}
+
+			function deleteTable(table_id) {
+				let answer = confirm('Are you sure you want to delete this table?');
+				if (!answer) return;
+				const message = JSON.stringify({ action: 'delete table', table_id: table_id });
+				window.parent.postMessage(message, 'http://127.0.0.1:8000/whiteboard/');
 			}
 
 			function getAttributeData() {
