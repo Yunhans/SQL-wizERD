@@ -357,7 +357,7 @@ def middle_parse_json(file_id, parsed_result):
                 
                 attributes.append({
                     "name": column_name,
-                    "type": column_type.lower(),
+                    "type": column_type.upper(),
                     **column_constraints
                 })
             elif item[0] == 'TABLE_CONSTRAINT' and item[1] == 'FOREIGN_KEY':
