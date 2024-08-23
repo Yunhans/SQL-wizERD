@@ -4,3 +4,6 @@ router/__pycache__/
 connect_db.py
 env
 myconfig.py
+utils/__pycache__/
+utils/parser.out
+utils/parsetab.py
