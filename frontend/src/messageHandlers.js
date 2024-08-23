@@ -21,7 +21,18 @@ export function handleSpecificTable(data) {
                     <datalist id="datalistOptions">
                         <option value="INT">
                         <option value="VARCHAR(255)">
+                        <option value="CHAR(255)">
+                        <option value="TEXT">
                         <option value="DATE">
+                        <option value="DATETIME">
+                        <option value="TIMESTAMP">
+                        <option value="DECIMAL(2,6)">
+                        <option value="FLOAT">
+                        <option value="BOOLEAN">
+                        <option value="BIGINT">
+                        <option value="SMALLINT">
+                        <option value="DOUBLE">
+                        <option value=ENUM("true","false")>
                     </datalist>
                 </div>
                 <div class="col-4 d-flex justify-content-around">
