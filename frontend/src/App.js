@@ -52,7 +52,7 @@ const initialNodes = [
 ];
 
 const initialEdges = [
-	{ id: '1->2', source: '1', target: '2', markerStart: 'hasManyReversed',sourceHandle: 'a', targetHandle: 'b', label: '1-m', type: 'floating' },
+	{ id: 'Order.product_id->Product.product_id', source: 'Order', target: 'Product', markerStart: 'hasManyReversed', sourceHandle: 'product_id-a', targetHandle: 'product_id-b', type: 'floating' },
 ];
 
 const getNodeId = () => `randomnode_${+new Date()}`;
@@ -117,6 +117,7 @@ function App() {
 				if (data.task === 'allTables') {
 					// Process the received data and update nodes or edges if needed
 					try {
+						console.log('Iframe Data received - allTables', data);
 						setNodes(data.nodes);
 						setEdges(data.edges);
 					} catch (error) {
@@ -167,7 +168,7 @@ function App() {
 						connectionMode={ConnectionMode.Loose}
 					>
 						<Panel position="bottom-center">
-							<button type="button" className="btn btn-success" onClick={ () => { addTable() }}>add Table</button>
+							<button type="button" className="btn btn-success" onClick={ () => { addTable() }}><i className="bi bi-table"></i> Add table</button>
 						</Panel>
 						<Background/>
 						<Controls position = 'bottom-right' showInteractive={false}/>

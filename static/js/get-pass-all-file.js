@@ -110,12 +110,12 @@ function passAllTableData(data) {
                 const [sourceTable, sourceColumn] = fk.from.split(".");
                 const [targetTable, targetColumn] = fk.references.split(".");
                 return {
-                    id: `${sourceTable.trim()}->${targetTable.trim()}`,
+                    id: `${sourceTable.trim()}.${sourceColumn}->${targetTable.trim()}.${targetColumn}`,
                     source: nodes.find(node => node.data.label === sourceTable.trim()).id,
                     target: nodes.find(node => node.data.label === targetTable.trim()).id,
                     markerStart: 'hasManyReversed',
-                    sourceHandle: 'a', 
-                    targetHandle: 'b',
+                    sourceHandle: `${sourceColumn}-a`,
+                    targetHandle: `${targetColumn}-b`,
                     type: "floating"
                 };
                 })

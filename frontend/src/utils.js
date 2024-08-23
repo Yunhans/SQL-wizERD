@@ -32,12 +32,6 @@ function getHandleCoordsByPosition(node, handlePosition) {
     case Position.Right:
       offsetX = handle.width;
       break;
-    case Position.Top:
-      offsetY = 0;
-      break;
-    case Position.Bottom:
-      offsetY = handle.height;
-      break;
   }
 
   const x = node.internals.positionAbsolute.x + handle.x + offsetX;

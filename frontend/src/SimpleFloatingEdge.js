@@ -2,7 +2,7 @@ import { getBezierPath, useInternalNode } from '@xyflow/react';
 
 import { getEdgeParams } from './utils.js';
 
-function SimpleFloatingEdge({ id, source, target, markerStart, markerEnd, style }) {
+function SimpleFloatingEdge({ id, source, target, markerStart, sourceHandle, targetHandle, style }) {
   const sourceNode = useInternalNode(source);
   const targetNode = useInternalNode(target);
 
@@ -26,7 +26,6 @@ function SimpleFloatingEdge({ id, source, target, markerStart, markerEnd, style 
       className="react-flow__edge-path"
       d={edgePath}
       strokeWidth={5}
-      markerEnd={markerEnd}
       markerStart={markerStart}
       style={style}
     />
