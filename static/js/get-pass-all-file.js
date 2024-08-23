@@ -114,8 +114,8 @@ function passAllTableData(data) {
                     source: nodes.find(node => node.data.label === sourceTable.trim()).id,
                     target: nodes.find(node => node.data.label === targetTable.trim()).id,
                     markerStart: 'hasManyReversed',
-                    sourceHandle: `${sourceColumn}-a`,
-                    targetHandle: `${targetColumn}-b`,
+                    sourceHandle: 'a',
+                    targetHandle: 'b',
                     type: "floating"
                 };
                 })

@@ -18,14 +18,14 @@ const TableNode = ({ data }) => {
                                 <span className="text-secondary">{attribute.name} {attribute.isKey && <i className="bi bi-key-fill text-warning"></i>}</span>
                                 <span className="text-body-tertiary ms-4">{attribute.type}</span>
                             </div>
-                            <Handle type="source" position={Position.Right} id={attribute.name + "-a"}/>
-                            <Handle type="source" position={Position.Left} id={attribute.name + "-b"}/>
+                            {/* <Handle type="source" position={Position.Right} id={attribute.name + "-a"}/>
+                            <Handle type="source" position={Position.Left} id={attribute.name + "-b"}/> */}
                         </li>
                     ))}
                 </ul>
             </div>
-            {/* <Handle type="source" position={Position.Right} id="a" />
-            <Handle type="source" position={Position.Left} id="b" /> */}
+            <Handle type="source" position={Position.Right} id="a" />
+            <Handle type="source" position={Position.Left} id="b" />
         </>
     );
 };
