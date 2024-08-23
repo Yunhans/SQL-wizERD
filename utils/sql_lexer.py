@@ -296,9 +296,9 @@ def sql_parse_middle(sql):
     parsed_tables = []
     lexer.lineno = 1
     
-    # Check for placeholder input
-    # if sql.strip() == "":
-    #     return [], None
+    # Check for empty input
+    if sql.strip() == "":
+        return [], None
     
     result = parser.parse(sql)
     #print(result)

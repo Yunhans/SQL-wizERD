@@ -22,7 +22,7 @@ def generate_sql_script(table_script):
         primary_keys = []
         
         for attr in attributes:
-            column_def = f"    {attr['name']} {attr['type']}"
+            column_def = f"    {attr['name']} {attr['type'].upper()}"
             constraints = []
             
             if attr.get('primary_key'):

@@ -55,6 +55,7 @@ let get_file_id = url.split('/').pop();
 let isUserChange = true;
 
 
+
 // Debounce function: delay
 function debounce(func, delay) {
   let timer;
@@ -116,7 +117,6 @@ async function updateERDFromSQL(script) {
 
       if (result.status === 'success') {
         // clear existing syntax error
-        alert('ERD updated successfully');
         showScriptSuccess();
         // update the erd display
         getAllTableData(get_file_id);
@@ -204,3 +204,4 @@ async function updateSQLFromERD() {
   }
 }
 
+updateSQLFromERD();
