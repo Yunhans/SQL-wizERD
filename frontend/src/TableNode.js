@@ -26,6 +26,8 @@ const TableNode = ({ data }) => {
             </div>
             <Handle type="source" position={Position.Right} id="a" />
             <Handle type="source" position={Position.Left} id="b" />
+            <Handle type="source" position={Position.Top} id="c" />
+            <Handle type="source" position={Position.Bottom} id="d" />
         </>
     );
 };
