@@ -69,6 +69,10 @@ header > div > div{
 	z-index: 0;
 }
 
+#offcanvasScrolling_script.offcanvas-body {
+	height: calc(100% - 100px);
+}
+
 #offcanvasScrolling_file{
 	margin-left: 3.5rem;
 	margin-top: 65px;
@@ -76,8 +80,14 @@ header > div > div{
 }
 
 #script_editor{
-	height: 100%;
+    height: 100%; /* Set a minimum height to avoid collapsing entirely */
+    width: 100%;
+}
+
+#script-error-message {
+	height: 100px;
 	width: 100%;
+	overflow-y: auto;
 }
 
 #ollama-nodejs{

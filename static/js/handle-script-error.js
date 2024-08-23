@@ -4,7 +4,7 @@ function showScriptError(errList) {
         error_html += `
             <div class="p-1 text-danger border-start border-danger border-5 bg-dark">
                 <div>
-                    <i class="bi bi-exclamation-circle-fill me-1"></i>
+                    <i class="bi bi-exclamation-triangle-fill me-1"></i>
                     ${message}
                 </div>
             </div>
