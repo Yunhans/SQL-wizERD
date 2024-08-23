@@ -21,8 +21,11 @@ def generate_sql_script(table_script):
         columns = []
         primary_keys = []
         
+        # count the number of primary keys(for output)
+        pk_count = sum(1 for attr in attributes if attr.get('primary_key'))
+        
         for attr in attributes:
-            column_def = f"    {attr['name']} {attr['type'].upper()}"
+            column_def = f"    {attr['name']} {attr['type']}"
             constraints = []
             
             if attr.get('primary_key'):
@@ -40,7 +43,7 @@ def generate_sql_script(table_script):
             if constraints:
                 column_def += " " + " ".join(constraints)
             
-            if attr.get('primary_key') and len(primary_keys) == 1:
+            if attr.get('primary_key') and pk_count == 1:
                 column_def += " PRIMARY KEY"
             
             columns.append(column_def)
@@ -55,7 +58,8 @@ def generate_sql_script(table_script):
         script += f"CREATE TABLE {table_name} (\n"
         script += ",\n".join(columns)
         
-        if len(primary_keys) > 1:  # If there are multiple primary keys
+        # add composite primary key if there are multiple primary keys' columns
+        if pk_count > 1:
             script += f",\n    PRIMARY KEY ({', '.join(primary_keys)})"
         
         if foreign_key_defs:
