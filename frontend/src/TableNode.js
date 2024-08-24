@@ -15,7 +15,7 @@ const TableNode = ({ data }) => {
                     { data.attribute.map((attribute, index) => (
                         <li key={index} className="list-group-item border-0 py-1">
                             <div className="my-0 w-100 d-flex justify-content-between">
-                                <span className="text-secondary">{attribute.name} {attribute.isKey && <i className="bi bi-key-fill text-warning"></i>}</span>
+                                <span className="text-secondary">{attribute.name} {attribute.isKey && <i className="bi bi-key-fill text-warning"></i>} { attribute.isFKey && <i className="bi bi-link-45deg text-danger"></i>} </span>
                                 <span className="text-body-tertiary ms-4">{attribute.type}</span>
                             </div>
                             {/* <Handle type="source" position={Position.Right} id={attribute.name + "-a"}/>

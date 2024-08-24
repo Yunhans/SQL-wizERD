@@ -101,6 +101,14 @@ function passAllTableData(data) {
         const convertJson = (input) => {
             const task = "allTables";
 
+            // Create a map of foreign keys with their corresponding table and column
+            const foreignKeysMap = input.flatMap(table =>
+                table.foreign_keys.map(fk => ({
+                    table: table.name,
+                    column: fk.from.split(".")[1] // Get the column name from the foreign key
+                }))
+            );
+
             const nodes = input.map(table => ({
                 id: table.id.toString(),
                 type: "table",
@@ -110,7 +118,8 @@ function passAllTableData(data) {
                     attribute: table.attribute.map(attr => ({
                         name: attr.name,
                         type: attr.type,
-                        isKey: attr.primary_key
+                        isKey: attr.primary_key,
+                        isFKey: foreignKeysMap.some(fk => fk.table === table.name && fk.column === attr.name)
                     }))
                 },
                 position: {
