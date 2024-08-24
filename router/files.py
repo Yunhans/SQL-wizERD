@@ -1,5 +1,7 @@
-from fastapi import APIRouter, status
+from fastapi import APIRouter, status, HTTPException
 from pydantic import BaseModel
+import os
+import base64
 
 
 from crud.file import new_file, get_all_files, update_file_name, delete_file
@@ -91,3 +93,40 @@ async def delete_file_(file_id):
     result = delete_file(file_id)
     
     return result
+
+
+
+'''
+
+--- UPLOAD IMAGE ---
+
+    -params: file_id, imageDataUrl
+
+'''
+
+class ImageUploadRequest(BaseModel):
+    file_id: str
+    imageDataUrl: str
+
+@router.post("/upload_image", status_code=status.HTTP_200_OK)
+async def upload_image(request: ImageUploadRequest):
+    file_id = request.file_id
+    image_data_url = request.imageDataUrl
+ 
+    if not image_data_url.startswith("data:image/png;base64,"):
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid image data URL")
+    
+    image_data = image_data_url.split(",")[1]
+    image_bytes = base64.b64decode(image_data)
+    
+    # image path
+    image_path = f"./static/img/file_imgs/{file_id}.png"
+
+    # ensure the directory exists
+    os.makedirs(os.path.dirname(image_path), exist_ok=True)
+
+    # store image into folder
+    with open(image_path, "wb") as image_file:
+        image_file.write(image_bytes)
+        
+    return {"img": f"{file_id}.png"}
