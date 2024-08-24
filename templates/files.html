@@ -62,8 +62,9 @@
                     <div class="card w-100" id="post" onclick="location.href='/whiteboard';">
                         <img class="bd-placeholder-img card-img-top object-fit-cover" width="100%" height="225" src="/static/img/eer_default.png" alt="文件檔案"></img>
                         <div class="card-body">
-                            <h5 class="card-title">標題</h5>
                             <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="card-title">標題</h5>
+                                <button type="button" class="btn btn-danger" onclick="alert('trash');"><i class="bi bi-trash3"></i></button>
                             </div>
                         </div>
                     </div>
@@ -114,12 +115,34 @@
                 timeout: 5000,
                 success: function (response) {
                     updateFiles(response.files);
-                    console.log(response);
+                    // console.log(response);
                 },
                 error: function () {
                     alert("抓取檔案失敗");
                 }
             });
+        }
+
+        function deleteFile(file_id){
+            let answer = confirm('Are you sure you want to delete this file?');
+            if (!answer) return;
+
+            $.ajax({
+                type: "DELETE",
+                url: "api/file/delete/" + file_id,
+                crossDomain: true,
+                cache: false,
+                timeout: 5000,
+                success: function(response) {
+                    console.log(response);
+                },
+                error: function(response) {
+                    // Handle any errors that occurred during the request
+                    console.log('Error: ' + error);
+                    // alert(response);
+                }
+            });
+            window.location.reload();
         }
 
         function updateFiles(files){
@@ -129,7 +152,7 @@
             var file_link = "''";
             $.each(files, function(index, value) {
                 file_html += '<div class="col d-flex">';
-                file_html += '<div class="card w-100" id="post" onclick="location.href='+ "'/whiteboard/" + value[0] + "';"+'">';
+                file_html += '<div class="card w-100" id="post">';
 
                 var imgSrc = '/static/img/file_imgs/' + value[0] + '.png';
                 $.ajax({
@@ -137,19 +160,20 @@
                     type: 'HEAD',
                     success: function() {
                         // If the image exists, use it
-                        file_html += '<img class="bd-placeholder-img card-img-top object-fit-cover" width="100%" height="225" src="' + imgSrc + '" alt="文件檔案"></img>';
+                        file_html += '<img class="bd-placeholder-img card-img-top object-fit-cover" width="100%" height="225" src="' + imgSrc + '" alt="文件檔案" onclick="location.href='+ "'/whiteboard/" + value[0] + "';"+'"></img>';
                     },
                     error: function() {
                         // If the image doesn't exist, use a default image
-                        file_html += '<img class="bd-placeholder-img card-img-top object-fit-cover" width="100%" height="225" src="/static/img/eer_default.png" alt="文件檔案"></img>';
+                        file_html += '<img class="bd-placeholder-img card-img-top object-fit-cover" width="100%" height="225" src="/static/img/eer_default.png" alt="文件檔案" onclick="location.href='+ "'/whiteboard/" + value[0] + "';"+'"></img>';
                     },
                     async: false // Ensure the request is completed before moving on
                 });
                 // file_html += '<img class="bd-placeholder-img card-img-top object-fit-cover" width="100%" height="225" src="/static/img/file_img/' + value[0] + '.png" alt="文件檔案"></img>';
                 // file_html += '<img class="bd-placeholder-img card-img-top object-fit-cover" width="100%" height="225" src="/static/img/eer_default.png" alt="文件檔案"></img>';
                 file_html += '<div class="card-body">';
-                file_html += '<h5 class="card-title">' + value[1] + '</h5>';
                 file_html += '<div class="d-flex justify-content-between align-items-center">';
+                file_html += '<h5 class="card-title" onclick="location.href='+ "'/whiteboard/" + value[0] + "';"+'">' + value[1] + '</h5>';
+                file_html += '<button type="button" class="btn btn-danger" onclick="deleteFile('+ value[0] +');"><i class="bi bi-trash3"></i></button>';
                 file_html += '</div>';
                 file_html += '</div>';
                 file_html += '</div>';
@@ -173,20 +197,18 @@
                 type: "POST",
                 url: "api/file/create",
                 crossDomain: true,
-                contentType: "application/json",// new add
+                contentType: "application/json",
                 data: data_string,
                 cache: false,
                 dataType: 'json',
                 timeout: 5000,
-                success: function(data, textStatus, xhr) {
-                    // This callback should capture both 200 and 201 status codes
-                    console.log("Response Data:", data);
-                    console.log("Status Code:", xhr.status);
+                success: function(response) {
+                    // Handle the response data here
+                    console.log(response);
                 },
-                error: function(xhr, textStatus, errorThrown) {
-                    // Handle errors here
-                    console.log("Error Response Data:", xhr.responseText);
-                    console.log("Status Code:", xhr.status);
+                error: function(response) {
+                    // Handle any errors that occurred during the request
+                    console.log('Error: ' + error);
                 }
             });
         }

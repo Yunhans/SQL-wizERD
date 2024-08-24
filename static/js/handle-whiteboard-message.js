@@ -38,7 +38,7 @@ function storeImg(imgUrl){
 
     var data_string = JSON.stringify(request);
 
-    console.log(data_string);
+    // console.log(data_string);
 
     $.ajax({
         type: "POST",
@@ -53,9 +53,6 @@ function storeImg(imgUrl){
             200: function(response) {
                 console.log("Image store successfully");
             },
-        },
-        error: function () {
-            alert("Image store failed");
         }
     });
 }

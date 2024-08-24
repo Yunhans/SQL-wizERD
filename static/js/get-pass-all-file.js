@@ -36,7 +36,7 @@ function updateFiles(files){
     $.each(files, function(index, value) {
         file_html += '\
             <div class="card mb-2" onclick="location.href='+ "'/whiteboard/" + value[0] + "';"+'">\
-                <div class="card-header">\
+                <div class="card-header bg-white">\
                     '+ value[1] +'\
                 </div>';
 
