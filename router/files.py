@@ -33,8 +33,9 @@ async def create_new_file(request: FileCreateRequest):
     user_id = request.user_id
     file_name = request.file_name
     
-    message = new_file(file_name, user_id)
-    return message
+    file_id = new_file(file_name, user_id)
+    
+    return {"file_id": file_id}
 
 
 
