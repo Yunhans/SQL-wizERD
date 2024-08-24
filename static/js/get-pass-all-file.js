@@ -38,9 +38,23 @@ function updateFiles(files){
             <div class="card mb-2" onclick="location.href='+ "'/whiteboard/" + value[0] + "';"+'">\
                 <div class="card-header">\
                     '+ value[1] +'\
-                </div>\
-                <img src="/static/img/eer_default.png" class="card-img-top" alt="..." height="250px">\
-            </div>';
+                </div>';
+
+        var imgSrc = '/static/img/file_imgs/' + value[0] + '.png';
+        $.ajax({
+            url: imgSrc,
+            type: 'HEAD',
+            success: function() {
+                // If the image exists, use it
+                // file_html += '<img class="bd-placeholder-img card-img-top object-fit-cover" width="100%" height="225" src="' + imgSrc + '" alt="文件檔案"></img>';
+                file_html += '<img src="' + imgSrc + '" class="card-img-top object-fit-cover" alt="..." height="250px"></div>';
+            },
+            error: function() {
+                // If the image doesn't exist, use a default image
+                file_html += '<img src="/static/img/eer_default.png" class="card-img-top object-fit-cover" alt="..." height="250px"></div>';
+            },
+            async: false // Ensure the request is completed before moving on
+        });
 
         if( file_id === value[0].toString() ){
             document.getElementById("file_name").innerHTML = value[1];

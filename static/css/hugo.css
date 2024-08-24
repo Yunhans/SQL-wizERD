@@ -4,6 +4,18 @@ body {
 	/* overflow-y: hidden; */
 } 
 
+.rainbow-font {
+	font-weight: bold;
+	background: -webkit-linear-gradient(45deg, rgb(253,18,226) 20%, rgb(164,67,221), rgb(84,126,255) 90% );
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	color: #978170;
+}
+
+#add_file_card {
+	min-height: 250px;
+}
+
 aside {
 	height: calc(100vh - 65px);
 	/* min-height: -webkit-fill-available; */
