@@ -38,7 +38,7 @@ def get_all_files(user_id):
         connection = connect_to_database()
         if connection.is_connected():
             cursor = connection.cursor()
-            sql_search_query = """ SELECT `file_id`, `file_name` FROM `tbl_file` WHERE `user_id` = %s"""
+            sql_search_query = """ SELECT `file_id`, `file_name` FROM `tbl_file` WHERE `user_id` = %s ORDER BY 1 DESC """
             cursor.execute(sql_search_query, (user_id,))
             records = cursor.fetchall()
             
