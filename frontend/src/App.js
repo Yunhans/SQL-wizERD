@@ -6,6 +6,7 @@ import TableNode from './TableNode';
 import SimpleFloatingEdge from './SimpleFloatingEdge';
 import { LinkMarkers } from './Markers';
 import Sidebar from './Sidebar';
+import DownloadButton from './DownloadButton';
 
 import { handleSpecificTable, handleTableDrag, handleReference, addTable } from './messageHandlers';
 
@@ -98,10 +99,10 @@ function App() {
 	};
 	
 	const onConnect = useCallback(
-		(connection) => {
-		  const edge = { ...connection, type: 'floating', markerStart: 'hasManyReversed' };
-		  setEdges((eds) => addEdge(edge, eds));
-		},
+		// (connection) => {
+		//   const edge = { ...connection, type: 'floating', markerStart: 'hasManyReversed' };
+		//   setEdges((eds) => addEdge(edge, eds));
+		// },
 		[setEdges],
 	);
 
@@ -120,10 +121,12 @@ function App() {
 						console.log('Iframe Data received - allTables', data);
 						setNodes(data.nodes);
 						setEdges(data.edges);
+						setTimeout(function(){
+							document.getElementById('download-img-btn').click();
+						}, 500);
 					} catch (error) {
 						console.error('Failed to parse or apply data:', error);
 					}
-
 				} 
 				else if (data.task === 'specificTable') {
 					console.log('Iframe Data received - specificTable:', data.table_data);
@@ -150,6 +153,8 @@ function App() {
 
 	return (
 		<div style={{ height: '100%', width: '100%'}}>
+			        <style><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/></style>
+
 			<div className="providerflow">
 				<ReactFlowProvider>
 					<div className="reactflow-wrapper">
@@ -166,6 +171,7 @@ function App() {
 						nodeTypes={nodeTypes}
 						proOptions={proOptions}
 						connectionMode={ConnectionMode.Loose}
+						id="whiteboard"
 					>
 						<Panel position="bottom-center">
 							<button type="button" className="btn btn-success" onClick={ () => { addTable() }}><i className="bi bi-table"></i> Add table</button>
@@ -173,6 +179,7 @@ function App() {
 						<Background/>
 						<Controls position = 'bottom-right' showInteractive={false}/>
 						<MiniMap position='top-right' nodeStrokeWidth={3} />
+						<DownloadButton />
 					</ReactFlow>
 					</div>
 					<Sidebar nodes={nodes} setNodes={setNodes}/>

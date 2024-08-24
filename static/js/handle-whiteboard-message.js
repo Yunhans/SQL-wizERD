@@ -21,10 +21,44 @@ function receiveMessage(e) {
         console.log("Parent Data received:", data);
         deleteTable(data.table_id);
     }
+    else if (data.action === "store image") {
+        console.log("Parent Data received:", data.img);
+        storeImg(data.img);
+    }
 }
 
 // 監聽 message 事件
 window.addEventListener('message', receiveMessage, false);
+
+function storeImg(imgUrl){
+    var request = {
+        'file_id': file_id,
+        'imageDataUrl': imgUrl
+    };
+
+    var data_string = JSON.stringify(request);
+
+    console.log(data_string);
+
+    $.ajax({
+        type: "POST",
+        url: "/api/file/upload_image",
+        crossDomain: true,
+        contentType: "application/json",
+        data: data_string,
+        cache: false,
+        dataType: 'json',
+        timeout: 5000,
+        statusCode: {
+            200: function(response) {
+                console.log("Image store successfully");
+            },
+        },
+        error: function () {
+            alert("Image store failed");
+        }
+    });
+}
 
 function getTableData(table_id) {
     $.ajax({
@@ -133,7 +167,7 @@ function getReferenceData(file_id) {
             passReferenceData(data);
         },
         error: function () {
-        alert("無法連線到伺服器！");
+            alert("無法連線到伺服器！");
         }
     });
 }
