@@ -59,7 +59,7 @@ export function handleSpecificTable(data) {
                         <div class="dropdown-menu shadow" style="min-width: 250px;">
                             <p class="dropdown-header">Other Constraints</p>
                             <div class="form-check mx-3 mb-2">
-                                <input class="form-check-input" type="checkbox" id="auto-check-${index}"  >
+                                <input class="form-check-input" type="checkbox" id="auto-check-${index}" ${(value.auto_increment? "checked" : "")}>
                                 <label class="form-check-label" for="auto-check-${index}">
                                     auto increment
                                 </label>
