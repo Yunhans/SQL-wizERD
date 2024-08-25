@@ -7,9 +7,9 @@
 | :--: | :-- | :--: |
 | 石昀翰 | @Yunhans | 前端 |
 | 管奕凱 | @CalvinKuan1007 | AI |
-| 林均翰 | @HenryLin1412 | 後端 |
+| 林均翰 | @HenryLin1412 | 資料庫 |
 | 朱博脩 | @shioudidi | 後端 |
-| 黃柏翰 | @hbh10601 | AI |
+| 黃柏翰 | @hbh10601 | 使用說明(魔法書) |
 
 # 使用說明
 
@@ -72,12 +72,13 @@ npm run start-pc    # Windows
     - [x] 資料表拖拉
     - [x] 白板縮放
     - [x] 白板拖拉
-    - [ ] 關聯線條呈現
-    - [ ] json 資料 API 串接
-- [ ] 語法偵錯 (朱)
-- [ ] chatbot
+    - [x] 關聯線條呈現
+    - [x] json 資料 API 串接
+    - [x] chatbot 串接
+- [x] 語法偵錯 (朱)
+- [x] chatbot 模型微調 (管)
 - [ ] 小教程 (林)
-- [ ] 雲端存檔 (林)
+- [x] 存檔 (林)
 
 # 參考連結
 1. [雲端硬碟](https://drive.google.com/drive/u/0/folders/15-sAc_Mu2l6ROezuPmi5HhFCdFezt0ED)
