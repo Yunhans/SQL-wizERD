@@ -164,6 +164,7 @@ function App() {
 						onNodesChange={handleNodesChange}
 						edges={edges}
 						onEdgesChange={onEdgesChange}
+						nodesConnectable={false}
 						onConnect={onConnect}
 						fitView
 						minZoom={0.2}
