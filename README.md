@@ -9,7 +9,7 @@
 | 管奕凱 | @CalvinKuan1007 | AI |
 | 林均翰 | @HenryLin1412 | 資料庫 |
 | 朱博脩 | @shioudidi | 後端 |
-| 黃柏翰 | @hbh10601 | 使用說明(魔法書) |
+| 黃柏翰 | @hbh10601 | AI+使用說明(魔法書) |
 
 # 使用說明
 
@@ -35,7 +35,7 @@ npm -v          # should print `10.7.0` or above
 
 4. 建立python虛擬環境並將 cmd 或 terminal 路徑 cd 至本資料夾
 ```bash
-cd graduate_project
+cd graduate-project
 ```
 
 5. 下載 pip 套件
