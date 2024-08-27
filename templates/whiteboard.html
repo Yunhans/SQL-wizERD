@@ -29,13 +29,12 @@
 
                 <div class="g-2">
                     <span class="text-secondary"><i class="bi bi-folder2-open"></i> <a href="/files" class="link-secondary">Files</a> ></span>
-                    <!-- <i class="bi bi-chevron-right"></i> -->
                     <i class="bi bi-database"></i>
                     <span id="file_name">file name</span>
-                </div>
+                    <!-- hint -->
+                    <button id="hint-btn" type="button" class="btn btn-sm mx-5" data-bs-toggle="modal" data-bs-target="#beginner-tutorial"><i class="bi bi-info-circle-fill"></i> Hint</button>
 
-                <!-- beginner-tutorial -->
-                <!-- <button type="button" class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#beginner-tutorial">Beginner tutorial</button> -->
+                </div>
             
 
                 <div class="dropdown text-end">
@@ -69,7 +68,7 @@
                 </li>
                 <li id="script_li">
                     <a id="script_btn" href="#" class="nav-link py-3 shadow-none px-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling_script" aria-controls="offcanvasScrolling_script">
-                        <button type="button" class="btn border-0 mx-0" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Sql Scripts">
+                        <button type="button" class="btn border-0 mx-0" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Scripts editor">
                             <i class="bi bi-code-slash" style="font-size: 1.5rem;"></i>
                         </button>
                     </a>
@@ -97,7 +96,7 @@
     <div>
         <!-- Modal -->
         <div class="modal fade" id="beginner-tutorial" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog modal-xl">
+            <div class="modal-dialog modal-xl modal-fullscreen-xl-down modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="beginner-tutorialLabel">How to begin</h1>
@@ -107,22 +106,50 @@
                     <div class="modal-body">
                         <!-- tutotial slide -->
                         
-                        <div id="carouselExampleIndicators" class="carousel slide">
+                        <div id="carouselExampleIndicators" class="carousel carousel-dark slide">
                             <div class="carousel-indicators">
-                              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4" aria-label="Slide 5"></button>
                             </div>
                             <div class="carousel-inner">
-                              <div class="carousel-item active">
-                                <img src="..." class="d-block w-100 placeholder" alt="...">
-                              </div>
-                              <div class="carousel-item">
-                                <img src="..." class="d-block w-100 placeholder" alt="...">
-                              </div>
-                              <div class="carousel-item">
-                                <img src="..." class="d-block w-100 placeholder" alt="...">
-                              </div>
+                                <div class="carousel-item active">
+                                    <img src="/static/img/hint/hint1.png" class="d-block w-100 object-fit-contain" height="600" alt="...">
+                                    <div class="carousel-caption d-none d-md-block shadow opacity-75 bg-body-tertiary rounded-3">
+                                        <h5>Step 1: SQL Appero!</h5>
+                                        <p>Open Chatbot <i class="bi bi-robot"></i>, ask questions and get script, remember to copy the scripts.</p>
+                                    </div>
+                                </div>
+                                <div class="carousel-item">
+                                    <img src="/static/img/hint/hint2.png" class="d-block w-100 object-fit-contain" height="600" alt="...">
+                                    <div class="carousel-caption d-none d-md-block shadow opacity-75 bg-body-tertiary rounded-3">
+                                        <h5>Step 2: ERD Conjuro!</h5>
+                                        <p>Open Script editor <i class="bi bi-code-slash"></i> and paste the SQL script inside, then ERD will show up accordinly.</p>
+                                    </div>
+                                </div>
+                                <div class="carousel-item">
+                                    <video src="/static/img/hint/hint3.mp4" class="d-block w-100 object-fit-contain" height="600" autoplay muted loop></video>
+                                    <div class="carousel-caption d-none d-md-block shadow opacity-75 bg-body-tertiary rounded-3">
+                                        <h5>Step 3: Mobilius Deskus!</h5>
+                                        <p>You can freely drag and scale both the tables and the whiteboard to suit your needs.</p>
+                                    </div>
+                                </div>
+                                <div class="carousel-item">
+                                    <img src="/static/img/hint/hint4.png" class="d-block w-100 object-fit-contain" height="600" alt="...">
+                                    <div class="carousel-caption d-none d-md-block shadow opacity-75 bg-body-tertiary rounded-3">
+                                        <h5>Step 4: Reparo!</h5>
+                                        <p>You can edit either the Scripts or the ERD if you‘d like.</p>
+                                    </div>
+                                </div>
+                                <div class="carousel-item">
+                                    <img src="/static/img/hint/hint5.png" class="d-block w-100 object-fit-contain" height="600" alt="...">
+                                    <div class="carousel-caption d-none d-md-block shadow opacity-75 bg-body-tertiary rounded-3">
+                                        <h5>Final: Revelio!</h5>
+                                        <p>Try it yourself now! Click on the Magic wiki <i class="bi bi-magic"></i> for more information and tutorials.</p>
+                                    </div>
+                                </div>
                             </div>
                             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
                               <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -132,7 +159,7 @@
                               <span class="carousel-control-next-icon" aria-hidden="true"></span>
                               <span class="visually-hidden">Next</span>
                             </button>
-                          </div>
+                        </div>
 
                     </div>
 
@@ -195,13 +222,10 @@
 
     <!-- ace editor -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.9.5/ace.js"></script>
-    
-    <script src="/static/js/bootstrap-5.3.js"></script>
     <script>
-        function tutorial() {
-
-        }
+        document.getElementById('hint-btn').click();
     </script>
+    <script src="/static/js/bootstrap-5.3.js"></script>
     <!-- update table data -->
     <script src="/static/js/get-pass-all-file.js"></script>
     <script src="/static/js/handle-script-error.js"></script>
