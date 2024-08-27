@@ -21,10 +21,11 @@ tokens = (
     'DECIMAL', 'FLOAT', 'BOOLEAN', 'BIGINT', 'SMALLINT', 'DOUBLE', 'ENUM',
     'PRIMARY', 'KEY', 'FOREIGN', 'NOT', 'NULL', 'UNIQUE', 'DEFAULT',
     'AUTO_INCREMENT', 'ON', 'DELETE', 'UPDATE', 'CASCADE', 'REFERENCES',
-    'NUMBER', 'STRING', 'CURRENT_TIMESTAMP'
+    'NUMBER', 'STRING', 'CURRENT_TIMESTAMP','FLOAT_NUMBER', 'TRUE', 'FALSE', 'CURRENT_DATE','TIME'
 )
 
 
+# Define keywords
 # Define keywords
 keywords = {
     'create': 'CREATE',
@@ -36,6 +37,7 @@ keywords = {
     'date': 'DATE',
     'datetime': 'DATETIME',
     'timestamp': 'TIMESTAMP',
+    'time': 'TIME',
     'decimal': 'DECIMAL',
     'float': 'FLOAT',
     'boolean': 'BOOLEAN',
@@ -56,7 +58,10 @@ keywords = {
     'update': 'UPDATE',
     'cascade': 'CASCADE',
     'references': 'REFERENCES',
-    'current_timestamp': 'CURRENT_TIMESTAMP'
+    'current_timestamp': 'CURRENT_TIMESTAMP',
+    'current_date': 'CURRENT_DATE',
+    'true': 'TRUE',
+    'false': 'FALSE'
 }
 
 # Token definitions (same as before)
@@ -65,6 +70,11 @@ t_RPAREN = r'\)'
 t_COMMA = r','
 t_SEMICOLON = r';'
 
+def t_FLOAT_NUMBER(t):
+    r'\d+\.\d+'
+    t.value = float(t.value)
+    return t
+
 def t_IDENTIFIER(t):
     r'[a-zA-Z_][a-zA-Z0-9_]*'
     t.type = keywords.get(t.value.lower(), 'IDENTIFIER')
@@ -72,6 +82,8 @@ def t_IDENTIFIER(t):
 
 t_NUMBER = r'\d+'
 t_STRING = r"'[^']*'"
+t_TRUE = r'TRUE|true'
+t_FALSE = r'FALSE|false'
 
 t_ignore = ' \t\r'
 
@@ -206,7 +218,8 @@ def p_data_type(p):
                  | BIGINT
                  | SMALLINT
                  | DOUBLE
-                 | ENUM LPAREN enum_values RPAREN'''
+                 | ENUM LPAREN enum_values RPAREN
+                 | TIME'''
     if len(p) == 2:
         p[0] = p[1]
     elif len(p) == 5:
@@ -242,7 +255,11 @@ def p_column_constraint(p):
 def p_default_value(p):
     '''default_value : STRING
                      | NUMBER
-                     | CURRENT_TIMESTAMP'''
+                     | FLOAT_NUMBER
+                     | CURRENT_TIMESTAMP
+                     | CURRENT_DATE
+                     | TRUE
+                     | FALSE'''
     p[0] = p[1]
 
 def p_table_constraint(p):
@@ -393,7 +410,7 @@ def middle_parse_json(file_id, parsed_result):
             add_table(table_name, str(table_dict), x, y, file_id)
         
         tables.append(table_dict)
-        
+
     # Delete remaining tables that weren't altered
     for table_name, table_id in existing_table_dict.items():
         delete_table(table_id)
