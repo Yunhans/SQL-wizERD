@@ -1,4 +1,5 @@
 import ast
+import re
 
 
 
@@ -10,6 +11,9 @@ import ast
 
 def generate_sql_script(table_script):
     script = ""
+    
+    # define the regex for DECIMAL
+    decimal_pattern = re.compile(r"^decimal\(\d+,\d+\)$", re.IGNORECASE)
     
     for table_tuple in table_script:
         table_info = ast.literal_eval(table_tuple[0])
@@ -25,6 +29,7 @@ def generate_sql_script(table_script):
         pk_count = sum(1 for attr in attributes if attr.get('primary_key'))
         
         for attr in attributes:
+
             column_def = f"    {attr['name']} {attr['type']}"
             constraints = []
             
@@ -38,8 +43,14 @@ def generate_sql_script(table_script):
             if attr.get('auto_increment'):
                 constraints.append("AUTO_INCREMENT")
             if attr.get('default') is not None:
-                constraints.append(f"DEFAULT {attr['default']}")
-            
+                default_value = attr['default']
+                if (default_value.lower() in ["current_timestamp", "current_date"] or
+                    attr['type'].lower() in ["int", "float", "boolean"] or
+                    decimal_pattern.match(attr['type'].lower())):
+                    constraints.append(f"DEFAULT {default_value}")
+                else:
+                    constraints.append(f"DEFAULT '{default_value}'")
+                    
             if constraints:
                 column_def += " " + " ".join(constraints)
             
