@@ -35,7 +35,7 @@ npm -v          # should print `10.7.0` or above
 
 4. 建立python虛擬環境並將 cmd 或 terminal 路徑 cd 至本資料夾
 ```bash
-cd graduate_project
+cd graduate-project
 ```
 
 5. 下載 pip 套件
