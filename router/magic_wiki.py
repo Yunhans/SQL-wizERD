@@ -3,11 +3,11 @@ from fastapi.templating import Jinja2Templates
 
 
 router = APIRouter(
-    tags=["tutorial"],
+    tags=["magic-wiki"],
 )
 
 templates = Jinja2Templates(directory="templates")
 
-@router.get("/tutorial")
+@router.get("/magic-wiki")
 async def tutorial(request: Request):
-    return templates.TemplateResponse("tutorial.html", {"request": request})
+    return templates.TemplateResponse("magicbook.html", {"request": request})
