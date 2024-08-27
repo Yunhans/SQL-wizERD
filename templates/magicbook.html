@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQLWizERD</title>
+    <link rel="stylesheet" href="magicbook.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-item">魔法書</div>
+        <div class="sidebar-item">資料庫元素介紹</div>
+    </div>
+    <div class="content">
+        <div class="header">
+            <img src="/魔法書圖片/logo.jpg" alt="SQLWizERD" style="max-width: 100px; height: auto;">
+        </div>        
+        <div class="homepage">魔法圖書館</div>
+        
+        <div class="section" id="wizard-book">
+            <div class="page active" id="page-1">
+                <img src="/魔法書圖片/魔法書1.png" alt="SQLWizERD">
+                <p>此為登入後的初始畫面</p>
+                <p>可以新增、刪除檔案，或是選擇以建立過的檔案進行修改</p> 
+            </div>
+            <div class="page" id="page-2">
+                <img src="/魔法書圖片/魔法書2.png" alt="SQLWizERD">
+                <p>此專案的初始畫面</p>
+                <p>右上為小地圖 能看見目前的畫面在整個專案地圖的位置
+                <p>右下角的按鈕依序能放大/縮小畫面以及回到table所在的位置</p>
+            </div>
+            <div class="page" id="page-3">
+                <img src="/魔法書圖片/魔法書3.png" alt="SQLWizERD">
+                <p>點擊資料夾按鈕可顯示已建立的專案</p>
+            </div>
+            <div class="page" id="page-4">
+                <img src="/魔法書圖片/魔法書4.png" alt="SQLWizERD">
+                <p>點擊機器人按鈕能開啟chat bot供您輸入問題並產生回覆</p>
+            </div>
+            <div class="page" id="page-5">
+                <img src="/魔法書圖片/魔法書5.png" alt="SQLWizERD">
+                <p>點擊程式碼按鈕能顯示SQL script輸入區</p>
+            </div>
+            <div class="page" id="page-6">
+                <img src="/魔法書圖片/魔法書6.png" alt="SQLWizERD">
+                <p>點擊魔法棒按鈕將跳轉到魔法圖書館頁面</p>
+                <p>有頁面使用教學以及資料庫新手補充資料</p>
+            </div>
+            <div class="page" id="page-7">
+                <img src="/魔法書圖片/魔法書7.png" alt="SQLWizERD">
+                <p>下方的Add table按鈕可創建資料庫中的Table</p>
+            </div>
+            <div class="page" id="page-8">
+                <img src="/魔法書圖片/魔法書8.png" alt="SQLWizERD">
+                <p>table右上角的按鈕能編輯table中的各個元素</p>
+                <p>如修改名稱、建立外來鍵等等</p>
+            </div>
+            <div class="navigation">
+                <button id="prev-page"><img src="/魔法書圖片/上一頁箭頭.jpg" alt="上一頁"></button>
+                <button id="next-page"><img src="/魔法書圖片/下一頁箭頭.jpg" alt="下一頁"></button>
+            </div>
+        </div>
+    
+        <div class="section" id="supplementary-info">
+            <div class="page active" id="page-1">
+                <img src="/魔法書圖片/補充資料1.png" alt="SQLWizERD">
+                <p>Attribute name : 輸入這項屬性的名稱</p><p>Attribute type: 輸入屬性的型態</p>
+                <p>欲刪除此table，可點擊左下的垃圾桶圖示</p><p>修改完成後，需點擊右下角的Confirm儲存</p>
+            </div>
+            <div class="page" id="page-2">
+                <img src="/魔法書圖片/補充資料2.png" alt="SQLWizERD">
+                <p>黃色鑰匙: 主鍵 Primary key</p>
+                <p>禁止符號: 不能為空值 Not null</p>
+                <p>星星符號: 獨一性 Unique</p>
+                <p>auto increment :這項屬性的值是否要自動遞增</p>
+                <p>default: 是否有預設值，使用者未輸入時會自動帶入的值</p>
+                <p>垃圾桶符號: 刪除這項屬性</p>
+            </div>
+            <div class="page" id="page-3">
+                <img src="/魔法書圖片/補充資料3.png" alt="SQLWizERD">
+                <p>table右上角的按鈕能編輯table中的各個元素</p>
+            </div>
+            <div class="page" id="page-4">
+                <img src="/魔法書圖片/補充資料4.png" alt="SQLWizERD">
+                <p>table右上角的按鈕能編輯table中的各個元素</p>
+            </div>
+            <div class="page" id="page-5">
+                <img src="/魔法書圖片/補充資料5.png" alt="SQLWizERD">
+                <p>table右上角的按鈕能編輯table中的各個元素</p>
+            </div>
+            <div class="navigation">
+                <button id="prev-supp-page"><img src="/魔法書圖片/上一頁箭頭.jpg" alt="上一頁"></button>
+                <button id="next-supp-page"><img src="/魔法書圖片/下一頁箭頭.jpg" alt="下一頁"></button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="magicbook.js"></script>
+    
+</body>
+</html>
