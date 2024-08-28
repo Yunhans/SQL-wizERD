@@ -98,9 +98,8 @@
         <div class="modal fade" id="beginner-tutorial" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-xl modal-fullscreen-xl-down modal-dialog-centered">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header d-flex justify-content-center">
                         <h1 class="modal-title fs-5" id="beginner-tutorialLabel">How to begin</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
                     <div class="modal-body">
@@ -151,11 +150,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                            <button id="pre-hint-btn" class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
                               <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                               <span class="visually-hidden">Previous</span>
                             </button>
-                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                            <button id="next-hint-btn" class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
                               <span class="carousel-control-next-icon" aria-hidden="true"></span>
                               <span class="visually-hidden">Next</span>
                             </button>
@@ -163,8 +162,9 @@
 
                     </div>
 
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Understood</button>
+                    <div class="modal-footer justify-content-between">
+                        <button id="skip-btn" type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"><i class="bi bi-skip-end-fill"></i> Skip</button>
+                        <button id="understood-btn" type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Understood</button>
                     </div>
                 </div>
             </div>
@@ -227,6 +227,47 @@
             document.getElementById('hint-btn').click();
             localStorage.setItem('beginner', JSON.stringify({new: false}));
         }
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var carouselElement = document.querySelector('#carouselExampleIndicators');
+            var carousel = new bootstrap.Carousel(carouselElement);
+            
+            var prevButton = document.querySelector('#pre-hint-btn');
+            var nextButton = document.querySelector('#next-hint-btn');
+            var understoodButton = document.querySelector('#understood-btn');
+        
+            function updateButtonStates() {
+                var activeIndex = Array.from(carouselElement.querySelectorAll('.carousel-item')).indexOf(carouselElement.querySelector('.carousel-item.active'));
+                var totalSlides = carouselElement.querySelectorAll('.carousel-item').length;
+                
+                // Hide the previous button on the first slide
+                if (activeIndex === 0) {
+                    prevButton.classList.add('d-none');
+                } else {
+                    prevButton.classList.remove('d-none');
+                }
+                
+                // Hide the next button on the last slide
+                if (activeIndex === totalSlides - 1) {
+                    nextButton.classList.add('d-none');
+                    understoodButton.classList.remove('btn-outline-primary'); // Remove outline class
+                    understoodButton.classList.add('btn-primary'); // Add primary class
+                    understoodButton.removeAttribute('disabled'); // Enable the "Understood" button
+                } else {
+                    nextButton.classList.remove('d-none');
+                    understoodButton.classList.add('btn-outline-primary'); // Add outline class
+                    understoodButton.classList.remove('btn-primary'); // Remove primary class
+                    understoodButton.setAttribute('disabled', 'true'); // Disable the "Understood" button
+                }
+            }
+        
+            // Initialize button states on page load
+            updateButtonStates();
+        
+            // Update button states after slide change
+            carouselElement.addEventListener('slid.bs.carousel', updateButtonStates);
+        });
     </script>
     <script src="/static/js/bootstrap-5.3.js"></script>
     <!-- update table data -->
