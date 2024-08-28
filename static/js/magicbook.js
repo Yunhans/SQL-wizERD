@@ -5,14 +5,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const wizardPages = document.querySelectorAll('#wizard-book .page');
     const suppPages = document.querySelectorAll('#supplementary-info .page');
+    const typePages = document.querySelectorAll('#type-info .page');
+    const relationPages = document.querySelectorAll('#relation-info .page');
+
 
     const prevWizardPageButton = document.getElementById('prev-page');
     const nextWizardPageButton = document.getElementById('next-page');
     const prevSuppPageButton = document.getElementById('prev-supp-page');
     const nextSuppPageButton = document.getElementById('next-supp-page');
+    const prevTypePageButton = document.getElementById('prev-type-page');
+    const nextTypePageButton = document.getElementById('next-type-page');
+    const prevRelaPageButton = document.getElementById('prev-rela-page');
+    const nextRelaPageButton = document.getElementById('next-rela-page');
 
     let currentWizardPageIndex = 0;
     let currentSuppPageIndex = 0;
+    let currentTypePageIndex = 0;
+    let currentRelaPageIndex = 0;
 
     // 初始頁面顯示控制
     function showSection(index) {
@@ -26,6 +35,12 @@ document.addEventListener('DOMContentLoaded', function () {
             updateWizardPage();
         } else if (index === 1) {
             updateSuppPage();
+        }
+        else if (index === 2) {
+            updateTypePage();
+        }
+        else if (index === 3) {
+            updateRelaPage();
         }
     }
 
@@ -50,6 +65,23 @@ document.addEventListener('DOMContentLoaded', function () {
         prevSuppPageButton.disabled = currentSuppPageIndex === 0;
         nextSuppPageButton.disabled = currentSuppPageIndex === suppPages.length - 1;
     }
+
+    // 資料型態頁面更新
+    function updateTypePage() {
+        typePages.forEach(page => page.classList.remove('active'));
+        typePages[currentTypePageIndex].classList.add('active');
+        prevTypePageButton.disabled = currentTypePageIndex === 0;
+        nextTypePageButton.disabled = currentTypePageIndex === typePages.length - 1;
+    }
+
+     // 關聯型態頁面更新
+    function updateRelaPage() {
+        relationPages.forEach(page => page.classList.remove('active'));
+        relationPages[currentRelaPageIndex].classList.add('active');
+        prevRelaPageButton.disabled = currentRelaPageIndex === 0;
+        nextRelaPageButton.disabled = currentRelaPageIndex === relationPages.length - 1;
+    }
+
 
     // 魔法書頁面切換按鈕事件
     prevWizardPageButton.addEventListener('click', function () {
@@ -78,6 +110,36 @@ document.addEventListener('DOMContentLoaded', function () {
         if (currentSuppPageIndex < suppPages.length - 1) {
             currentSuppPageIndex++;
             updateSuppPage();
+        }
+    });
+
+    // 資料型態頁面切換按鈕事件
+    prevTypePageButton.addEventListener('click', function () {
+        if (currentTypePageIndex > 0) {
+            currentTypePageIndex--;
+            updateTypePage();
+        }
+    });
+
+    nextTypePageButton.addEventListener('click', function () {
+        if (currentTypePageIndex < typePages.length - 1) {
+            currentTypePageIndex++;
+            updateTypePage();
+        }
+    });
+
+    // 關聯型態頁面切換按鈕事件
+    prevRelaPageButton.addEventListener('click', function () {
+        if (currentRelaPageIndex > 0) {
+            currentRelaPageIndex--;
+            updateRelaPage();
+        }
+    });
+
+    nextRelaPageButton.addEventListener('click', function () {
+        if (currentRelaPageIndex < relationPages.length - 1) {
+            currentRelaPageIndex++;
+            updateRelaPage();
         }
     });
 

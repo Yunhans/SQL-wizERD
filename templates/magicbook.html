@@ -10,6 +10,8 @@
     <div class="sidebar">
         <div class="sidebar-item">基本功能介紹</div>
         <div class="sidebar-item">資料庫元素介紹</div>
+        <div class="sidebar-item">資料型態介紹</div>
+        <div class="sidebar-item">關聯型態介紹</div>
     </div>
     <div class="content">
         <div class="header">
@@ -64,45 +66,69 @@
         <div class="section" id="supplementary-info">
             <div class="page active" id="page-1">
                 <img src="/static/img/magicbook/補充資料1.png" alt="SQLWizERD">
-                <p><b>1</b>:輸入屬性的名稱 <strong>2</strong>: 輸入屬性的型態(後面會做介紹) <strong>3</strong>: 修改完成後須按下confirm</p>
+                <p><b>1</b>:輸入屬性的名稱 <strong>2</strong>: 輸入屬性的型態(旁邊有介紹可以點擊) <strong>3</strong>: 修改完成後須按下confirm</p>
                 <p>欲刪除此table，可點擊左下的垃圾桶圖示</p>
             </div>
-            <div class="page active" id="page-2">
-                <img src="/static/img/magicbook/資料型態1.png" alt="SQLWizERD">
-                <p>這邊介紹了整數、浮點數的幾種形態及舉例</p>
-            </div>
-            <div class="page active" id="page-3">
-                <img src="/static/img/magicbook/資料型態2.png" alt="SQLWizERD">
-                <p>介紹了與字符相關的形態及舉例</p>
-            </div>
-            <div class="page active" id="page-4">
-                <img src="/static/img/magicbook/資料型態3.png" alt="SQLWizERD">
-                <p>介紹了儲存與時間擊其他類別有關的形態及舉例</p>
-            </div>
-            <div class="page" id="page-5">
+            <div class="page" id="page-2">
                 <img src="/static/img/magicbook/補充資料2.png" alt="SQLWizERD">
-                <p>黃色鑰匙: 主鍵 Primary key</p>
-                <p>禁止符號: 不能為空值 Not null</p>
-                <p>星星符號: 獨一性 Unique</p>
-                <p>auto increment :這項屬性的值是否要自動遞增</p>
-                <p>default: 是否有預設值，使用者未輸入時會自動帶入的值</p>
+                <p><b>黃色鑰匙</b>: 主鍵 Primary key <b>禁止符號</b>: 不能為空值 Not null <b>星星符號</b>: 獨一性 Unique</p>
+                <p><b>auto increment</b> :這項屬性的值是否要自動遞增 <b>default</b>: 是否有預設值，使用者未輸入時會自動帶入的值</p>
                 <p>垃圾桶符號: 刪除這項屬性</p>
             </div>
-            <div class="page" id="page-6">
+            <div class="page" id="page-3">
                 <img src="/static/img/magicbook/補充資料3.png" alt="SQLWizERD">
-                <p>table右上角的按鈕能編輯table中的各個元素</p>
+                <p>此按鈕可以新增外來鍵，與其他table建立關聯</p>
             </div>
-            <div class="page" id="page-7">
+            
+            <div class="page" id="page-4">
                 <img src="/static/img/magicbook/補充資料4.png" alt="SQLWizERD">
-                <p>table右上角的按鈕能編輯table中的各個元素</p>
+                <p>先選擇table要建立外來鍵的欄位後，選擇是用哪張表的鍵作為外來鍵</p>
             </div>
-            <div class="page" id="page-8">
+            <div class="page" id="page-5">
                 <img src="/static/img/magicbook/補充資料5.png" alt="SQLWizERD">
-                <p>table右上角的按鈕能編輯table中的各個元素</p>
+                <p>完成後可以看到，外來鍵的屬性旁會有連結符號，表示此屬性為外來鍵</p>
             </div>
             <div class="navigation">
                 <button id="prev-supp-page"><img src="/static/img/magicbook/上一頁箭頭.jpg" alt="上一頁"></button>
                 <button id="next-supp-page"><img src="/static/img/magicbook/下一頁箭頭.jpg" alt="下一頁"></button>
+            </div>
+        </div>
+
+        <div class="section" id="type-info">
+            <div class="page active" id="page-1">
+                <img src="/static/img/magicbook/資料型態1.png" alt="SQLWizERD">
+                <p>這邊介紹了整數、浮點數的幾種形態及舉例</p>
+            </div>
+            <div class="page active" id="page-2">
+                <img src="/static/img/magicbook/資料型態2.png" alt="SQLWizERD">
+                <p>介紹了與字符相關的形態及舉例</p>
+            </div>
+            <div class="page active" id="page-3">
+                <img src="/static/img/magicbook/資料型態3.png" alt="SQLWizERD">
+                <p>介紹了儲存與時間擊其他類別有關的形態及舉例</p>
+            </div>
+            <div class="navigation">
+                <button id="prev-type-page"><img src="/static/img/magicbook/上一頁箭頭.jpg" alt="上一頁"></button>
+                <button id="next-type-page"><img src="/static/img/magicbook/下一頁箭頭.jpg" alt="下一頁"></button>
+            </div>
+        </div>
+
+        <div class="section" id="relation-info">
+            <div class="page" id="page-1">
+                <img src="/static/img/magicbook/一對一關聯.png" alt="SQLWizERD">
+                <p><b>一對一關聯</b>，像是購物網站的會員與購物車間的關係(一個會員有一個購物車)</p>
+            </div>
+            <div class="page" id="page-2">
+                <img src="/static/img/magicbook/一對多關聯.png" alt="SQLWizERD">
+                <p><b>一對多關聯</b>，購物網站與商品間的關係(一個網站可以有很多商品)</p>
+            </div>
+            <div class="page" id="page-3">
+                <img src="/static/img/magicbook/多對多關聯.png" alt="SQLWizERD">
+                <p><b>多對多關聯</b>，顧客與訂單的關係，一位顧客會有多筆訂單，一個訂單會有多種商品</p>
+            </div>
+            <div class="navigation">
+                <button id="prev-rela-page"><img src="/static/img/magicbook/上一頁箭頭.jpg" alt="上一頁"></button>
+                <button id="next-rela-page"><img src="/static/img/magicbook/下一頁箭頭.jpg" alt="下一頁"></button>
             </div>
         </div>
     </div>
