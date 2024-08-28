@@ -82,3 +82,9 @@ npm run start-pc    # Windows
 
 # 參考連結
 1. [雲端硬碟](https://drive.google.com/drive/u/0/folders/15-sAc_Mu2l6ROezuPmi5HhFCdFezt0ED)
+
+# Acknowledgements
+
+This project uses the following open source projects:
+- [Create React App](https://github.com/facebook/create-react-app) - Licensed under the [MIT License](https://github.com/facebook/create-react-app/blob/main/LICENSE) 
+- [xyflow](https://github.com/xyflow/xyflow) - Licensed under the [MIT License](https://github.com/xyflow/xyflow/blob/main/LICENSE) 
