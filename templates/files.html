@@ -84,13 +84,13 @@
                 </div>
                 <div class="modal-body mb-2">
                    
-                    <form class="row g-3" onsubmit="add_file()">
+                    <form class="row g-3">
                         <div class="col-12">
                             <label for="add_file_name" class="form-label">檔案名稱</label>
                             <input type="text" class="form-control" id="add_file_name" placeholder="Untitled">
                         </div>
                         <div class="col-12 text-center">
-                            <button type="submit" class="btn btn-primary">新增</button>
+                            <button type="button" class="btn btn-primary" onclick="add_file()">新增</button>
                         </div>
                     </form>
 
@@ -192,7 +192,9 @@
 
 		    var data_string = JSON.stringify(request);
 
-            console.log(filename);
+            // console.log(filename);
+            var file_id = 0;
+            
             $.ajax({
                 type: "POST",
                 url: "api/file/create",
@@ -203,14 +205,16 @@
                 dataType: 'json',
                 timeout: 5000,
                 success: function(response) {
-                    // Handle the response data here
-                    console.log(response);
+                    console.log("file_id: "+ response.file_id);
+                    const data = { new: true };
+                    localStorage.setItem('beginner', JSON.stringify(data));
+                    window.location.href = "/whiteboard/" + response.file_id;
                 },
-                error: function(response) {
-                    // Handle any errors that occurred during the request
+                error: function(error) {
                     console.log('Error: ' + error);
                 }
             });
+
         }
     </script>
 </body>

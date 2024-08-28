@@ -19,4 +19,4 @@ async def whiteboard(request: Request, file_id):
         "file_id": file_id,
         "user": user,
         "user_id": user_id
-        })
+    })

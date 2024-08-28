@@ -222,7 +222,11 @@
     <!-- ace editor -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.9.5/ace.js"></script>
     <script>
-        document.getElementById('hint-btn').click();
+        // if new file -> open hint -> set false
+        if (JSON.parse(localStorage.getItem('beginner')).new) {
+            document.getElementById('hint-btn').click();
+            localStorage.setItem('beginner', JSON.stringify({new: false}));
+        }
     </script>
     <script src="/static/js/bootstrap-5.3.js"></script>
     <!-- update table data -->
