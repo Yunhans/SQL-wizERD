@@ -81,7 +81,7 @@ npm run start-pc    # Windows
 - [x] 存檔 (林)
 
 # 參考連結
-1. [雲端硬碟](https://drive.google.com/drive/u/0/folders/15-sAc_Mu2l6ROezuPmi5HhFCdFezt0ED)
+1. [雲端硬碟]()
 
 # Acknowledgements
 
